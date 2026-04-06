@@ -150,7 +150,7 @@ const DressCode = () => {
   }, [])
 
   return (
-    <div className="relative">
+    <div className="relative w-full min-w-0">
       {/* Dress Code Title */}
       <div ref={dressCodeTitleRef} className="text-center mb-12 sm:mb-16">
         <div>
@@ -169,7 +169,7 @@ const DressCode = () => {
       </div>
 
       {/* Dress Code Content */}
-      <div className="flex flex-col lg-custom:flex-row gap-3 lg-custom:gap-4 items-stretch">
+      <div className="flex flex-col lg-custom:flex-row gap-4 md:gap-6 lg-custom:gap-4 items-stretch min-w-0">
         {/* Principal Sponsors Category */}
         {dresscode.sections && dresscode.sections[0] && (() => {
           const section = dresscode.sections[0];
@@ -181,9 +181,9 @@ const DressCode = () => {
                   className="transition-opacity duration-500 ease-in-out"
                 >
                   {/* Category Image and Details - Side by side on mobile, stacked on 992px+ */}
-                  <div className="flex flex-row lg-custom:flex-col gap-6 md:gap-8 lg-custom:gap-6 items-start">
+                  <div className="flex flex-row lg-custom:flex-col gap-6 md:gap-8 lg-custom:gap-6 items-start min-w-0">
                     {/* Category Details - First category: right aligned on mobile, left aligned on 992px+ */}
-                    <div className="w-1/2 lg-custom:w-full flex flex-col text-right lg-custom:text-left order-1 lg-custom:order-2">
+                    <div className="w-1/2 min-w-0 lg-custom:w-full flex flex-col text-right lg-custom:text-left order-1 lg-custom:order-2">
                       {/* Category Name and Description Container */}
                       <div className="w-full">
                         {/* Category Name */}
@@ -223,7 +223,7 @@ const DressCode = () => {
                     
                     {/* Category Image - First category: right on mobile, top on desktop */}
                     {section.image && (
-                      <div className="w-1/2 lg-custom:w-full order-2 lg-custom:order-1">
+                      <div className="w-1/2 min-w-0 lg-custom:w-full order-2 lg-custom:order-1">
                         <div className="w-full relative dresscode-image-container">
                           <img 
                             src={section.image} 
@@ -261,10 +261,10 @@ const DressCode = () => {
                   className="text-center transition-opacity duration-500 ease-in-out"
                 >
                   {/* Category Image and Details - Side by side on mobile, stacked on 992px+ */}
-                  <div className="flex flex-row lg-custom:flex-col gap-6 md:gap-8 lg-custom:gap-6 items-start">
+                  <div className="flex flex-row lg-custom:flex-col gap-6 md:gap-8 lg-custom:gap-6 items-start min-w-0">
                     {/* Category Image - Second category: left on mobile, top on desktop */}
                     {section.image && (
-                      <div className="w-1/2 lg-custom:w-full">
+                      <div className="w-1/2 min-w-0 lg-custom:w-full">
                         <div className="w-full relative dresscode-image-container">
                           <img 
                             src={section.image} 
@@ -276,7 +276,7 @@ const DressCode = () => {
                     )}
                     
                     {/* Category Details - Second category: left aligned on mobile, bottom on desktop */}
-                    <div className="w-1/2 lg-custom:w-full flex flex-col justify-between text-left lg-custom:text-left dresscode-image-container">
+                    <div className="w-1/2 min-w-0 lg-custom:w-full flex flex-col justify-between text-left lg-custom:text-left dresscode-image-container">
                       {/* Category Name and Description Container */}
                       <div>
                         {/* Category Name */}

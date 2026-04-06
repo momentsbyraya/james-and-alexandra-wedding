@@ -1,81 +1,87 @@
-const PRENUP_IMAGE_POOL = [
-  '/assets/images/prenup/1.jpeg',
-  '/assets/images/prenup/2.jpeg',
-  '/assets/images/prenup/3.jpeg',
-  '/assets/images/prenup/4.jpeg',
-  '/assets/images/prenup/5.jpeg',
-  '/assets/images/prenup/6.png',
-  '/assets/images/prenup/7.jpeg',
-  '/assets/images/prenup/8.jpeg',
-  '/assets/images/prenup/9.jpeg',
-  '/assets/images/prenup/10.jpeg',
-  '/assets/images/prenup/11.jpeg',
+/** Prenup filenames live in /assets/images/prenup/ (spaces & parens encoded for URLs). */
+const prenup = (filename) =>
+  `/assets/images/prenup/${encodeURIComponent(filename)}`
+
+const hero = prenup('1st picture.jpeg')
+const fullBleedAfterVenue = prenup('2nd picture.jpeg')
+const fullBleedAfterSchedule = prenup('3rd picture.jpeg')
+const fullBleedAfterLoveStory = prenup('4th picture.jpeg')
+const fullBleedAfterDressCode = prenup('5th picture.jpeg')
+
+const loveStory = [
+  prenup('Bestfriends pictures (love story section).jpeg'),
+  prenup('Deskmates picture (lovestory section).jpeg'),
+  prenup('Furparents pictures (love story section).png'),
+  prenup('Partners for life picture (love story section).jpeg'),
+  prenup('Study Buddies picture (love story section).jpeg'),
+]
+
+const gallery = [
+  prenup('include in gallery(1).jpeg'),
+  prenup('include in gallery.jpeg'),
+  prenup('iclude in gallery.jpeg'),
+  prenup('include in gallery3.jpeg'),
+]
+
+/** Same order as `gallery`: CSS object-position for thumbnails (object-cover), not the grid cell. */
+const galleryThumbObjectPosition = [
+  'center center',
+  'center center',
+  'center center',
+  /** include in gallery3 — tall/selfie-style shot: keep top of frame (faces) visible; high % was cropping foreheads */
+  'center top',
+]
+
+const countdownBackground = prenup('Save the date or Countdown picture.jpeg')
+
+/** Opening screen triptych: top → middle → bottom row */
+const openingScreenBackgrounds = [
+  prenup('Partners for life picture (love story section).jpeg'),
+  prenup('iclude in gallery.jpeg'),
+  prenup('5th picture.jpeg'),
+]
+
+/** Pool for other features (e.g. Moments grid, random picks). */
+const pool = [
+  hero,
+  fullBleedAfterVenue,
+  fullBleedAfterSchedule,
+  fullBleedAfterLoveStory,
+  fullBleedAfterDressCode,
+  ...loveStory,
+  ...gallery,
+  countdownBackground,
 ]
 
 export const prenupImages = {
-  pool: PRENUP_IMAGE_POOL,
-  hero: PRENUP_IMAGE_POOL[6],
-  fullBleedMain: PRENUP_IMAGE_POOL[1],
+  pool,
+  openingScreenBackgrounds,
+  hero,
+  fullBleedAfterVenue,
+  fullBleedAfterSchedule,
+  fullBleedAfterLoveStory,
+  fullBleedAfterDressCode,
+  loveStory,
+  gallery,
+  galleryThumbObjectPosition,
+  countdownBackground,
+  modalBackground: hero,
+  ogImage: hero,
+  favicon: hero,
+  rsvpBackground: fullBleedAfterDressCode,
+  fullBleedMain: fullBleedAfterVenue,
   splitA: {
-    left: PRENUP_IMAGE_POOL[2],
-    right: PRENUP_IMAGE_POOL[3],
+    left: fullBleedAfterVenue,
+    right: fullBleedAfterSchedule,
   },
   splitB: {
-    left: PRENUP_IMAGE_POOL[4],
-    right: PRENUP_IMAGE_POOL[5],
+    left: fullBleedAfterLoveStory,
+    right: fullBleedAfterDressCode,
   },
   splitC: {
-    left: PRENUP_IMAGE_POOL[6],
-    right: PRENUP_IMAGE_POOL[7],
+    left: loveStory[0],
+    right: loveStory[1],
   },
-  rsvpBackground: PRENUP_IMAGE_POOL[8],
-  modalBackground: PRENUP_IMAGE_POOL[6],
-  countdownBackground: PRENUP_IMAGE_POOL[2],
-  ogImage: PRENUP_IMAGE_POOL[4],
-  favicon: PRENUP_IMAGE_POOL[0],
-  // Love story section: one polaroid per paragraph, in order (files 4, 8, 5, 10, 6)
-  loveStory: [
-    PRENUP_IMAGE_POOL[3],
-    PRENUP_IMAGE_POOL[7],
-    PRENUP_IMAGE_POOL[4],
-    PRENUP_IMAGE_POOL[9],
-    PRENUP_IMAGE_POOL[5],
-  ],
-  gallery: [
-    PRENUP_IMAGE_POOL[10],
-    PRENUP_IMAGE_POOL[1],
-    PRENUP_IMAGE_POOL[2],
-    PRENUP_IMAGE_POOL[3],
-    PRENUP_IMAGE_POOL[4],
-    PRENUP_IMAGE_POOL[5],
-    PRENUP_IMAGE_POOL[6],
-    PRENUP_IMAGE_POOL[7],
-    PRENUP_IMAGE_POOL[8],
-    PRENUP_IMAGE_POOL[9],
-    PRENUP_IMAGE_POOL[0],
-  ],
-  momentsHero: PRENUP_IMAGE_POOL[2],
-  momentsGrid: [
-    PRENUP_IMAGE_POOL[0],
-    PRENUP_IMAGE_POOL[1],
-    PRENUP_IMAGE_POOL[2],
-    PRENUP_IMAGE_POOL[3],
-    PRENUP_IMAGE_POOL[4],
-    PRENUP_IMAGE_POOL[5],
-    PRENUP_IMAGE_POOL[6],
-    PRENUP_IMAGE_POOL[7],
-    PRENUP_IMAGE_POOL[8],
-    PRENUP_IMAGE_POOL[9],
-    PRENUP_IMAGE_POOL[10],
-    PRENUP_IMAGE_POOL[0],
-    PRENUP_IMAGE_POOL[2],
-    PRENUP_IMAGE_POOL[4],
-    PRENUP_IMAGE_POOL[6],
-    PRENUP_IMAGE_POOL[8],
-    PRENUP_IMAGE_POOL[10],
-    PRENUP_IMAGE_POOL[1],
-    PRENUP_IMAGE_POOL[3],
-    PRENUP_IMAGE_POOL[5],
-  ],
+  momentsHero: fullBleedAfterSchedule,
+  momentsGrid: [...pool],
 }
-

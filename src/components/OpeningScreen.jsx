@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { prenupImages } from '../data/prenupImages'
 
+const openingBg = prenupImages.openingScreenBackgrounds
+
 function OpeningScreen({ onEnvelopeOpen }) {
   const envelopeRef = useRef(null)
   const openingSectionRef = useRef(null)
@@ -86,37 +88,23 @@ function OpeningScreen({ onEnvelopeOpen }) {
       ref={openingSectionRef}
       className="fixed inset-0 z-[9999] flex items-center justify-center opening-section"
     >
-      <div className="absolute inset-0 grid grid-cols-1 grid-rows-3">
-        <div
-          className="w-full h-full bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${prenupImages.pool[0] || '/assets/images/prenup/1.jpeg'})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center 20%',
-            backgroundRepeat: 'no-repeat',
-            filter: 'grayscale(100%)'
-          }}
-        />
-        <div
-          className="w-full h-full bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${prenupImages.pool[4] || '/assets/images/prenup/5.jpeg'})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center 20%',
-            backgroundRepeat: 'no-repeat',
-            filter: 'grayscale(100%)'
-          }}
-        />
-        <div
-          className="w-full h-full bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${prenupImages.pool[9] || '/assets/images/prenup/10.jpeg'})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center 45%',
-            backgroundRepeat: 'no-repeat',
-            filter: 'grayscale(100%)'
-          }}
-        />
+      <div className="absolute inset-0 flex min-h-0 flex-col">
+        {openingBg.map((src, i) => (
+          <div
+            key={src}
+            className="relative min-h-0 flex-1 basis-0 overflow-hidden"
+          >
+            <img
+              src={src}
+              alt=""
+              draggable={false}
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover grayscale"
+              style={{
+                objectPosition: i === 2 ? 'center 45%' : 'center 20%',
+              }}
+            />
+          </div>
+        ))}
       </div>
       <div className="absolute inset-0 bg-black/20 z-[1]" />
       <section className="cssletter flex flex-col items-center relative z-10 w-full py-8" style={{ minHeight: 'auto', height: 'auto' }}>

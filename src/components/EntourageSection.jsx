@@ -12,7 +12,7 @@ const EntourageSection = () => {
       data-section="entourage"
       className="w-full py-16 sm:py-20"
     >
-      <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto text-center px-4">
+      <div className="w-full text-center">
         <h3 className="font-foglihten text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-none capitalize text-forest">
           Entourage
         </h3>

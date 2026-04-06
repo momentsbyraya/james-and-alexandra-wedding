@@ -92,7 +92,7 @@ const Schedule = () => {
       </div>
 
       {/* Vertical Timeline */}
-      <div ref={timelineRef} className="relative max-w-md sm:max-w-xl lg:max-w-2xl w-full mx-auto z-10 timeline-container">
+      <div ref={timelineRef} className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto z-10 timeline-container">
         {/* Central Vertical Line - Light Grey */}
         <div ref={lineRef} className="absolute left-1/2 top-0 bottom-0 w-px bg-gold/55 transform -translate-x-1/2"></div>
 

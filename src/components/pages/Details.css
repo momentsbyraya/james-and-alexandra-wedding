@@ -177,7 +177,31 @@
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   margin-right: calc(-50vw + 50%);
-  background-color: #AA8D5A;
+  background-color: #aa8d5a;
+}
+
+/* FAQ — botanical background (same asset as Love Story modal) */
+.faq-section.faq-section--botanical {
+  position: relative;
+  background-color: #1e3020;
+  background-image: url('/assets/images/graphics/Gemini_Generated_Image_dduovmdduovmdduo.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+.faq-section.faq-section--botanical::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 66, 16, 0.52);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.faq-section.faq-section--botanical > .faq-section__inner {
+  position: relative;
+  z-index: 1;
 }
 
 .faq-title-text {
@@ -231,4 +255,57 @@
 /* Summary mode — only the top of the photo peeks out of the frame */
 .love-story-polaroid-peek {
   user-select: none;
+}
+
+/* Love story teaser — crossfade between images */
+.love-story-teaser-slide {
+  transition: opacity 0.85s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .love-story-teaser-slide {
+    transition-duration: 0.01ms;
+  }
+}
+
+/* Love story modal — full-panel botanical background */
+.love-story-modal-panel {
+  background-color: #1e3020;
+  background-image: url('/assets/images/graphics/Gemini_Generated_Image_dduovmdduovmdduo.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+/* Title row + rule: readable scrim over artwork */
+.love-story-modal-banner {
+  background-color: rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Story scroll area — light veil so white copy stays readable on busy leaves */
+.love-story-modal-body {
+  background: rgba(16, 66, 16, 0.5);
+}
+
+/* Cinzel Decorative + uppercase — modal: pale gold; in-page: dark green via --section */
+.love-story-title {
+  font-family: 'Cinzel Decorative', serif;
+  color: #dbcf9f;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.love-story-title--section {
+  color: #104210;
+  text-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.5),
+    0 1px 2px rgba(16, 66, 16, 0.12);
+}
+
+.love-story-modal-banner .love-story-title {
+  text-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(219, 207, 159, 0.08);
 }

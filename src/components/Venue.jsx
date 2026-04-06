@@ -233,7 +233,7 @@ const Venue = () => {
 
             {/* ——— Tablet/Desktop: Swipeable carousel ——— */}
             <div
-              className="hidden md:flex venue-details-desktop flex-col gap-6 w-full max-w-[640px] lg:max-w-[760px] xl:max-w-[840px] mx-auto items-center"
+              className="hidden md:flex venue-details-desktop flex-col gap-6 md:gap-8 w-full max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto items-center"
               onMouseEnter={() => setCarouselPaused(true)}
               onMouseLeave={() => setCarouselPaused(false)}
             >
@@ -242,7 +242,7 @@ const Venue = () => {
                   <ChevronLeft className="w-8 h-8 text-forest" />
                 </button>
                 <div
-                  className="w-full max-w-[320px] lg:max-w-[380px] aspect-square relative venue-image-container overflow-hidden rounded-full flex items-center justify-center bg-white/90 border-2 border-gold/20"
+                  className="w-full max-w-[300px] md:max-w-[340px] lg:max-w-[380px] xl:max-w-[420px] aspect-square relative venue-image-container overflow-hidden rounded-full flex items-center justify-center bg-white/90 border-2 border-gold/20"
                   onTouchStart={handleTouchStart}
                   onTouchEnd={handleTouchEnd}
                 >

@@ -234,7 +234,7 @@ const Moments = () => {
 
           {/* Second Gallery Section - Grid Pattern */}
           <div className="relative z-20 flex items-center justify-center py-12 w-full">
-            <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto px-4 sm:px-6">
+            <div className="site-content-width">
               {/* Divider and Decorative Graphic */}
               <div className="flex justify-center items-center mb-12">
                 <div className="w-16 h-px bg-[#333333] opacity-40" />

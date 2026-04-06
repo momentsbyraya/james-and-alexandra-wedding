@@ -216,7 +216,7 @@ const EntourageDetailsSection = () => {
       data-section="entourage"
       className="relative w-full py-12"
     >
-      <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto entourage-names-single-line min-w-0">
+      <div className="site-content-width entourage-names-single-line min-w-0">
         <h2 ref={headerRef} className="text-2xl sm:text-3xl md:text-4xl mb-8 font-boska text-center" style={{ color: accentColor }}>
           Entourage
         </h2>

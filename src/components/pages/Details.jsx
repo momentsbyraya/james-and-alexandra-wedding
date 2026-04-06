@@ -324,7 +324,7 @@ const Details = () => {
 
         {/* Content */}
         <div className="relative z-20 flex items-center justify-center pt-12 pb-32">
-          <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto">
+          <div className="site-content-width">
             {/* Header Section */}
             <div className="text-center">
               <div ref={headerContentRef}>
@@ -353,7 +353,7 @@ const Details = () => {
 
       {/* Content */}
       <div className="relative z-20 flex items-center justify-center pt-12">
-        <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto">
+        <div className="site-content-width">
           {/* Schedule Section */}
           <Schedule />
 
@@ -402,7 +402,7 @@ const Details = () => {
 
       {/* Content */}
       <div className="relative z-20 flex items-center justify-center pt-12">
-        <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto">
+        <div className="site-content-width">
           {/* Dress Code Section */}
           <DressCode />
         </div>
@@ -422,12 +422,10 @@ const Details = () => {
       </div>
 
       {/* FAQ Section - Outside container */}
-      <div className="relative z-20 faq-section">
-        <div ref={faqRef} className="relative z-10 w-full px-8 sm:px-12 md:px-8 lg:px-16">
+      <div className="relative z-20 faq-section faq-section--botanical">
+        <div ref={faqRef} className="faq-section__inner relative z-10 w-full px-8 sm:px-12 md:px-8 lg:px-16">
           <h3 ref={faqTitleRef} className="relative inline-block px-6 py-3 mb-12 text-center w-full">
-            <span 
-              className="font-tebranos text-5xl sm:text-6xl md:text-7xl lg:text-8xl inline-block leading-none uppercase faq-title-text"
-            >
+            <span className="font-tebranos text-5xl sm:text-6xl md:text-7xl lg:text-8xl inline-block leading-none uppercase text-[#dbcf9f] drop-shadow-sm">
               Frequently Asked Questions
             </span>
           </h3>
@@ -438,13 +436,13 @@ const Details = () => {
                 return (
                   <div
                     key={index}
-                    className="border-b border-obsidian pb-6 pt-6 first:pt-0 last:border-b-0"
+                    className="border-b border-white/25 pb-6 pt-6 first:pt-0 last:border-b-0"
                   >
                     <div className="mb-2">
-                      <p className="text-base sm:text-lg font-albert text-forest mb-2 faq-question-bold">
+                      <p className="text-base sm:text-lg font-albert text-[#CBCBC0] mb-2 faq-question-bold">
                         Q: {text}
                       </p>
-                      <p className="text-sm sm:text-base font-albert font-thin text-obsidian whitespace-pre-line">
+                      <p className="text-sm sm:text-base font-albert font-thin text-[#CBCBC0]/90 whitespace-pre-line">
                         A: {parseAnswerWithPhoneNumbers(item.answer)}
                       </p>
                     </div>

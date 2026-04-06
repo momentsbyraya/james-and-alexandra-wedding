@@ -144,8 +144,8 @@ const FAQ = () => {
   }, [])
 
   return (
-    <div className="relative z-20 faq-section bg-forest">
-      <div ref={faqRef} className="relative z-10 w-full px-8 sm:px-12 md:px-8 lg:px-16">
+    <div className="relative z-20 faq-section faq-section--botanical">
+      <div ref={faqRef} className="faq-section__inner relative z-10 w-full px-8 sm:px-12 md:px-8 lg:px-16">
         <h3 ref={faqTitleRef} className="relative inline-block px-6 py-3 mb-12 text-center w-full">
           <span 
             className="font-foglihten text-3xl sm:text-4xl md:text-5xl lg:text-6xl inline-block leading-none capitalize"
@@ -155,7 +155,7 @@ const FAQ = () => {
           </span>
         </h3>
         {faqItems && faqItems.faqData && (
-          <div className="faq-items max-w-[600px] mx-auto">
+          <div className="faq-items w-full max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto">
             {faqItems.faqData.map((item, index) => {
               const { text } = getFaqIconAndText(item.question)
               return (

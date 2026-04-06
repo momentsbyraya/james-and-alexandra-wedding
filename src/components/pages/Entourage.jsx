@@ -459,7 +459,7 @@ const Entourage = () => {
 
         {/* Content */}
         <div className="relative z-20 flex items-center justify-center py-12">
-          <div className="max-w-xs sm:max-w-md lg:max-w-4xl w-full mx-auto px-4 sm:px-6 md:px-6 lg:px-8">
+          <div className="w-full max-w-md sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-10">
             {/* Header Section */}
             <div className="text-center mb-12">
               <h2 ref={headerRef} className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-8">

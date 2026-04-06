@@ -11,19 +11,25 @@ import GiftRegistry from './GiftRegistry'
 import FAQ from './FAQ'
 import SaveTheDateCounter from './SaveTheDateCounter'
 import FullBleedPhoto from './FullBleedPhoto'
-import FullBleedPhotoSplit from './FullBleedPhotoSplit'
 import { couple, prenupImages } from '../data'
 import './pages/Details.css'
 
 const photoAlt = couple.together.replace('&', 'and')
 
+const bgSectionStyle = {
+  backgroundImage: 'url(/assets/images/graphics/bg-1.png)',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+}
+
 const Home = ({ onOpenRSVP }) => {
   return (
     <div className="relative w-full bg-sage">
-      {/* Hero Section */}
+      {/* 1. First page — photo, date & names (Hero; venue not shown) */}
       <Hero />
 
-      {/* Venue Section Wrapper */}
+      {/* 2. Where to go — venue, directions, time */}
       <div
         className="embossed-bg"
         style={{
@@ -33,7 +39,6 @@ const Home = ({ onOpenRSVP }) => {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        {/* Flower Banner - Top */}
         <div className="relative" style={{ width: '100vw' }}>
           <img
             src="/assets/images/graphics/flower-banner-2.png"
@@ -42,15 +47,12 @@ const Home = ({ onOpenRSVP }) => {
           />
         </div>
 
-        {/* Content */}
         <div className="relative z-20 flex items-center justify-center pt-12 sm:pt-16 md:pt-20 pb-12 sm:pb-16 md:pb-20">
-          <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto">
-            {/* Venue Section */}
+          <div className="site-content-width">
             <Venue />
           </div>
         </div>
 
-        {/* Flower Banner - Bottom */}
         <div className="relative" style={{ width: '100vw' }}>
           <img
             src="/assets/images/graphics/flower-banner-3.png"
@@ -60,20 +62,14 @@ const Home = ({ onOpenRSVP }) => {
         </div>
       </div>
 
+      {/* 3. Second full-bleed photo */}
       <FullBleedPhoto
-        src={prenupImages.pool[8]}
+        src={prenupImages.fullBleedAfterVenue}
         alt={photoAlt}
       />
 
-      {/* Schedule Section Wrapper */}
-      <div
-        style={{
-          backgroundImage: 'url(/assets/images/graphics/bg-1.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
+      {/* 4. Order of events */}
+      <div style={bgSectionStyle}>
         <div className="relative" style={{ width: '100vw' }}>
           <img
             src="/assets/images/graphics/flower-banner-3.png"
@@ -83,9 +79,8 @@ const Home = ({ onOpenRSVP }) => {
           />
         </div>
 
-        <div className="relative z-20 flex items-center justify-center">
-          <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto">
-            {/* Schedule Section */}
+        <div className="relative z-20 flex items-center justify-center py-10 sm:py-12 md:py-16">
+          <div className="site-content-width">
             <Schedule />
           </div>
         </div>
@@ -100,61 +95,56 @@ const Home = ({ onOpenRSVP }) => {
         </div>
       </div>
 
+      {/* 5. Third full-bleed photo */}
       <FullBleedPhoto
-        src={prenupImages.pool[4]}
+        src={prenupImages.fullBleedAfterSchedule}
         alt={photoAlt}
       />
 
-      <div
-        style={{
-          backgroundImage: 'url(/assets/images/graphics/bg-1.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        {/* RSVP Section */}
-        <div className="relative z-20 flex items-center justify-center">
-          <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto">
-            <RSVPSection onOpenRSVP={onOpenRSVP} />
+      {/* 6. Entourage */}
+      <div style={bgSectionStyle}>
+        <div className="relative" style={{ width: '100vw' }}>
+          <img
+            src="/assets/images/graphics/flower-banner-3.png"
+            alt="Flower banner"
+            className="w-full h-auto object-contain"
+            style={{ transform: 'scaleY(-1)' }}
+          />
+        </div>
+
+        <div className="relative z-20 flex items-center justify-center py-10 sm:py-12 md:py-16">
+          <div className="site-content-width">
+            <EntourageSection />
           </div>
         </div>
 
-        <div className="w-full max-w-3xl mx-auto px-4 flex items-center gap-3">
-          <div className="h-px bg-gold/50 flex-1" />
-          <div className="w-2 h-2 border border-gold/70 rotate-45 flex-shrink-0" />
-          <div className="h-px bg-gold/50 flex-1" />
+        <div className="relative" style={{ width: '100vw' }}>
+          <img
+            src="/assets/images/graphics/flower-banner-2.png"
+            alt="Flower banner"
+            className="w-full h-auto object-contain"
+            style={{ transform: 'scaleY(-1)' }}
+          />
         </div>
+      </div>
 
-        {/* Entourage Section */}
-        <EntourageSection />
-
-        <div className="w-full max-w-3xl mx-auto px-4 flex items-center gap-3">
-          <div className="h-px bg-gold/50 flex-1" />
-          <div className="w-2 h-2 border border-gold/70 rotate-45 flex-shrink-0" />
-          <div className="h-px bg-gold/50 flex-1" />
-        </div>
-
-        <div className="relative z-20 flex items-center justify-center">
-          <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto">
-            <GiftRegistry />
+      {/* 7. Our Love Story */}
+      <div style={bgSectionStyle}>
+        <div className="relative z-20 flex items-center justify-center py-10 sm:py-12 md:py-16">
+          <div className="site-content-width">
+            <LoveStory />
           </div>
         </div>
       </div>
 
+      {/* 8. Fourth full-bleed photo */}
       <FullBleedPhoto
-        src={prenupImages.pool[10]}
+        src={prenupImages.fullBleedAfterLoveStory}
         alt={photoAlt}
       />
 
-      <div
-        style={{
-          backgroundImage: 'url(/assets/images/graphics/bg-1.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
+      {/* 9. Dress code */}
+      <div style={bgSectionStyle}>
         <div className="relative" style={{ width: '100vw' }}>
           <img
             src="/assets/images/graphics/flower-banner-2.png"
@@ -164,7 +154,7 @@ const Home = ({ onOpenRSVP }) => {
         </div>
 
         <div className="relative z-20 flex items-center justify-center pt-12 sm:pt-16 md:pt-20 pb-12 sm:pb-16 md:pb-20">
-          <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto">
+          <div className="site-content-width">
             <DressCode />
           </div>
         </div>
@@ -178,55 +168,44 @@ const Home = ({ onOpenRSVP }) => {
         </div>
       </div>
 
+      {/* 10. Fifth full-bleed photo */}
       <FullBleedPhoto
-        src={prenupImages.pool[7]}
+        src={prenupImages.fullBleedAfterDressCode}
         alt={photoAlt}
       />
 
-      <div
-        style={{
-          backgroundImage: 'url(/assets/images/graphics/bg-1.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        <div className="relative" style={{ width: '100vw' }}>
-          <img
-            src="/assets/images/graphics/flower-banner-3.png"
-            alt="Flower banner"
-            className="w-full h-auto object-contain"
-            style={{ transform: 'scaleY(-1)' }}
-          />
-        </div>
-
-        <div className="relative z-20 flex items-center justify-center">
-          <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto">
-            <LoveStory />
+      {/* 11–12. RSVP & Gift guide */}
+      <div style={bgSectionStyle}>
+        <div className="relative z-20 flex items-center justify-center py-8 sm:py-10">
+          <div className="site-content-width">
+            <RSVPSection onOpenRSVP={onOpenRSVP} />
           </div>
         </div>
 
-        <div className="relative" style={{ width: '100vw' }}>
-          <img
-            src="/assets/images/graphics/flower-banner-2.png"
-            alt="Flower banner"
-            className="w-full h-auto object-contain"
-            style={{ transform: 'scaleY(-1)' }}
-          />
+        <div className="site-content-width flex items-center gap-3">
+          <div className="h-px bg-gold/50 flex-1" />
+          <div className="w-2 h-2 border border-gold/70 rotate-45 flex-shrink-0" />
+          <div className="h-px bg-gold/50 flex-1" />
+        </div>
+
+        <div className="relative z-20 flex items-center justify-center pb-8 sm:pb-10">
+          <div className="site-content-width">
+            <GiftRegistry />
+          </div>
         </div>
       </div>
 
+      {/* 13. Gallery */}
       <div className="relative z-20 flex items-center justify-center">
-        <div className="max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto">
-          {/* Gallery - masonry-style grid + lightbox */}
+        <div className="site-content-width">
           <Gallery />
         </div>
       </div>
 
-      {/* FAQ Section */}
+      {/* 14. FAQ */}
       <FAQ />
 
-      {/* Save The Date Counter Section */}
+      {/* 15. Save the Date & countdown */}
       <SaveTheDateCounter />
     </div>
   )

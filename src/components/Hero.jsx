@@ -1,13 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
-import { couple, venues, prenupImages } from '../data'
-import ImageLightbox from './ImageLightbox'
+import { couple, prenupImages } from '../data'
 
 const Hero = () => {
-  const [lightboxOpen, setLightboxOpen] = useState(false)
   const coupleTogetherRef = useRef(null)
   const dateRef = useRef(null)
-  const venueRef = useRef(null)
 
   const formatDate = () => {
     const { day, year, month } = couple.wedding
@@ -16,42 +13,33 @@ const Hero = () => {
     return `${monthUpper}.${dayFormatted}.${year}`
   }
 
-  const venueName = venues.ceremony.name
-
   useEffect(() => {
     gsap.set(coupleTogetherRef.current, { opacity: 0, y: 30 })
     gsap.set(dateRef.current, { opacity: 0, y: 20 })
-    gsap.set(venueRef.current, { opacity: 0, y: 20 })
 
     const tl = gsap.timeline({ delay: 0.3 })
-
-    if (dateRef.current) {
-      tl.to(dateRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        ease: "power2.out"
-      })
-    }
-
-    if (venueRef.current) {
-      tl.to(venueRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        ease: "power2.out"
-      }, "-=0.3")
-    }
 
     if (coupleTogetherRef.current) {
       tl.to(coupleTogetherRef.current, {
         opacity: 1,
         y: 0,
         duration: 0.75,
-        ease: "power2.out"
-      }, "-=0.2")
+        ease: 'power2.out',
+      })
     }
 
+    if (dateRef.current) {
+      tl.to(
+        dateRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+          ease: 'power2.out',
+        },
+        '-=0.35'
+      )
+    }
   }, [])
 
   const heroAlt = couple.together.replace('&', 'and')
@@ -61,58 +49,11 @@ const Hero = () => {
       <img
         src={prenupImages.hero}
         alt={heroAlt}
-        className="absolute left-1/2 top-1/2 h-[102%] w-[102%] max-w-none -translate-x-1/2 -translate-y-1/2 object-cover object-center md:inset-0 md:h-full md:w-full md:max-w-none md:translate-x-0 md:translate-y-0 md:object-[center_78%] cursor-pointer"
+        className="pointer-events-none absolute inset-0 h-full w-full max-w-none object-cover object-top select-none md:object-[center_22%]"
         fetchPriority="high"
         decoding="async"
-        role="button"
-        tabIndex={0}
-        aria-label={heroAlt ? `Zoom: ${heroAlt}` : 'Zoom image'}
-        onClick={() => setLightboxOpen(true)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault()
-            setLightboxOpen(true)
-          }
-        }}
+        draggable={false}
       />
-      <ImageLightbox
-        isOpen={lightboxOpen}
-        src={prenupImages.hero}
-        alt={heroAlt}
-        onClose={() => setLightboxOpen(false)}
-      />
-
-      <svg
-        className="pointer-events-none absolute -top-2 left-1/2 z-10 h-[calc(16rem+16px)] w-[calc(100%+24px)] max-w-none -translate-x-1/2 sm:h-[calc(20rem+16px)] md:h-[calc(24rem+16px)] lg:h-[calc(28rem+20px)]"
-        preserveAspectRatio="none"
-        viewBox="0 0 1200 400"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <filter id="heroBlurTop">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="8" />
-          </filter>
-          <linearGradient id="topGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="rgba(31, 43, 32, 1)" />
-            <stop offset="12%" stopColor="rgba(31, 43, 32, 0.95)" />
-            <stop offset="40%" stopColor="rgba(31, 43, 32, 0.72)" />
-            <stop offset="70%" stopColor="rgba(31, 43, 32, 0.35)" />
-            <stop offset="100%" stopColor="rgba(31, 43, 32, 0)" />
-          </linearGradient>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#topGradient)" filter="url(#heroBlurTop)" />
-      </svg>
-      
-      <div className="pointer-events-none absolute top-0 left-0 right-0 pt-8 sm:pt-12 md:pt-16 lg:pt-20 px-4 sm:px-6 md:px-8 z-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <p ref={dateRef} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-foglihten text-white" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5), 0 0 20px rgba(0,0,0,0.25)' }}>
-            {formatDate()}
-          </p>
-          <p ref={venueRef} className="text-xs sm:text-sm md:text-base font-albert mt-2 sm:mt-3 text-[#F8F3EA]" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.45)' }}>
-            {venueName}
-          </p>
-        </div>
-      </div>
 
       <svg
         className="pointer-events-none absolute -bottom-2 left-1/2 z-10 h-[calc(16rem+16px)] w-[calc(100%+24px)] max-w-none -translate-x-1/2 sm:h-[calc(20rem+16px)] md:h-[calc(24rem+16px)] lg:h-[calc(28rem+20px)]"
@@ -135,14 +76,21 @@ const Hero = () => {
         <rect width="100%" height="100%" fill="url(#bottomGradient)" filter="url(#heroBlurBottom)" />
       </svg>
 
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 pb-10 sm:pb-12 md:pb-14 lg:pb-16 px-4 sm:px-6 md:px-8 z-20">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-20 px-4 pb-10 sm:pb-12 md:px-8 md:pb-14 lg:pb-16">
+        <div className="mx-auto max-w-4xl text-center">
           <p
             ref={coupleTogetherRef}
-            className="font-foglihten text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight text-[#F8F3EA]"
+            className="font-foglihten text-4xl leading-tight text-[#F8F3EA] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
             style={{ textShadow: '0 1px 3px rgba(0,0,0,0.45), 0 0 24px rgba(0,0,0,0.2)' }}
           >
             {couple.together}
+          </p>
+          <p
+            ref={dateRef}
+            className="mt-2 font-foglihten text-3xl tracking-wide text-white sm:mt-3 sm:text-4xl md:mt-4 md:text-5xl lg:text-6xl"
+            style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5), 0 0 18px rgba(0,0,0,0.2)' }}
+          >
+            {formatDate()}
           </p>
         </div>
       </div>

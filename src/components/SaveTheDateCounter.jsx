@@ -72,12 +72,13 @@ const SaveTheDateCounter = () => {
         backgroundRepeat: 'no-repeat'
       }}
     >
-      <div className="relative z-20 max-w-xs sm:max-w-md lg:max-w-3xl w-full mx-auto px-4 sm:px-6 md:px-8 flex flex-col justify-between min-h-[400px] sm:min-h-[500px] md:min-h-[600px] min-[992px]:min-h-[760px]">
+      <div className="relative z-20 site-content-width flex flex-col justify-between min-h-[400px] sm:min-h-[500px] md:min-h-[600px] min-[992px]:min-h-[760px]">
         {/* Title */}
         <div className="text-center">
           <h2
             ref={titleRef}
-            className="font-foglihten text-3xl sm:text-4xl md:text-5xl lg:text-6xl capitalize text-forest drop-shadow-sm"
+            className="font-foglihten text-3xl capitalize text-white drop-shadow-sm sm:text-4xl md:text-5xl lg:text-6xl"
+            style={{ textShadow: '0 1px 3px rgba(0,0,0,0.45), 0 0 20px rgba(0,0,0,0.2)' }}
           >
             Save The Date
           </h2>
