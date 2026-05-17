@@ -21,11 +21,10 @@ export const AudioProvider = ({ children }) => {
       console.warn('Failed to create URL for audio, using direct path:', error)
       audioRef.current = new Audio(audio.background)
     }
-    audioRef.current.loop = false
-    audioRef.current.volume = audio.volume
-
     const loopStart = typeof audio.loopStart === 'number' ? audio.loopStart : 0
     const loopEnd = typeof audio.loopEnd === 'number' ? audio.loopEnd : null
+    audioRef.current.loop = loopEnd == null && audio.loop === true
+    audioRef.current.volume = audio.volume
 
     const handleTimeUpdate = () => {
       if (!audioRef.current || loopEnd == null) return

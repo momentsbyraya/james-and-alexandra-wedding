@@ -133,6 +133,7 @@
 .entourage-names-single-line p.ninang-item,
 .entourage-names-single-line p.groomsmen-item,
 .entourage-names-single-line p.bridesmaids-item {
+  color: #171717;
   white-space: nowrap;
   overflow: visible;
   max-width: 100%;

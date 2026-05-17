@@ -1,15 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { gsap } from 'gsap'
-import { ExternalLink, X } from 'lucide-react'
-import { couple, prenupImages } from '../data'
-
-const RSVP_FORM_URL =
-  couple.rsvpFormUrl || 'https://forms.gle/oEvmo4fPAJmMdmHFA'
-
-const RSVP_FORM_EMBED_URL =
-  couple.rsvpGoogleFormEmbedUrl ||
-  'https://docs.google.com/forms/d/e/1FAIpQLSf8Cf7EVsnjE9QW8blVU-PrYsZ0aND3-DRRRCcndT6nSqScEA/viewform?embedded=true'
+import { X } from 'lucide-react'
+import { prenupImages } from '../data'
 
 const RSVPModal = ({ isOpen, onClose }) => {
   const modalRef = useRef(null)
@@ -109,26 +102,10 @@ const RSVPModal = ({ isOpen, onClose }) => {
           </button>
         </header>
 
-        <div className="flex-1 min-h-0 flex flex-col bg-sage/90 backdrop-blur-sm">
-          <div className="w-full flex-1 min-h-0 border-0 rsvp-modal-content flex flex-col px-2 pt-2 pb-2 sm:px-4 sm:pt-3 sm:pb-2">
-            <iframe
-              title="RSVP — Google Form"
-              src={RSVP_FORM_EMBED_URL}
-              className="h-full min-h-[min(70vh,560px)] w-full flex-1 rounded-md border border-gold/20 bg-white shadow-inner"
-              loading="lazy"
-            />
-          </div>
-          <div className="shrink-0 flex flex-wrap items-center justify-center gap-2 border-t border-gold/20 px-4 py-3 sm:px-6 sm:py-4">
-            <a
-              href={RSVP_FORM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-white/80 px-4 py-2.5 text-sm font-albert text-forest shadow-sm transition-colors hover:bg-gold/15 hover:border-gold/60"
-            >
-              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
-              Open form in browser
-            </a>
-          </div>
+        <div className="flex flex-1 min-h-0 items-center justify-center bg-sage/90 px-6 backdrop-blur-sm">
+          <p className="font-foglihten text-3xl uppercase tracking-wide text-forest sm:text-4xl md:text-5xl">
+            To Be Added
+          </p>
         </div>
       </div>
     </div>,

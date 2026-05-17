@@ -14,14 +14,35 @@ const DressCode = () => {
   const category1Ref = useRef(null)
   const category2Ref = useRef(null)
   
-  /** Guest palette — circular swatches + lowercase labels (invitation-style). */
-  const invitationGuestPalette = [
-    { color: '#013624', name: 'emerald green' },
-    { color: '#9daf89', name: 'sage green' },
-    { color: '#53604c', name: 'olive green' },
-    { color: '#846552', name: 'brown' },
-    { color: '#dfd3c3', name: 'beige' },
-  ]
+  const colorPalette =
+    dresscode.colorPalette?.length > 0
+      ? dresscode.colorPalette
+      : [
+          { color: '#094a2f', name: 'emerald green' },
+          { color: '#b8a67a', name: 'khaki' },
+          { color: '#e5dcc8', name: 'lighter khaki' },
+        ]
+
+  const ColorSwatches = ({ className = '' }) => (
+    <div
+      className={`flex flex-row flex-wrap items-start justify-center gap-4 sm:gap-6 ${className}`}
+      aria-label="Dress code color palette"
+    >
+      {colorPalette.map((swatch) => (
+        <div key={swatch.color} className="flex flex-col items-center gap-2">
+          <span
+            className="h-10 w-10 shrink-0 rounded-full shadow-[0_2px_10px_rgba(26,46,26,0.12)] ring-1 ring-forest/15 sm:h-12 sm:w-12"
+            style={{ backgroundColor: swatch.color }}
+            role="img"
+            aria-label={swatch.name}
+          />
+          <span className="text-center font-boska text-[11px] italic capitalize text-forest sm:text-xs">
+            {swatch.name}
+          </span>
+        </div>
+      ))}
+    </div>
+  )
 
   useEffect(() => {
     // Dress Code Title animation
@@ -153,6 +174,7 @@ const DressCode = () => {
           <p className="text-base sm:text-lg font-albert font-thin italic dress-code-description">
             {dresscode.mainDressCode?.description || "Formal attire with these colors on our special day."}
           </p>
+          <ColorSwatches className="mt-6 sm:mt-8" />
         </div>
       </div>
 
@@ -269,7 +291,7 @@ const DressCode = () => {
                       className="flex w-full max-w-full flex-row flex-nowrap items-start justify-center gap-3 overflow-x-auto overflow-y-visible py-1 [scrollbar-width:thin] sm:gap-6 md:gap-8"
                       aria-label="Wedding color palette for guests"
                     >
-                      {invitationGuestPalette.map((swatch) => (
+                      {colorPalette.map((swatch) => (
                         <div
                           key={swatch.color}
                           className="flex w-[3.5rem] shrink-0 flex-col items-center gap-2 sm:w-[4.75rem] md:w-[5.25rem]"

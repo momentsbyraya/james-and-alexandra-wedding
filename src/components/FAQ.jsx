@@ -8,8 +8,6 @@ import './pages/Details.css'
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
 
-const FAQ_MONOGRAM_SRC = '/assets/images/graphics/logo.png'
-
 const FAQ = () => {
   const [copiedIndex, setCopiedIndex] = useState(null)
   const faqRef = useRef(null)
@@ -24,6 +22,7 @@ const FAQ = () => {
       'Wedding Reception Location': UtensilsCrossed,
       'What time is the wedding?': Clock,
       'What is the wedding theme and dress code?': Palette,
+      'What is the dress code?': Palette,
       'Can I bring a plus one?': Users,
       'Can I bring plus one?': Users,
       'Should I do RSVP?': Mail,
@@ -182,16 +181,6 @@ const FAQ = () => {
           </div>
         )}
       </div>
-      <img
-        src={FAQ_MONOGRAM_SRC}
-        alt=""
-        width={180}
-        height={180}
-        className="pointer-events-none absolute bottom-4 right-4 z-[15] h-16 w-auto max-w-[42vw] object-contain opacity-90 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)] sm:bottom-6 sm:right-6 sm:h-20 md:bottom-8 md:right-10 md:h-24 lg:right-14"
-        loading="lazy"
-        decoding="async"
-        aria-hidden
-      />
     </div>
   )
 }

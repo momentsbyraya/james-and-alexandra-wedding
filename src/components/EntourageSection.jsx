@@ -3,14 +3,14 @@ import { ArrowRight } from 'lucide-react'
 import SecondaryButton from './SecondaryButton'
 import EntourageModal from './EntourageModal'
 
-const EntourageSection = () => {
+const EntourageSection = ({ compact = false }) => {
   const [isEntourageModalOpen, setIsEntourageModalOpen] = useState(false)
 
   return (
     <section
       id="entourage"
       data-section="entourage"
-      className="w-full py-16 sm:py-20"
+      className={`w-full ${compact ? 'py-4 sm:py-5' : 'py-16 sm:py-20'}`}
     >
       <div className="w-full text-center">
         <h3 className="font-foglihten text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-none capitalize text-forest">

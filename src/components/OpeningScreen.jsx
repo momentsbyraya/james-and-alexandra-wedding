@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
+import { prenupImages } from '../data'
 
-const OPENING_TEXTURE_BG = '/assets/images/graphics/textured-bg-2.png'
+const OPENING_BG = prenupImages.openingBackground
 
 function OpeningScreen({ onEnvelopeOpen }) {
   const envelopeRef = useRef(null)
@@ -90,7 +91,7 @@ function OpeningScreen({ onEnvelopeOpen }) {
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage: `url(${OPENING_TEXTURE_BG})`,
+          backgroundImage: `url(${OPENING_BG})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -133,7 +134,7 @@ function OpeningScreen({ onEnvelopeOpen }) {
           </div>
           {/* Letter that slides up when envelope opens */}
           <div className="envelope-letter envelope-letter-centered">
-            <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-gold">You are invited!</p>
+            <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-gold">Celebrate with us</p>
             <img 
               src="/assets/images/graphics/cutlery-sketch.png" 
               alt="Cutlery sketch" 

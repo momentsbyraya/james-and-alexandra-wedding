@@ -162,6 +162,14 @@ body {
   background-color: #CBCBC0;
 }
 
+/* Safari iOS: avoid white gap under full-viewport hero */
+.hero-viewport-height {
+  height: 100vh;
+  height: 100dvh;
+  height: 100svh;
+  min-height: -webkit-fill-available;
+}
+
 @layer base {
   body {
     font-family: 'Elsie Swash Caps', cursive;
@@ -180,7 +188,7 @@ body {
   }
   
   .text-gradient {
-    background: linear-gradient(135deg, #1F2B20 0%, #AA8D5A 100%);
+    background: linear-gradient(135deg, #094a2f 0%, #AA8D5A 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

@@ -2,44 +2,32 @@
   "title": "Our Love Story",
   "chapters": [
     {
-      "title": "Desk Mates",
-      "text": "We started as colleagues, sharing ideas, coffee breaks and lunch in the office."
+      "title": "Written by God",
+      "text": "From schoolmates in elementary and high school to strangers on different paths, we never imagined God was quietly writing our love story. Years later, college brought us together, and what started as simple chats on Facebook grew into a friendship full of laughter — and eventually, into a love that just feels right."
     },
     {
-      "title": "Study Buddies",
-      "text": "We became schoolmates and allies, supporting each other as working students and proud family breadwinners."
-    },
-    {
-      "title": "Best Friends",
-      "text": "That mutual support blossomed into a deep friendship. We found our favorite travel companion, dinner date, and confidant in one another."
-    },
-    {
-      "title": "Furparents",
-      "text": "The love grew, and so did our family, with the addition of our beloved paws!"
-    },
-    {
-      "title": "Now... Partners for Life",
-      "text": "From desks to diplomas, through life's joys, challenges, and adventures, we've arrived here. We can't wait to continue our journey as husband and wife."
+      "title": "Our New Chapter",
+      "text": "Every twist, every delay, every unexpected moment had a purpose. Now, we're ready to start this new chapter together — hand in hand, guided by faith, love, and the promise of forever."
     }
   ],
-  "content": "We started as colleagues, sharing ideas, coffee breaks and lunch in the office.\n\nWe became schoolmates and allies, supporting each other as working students and proud family breadwinners.\n\nThat mutual support blossomed into a deep friendship. We found our favorite travel companion, dinner date, and confidant in one another.\n\nThe love grew, and so did our family, with the addition of our beloved paws!\n\nFrom desks to diplomas, through life's joys, challenges, and adventures, we've arrived here. We can't wait to continue our journey as husband and wife.",
+  "content": "From schoolmates in elementary and high school to strangers on different paths, we never imagined God was quietly writing our love story. Years later, college brought us together, and what started as simple chats on Facebook grew into a friendship full of laughter — and eventually, into a love that just feels right.\n\nEvery twist, every delay, every unexpected moment had a purpose. Now, we're ready to start this new chapter together — hand in hand, guided by faith, love, and the promise of forever.",
   "timeline": [
     {
-      "title": "Desk Mates",
+      "title": "Schoolmates",
       "date": "The Beginning",
-      "description": "We started as colleagues, sharing ideas, coffee breaks and lunch in the office.",
+      "description": "From schoolmates in elementary and high school to strangers on different paths, we never imagined God was quietly writing our love story.",
       "image": "couple2"
     },
     {
-      "title": "Study Buddies",
-      "date": "Growing Together",
-      "description": "We became schoolmates and allies, supporting each other as working students and proud family breadwinners.",
+      "title": "College",
+      "date": "Coming Together",
+      "description": "Years later, college brought us together, and what started as simple chats on Facebook grew into a friendship full of laughter — and eventually, into a love that just feels right.",
       "image": "couple4"
     },
     {
-      "title": "Best Friends",
-      "date": "Our Story",
-      "description": "That mutual support blossomed into a deep friendship. We found our favorite travel companion, dinner date, and confidant in one another.",
+      "title": "Forever",
+      "date": "Our Chapter",
+      "description": "Every twist, every delay, every unexpected moment had a purpose. Now, we're ready to start this new chapter together — hand in hand, guided by faith, love, and the promise of forever.",
       "image": "couple7"
     }
   ]

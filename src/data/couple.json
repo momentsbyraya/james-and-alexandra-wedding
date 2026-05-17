@@ -1,30 +1,30 @@
 {
   "bride": {
-    "firstName": "Patricia Ann",
-    "lastName": "B. Historillo",
-    "fullName": "PATRICIA ANN B. HISTORILLO"
+    "firstName": "Fritzie",
+    "lastName": "Briones",
+    "fullName": "FRITZIE BRIONES"
   },
   "groom": {
-    "firstName": "Dom-Nikko",
-    "lastName": "O. Negrite",
-    "fullName": "DOM-NIKKO O. NEGRITE"
+    "firstName": "Arjie",
+    "lastName": "Abaquita",
+    "fullName": "ARJIE ABAQUITA"
   },
-  "together": "Dom & Patricia",
-  "nickname": "Dom & Patricia",
+  "together": "Arjie & Fritzie",
+  "nickname": "Arjie & Fritzie",
   "wedding": {
-    "date": "2026-06-28",
-    "time": "2:00 PM",
-    "dayOfWeek": "Sunday",
+    "date": "2026-06-18",
+    "time": "3:00 PM",
+    "dayOfWeek": "Thursday",
     "month": "June",
-    "day": "28",
+    "day": "18",
     "year": "2026"
   },
   "rsvpDeadline": {
-    "date": "2026-05-04",
-    "month": "May",
-    "day": "4",
-    "year": "2026"
+    "date": "",
+    "month": "",
+    "day": "",
+    "year": ""
   },
-  "rsvpFormUrl": "https://forms.gle/oEvmo4fPAJmMdmHFA",
-  "rsvpGoogleFormEmbedUrl": "https://docs.google.com/forms/d/e/1FAIpQLSf8Cf7EVsnjE9QW8blVU-PrYsZ0aND3-DRRRCcndT6nSqScEA/viewform?embedded=true"
+  "rsvpFormUrl": "",
+  "rsvpGoogleFormEmbedUrl": ""
 }

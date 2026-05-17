@@ -1,6 +1,5 @@
 import React from 'react'
 import Hero from './Hero'
-import GuestMessage from './GuestMessage'
 import Venue from './Venue'
 import Schedule from './Schedule'
 import DressCode from './DressCode'
@@ -17,8 +16,8 @@ import './pages/Details.css'
 
 const photoAlt = couple.together.replace('&', 'and')
 
-const bgSectionStyle = {
-  backgroundImage: 'url(/assets/images/graphics/bg-1.png)',
+const bg2SectionStyle = {
+  backgroundImage: 'url(/assets/images/graphics/bg-2.png)',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
@@ -30,14 +29,11 @@ const Home = ({ onOpenRSVP }) => {
       {/* 1. First page — photo, date & names (Hero; venue not shown) */}
       <Hero />
 
-      {/* 1b. Note to guests — between hero and venue */}
-      <GuestMessage />
-
       {/* 2. Where to go — venue, directions, time */}
       <div
         className="embossed-bg"
         style={{
-          backgroundImage: 'url(/assets/images/graphics/bg-1.png)',
+          backgroundImage: 'url(/assets/images/graphics/bg-2.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -73,7 +69,7 @@ const Home = ({ onOpenRSVP }) => {
       />
 
       {/* 4. Order of events */}
-      <div style={bgSectionStyle}>
+      <div className="schedule-section-wrap">
         <div className="relative" style={{ width: '100vw' }}>
           <img
             src="/assets/images/graphics/flower-banner-3.png"
@@ -83,7 +79,7 @@ const Home = ({ onOpenRSVP }) => {
           />
         </div>
 
-        <div className="relative z-20 flex items-center justify-center py-10 sm:py-12 md:py-16">
+        <div className="relative z-20 flex items-center justify-center pt-10 pb-6 sm:pt-12 sm:pb-8 md:pt-16 md:pb-10">
           <div className="site-content-width">
             <Schedule />
           </div>
@@ -105,8 +101,15 @@ const Home = ({ onOpenRSVP }) => {
         alt={photoAlt}
       />
 
-      {/* 6. Entourage */}
-      <div style={bgSectionStyle}>
+      {/* 6. Entourage, RSVP & Gift guide */}
+      <div
+        style={{
+          backgroundImage: 'url(/assets/images/graphics/bg-2.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
         <div className="relative" style={{ width: '100vw' }}>
           <img
             src="/assets/images/graphics/flower-banner-3.png"
@@ -116,9 +119,25 @@ const Home = ({ onOpenRSVP }) => {
           />
         </div>
 
-        <div className="relative z-20 flex items-center justify-center py-10 sm:py-12 md:py-16">
+        <div className="relative z-20 flex items-center justify-center py-6 sm:py-8 md:py-10">
           <div className="site-content-width">
-            <EntourageSection />
+            <EntourageSection compact />
+
+            <div className="flex items-center gap-3 my-2 sm:my-3">
+              <div className="h-px bg-gold/50 flex-1" />
+              <div className="w-2 h-2 border border-gold/70 rotate-45 flex-shrink-0" />
+              <div className="h-px bg-gold/50 flex-1" />
+            </div>
+
+            <RSVPSection onOpenRSVP={onOpenRSVP} compact />
+
+            <div className="flex items-center gap-3 my-2 sm:my-3">
+              <div className="h-px bg-gold/50 flex-1" />
+              <div className="w-2 h-2 border border-gold/70 rotate-45 flex-shrink-0" />
+              <div className="h-px bg-gold/50 flex-1" />
+            </div>
+
+            <GiftRegistry compact />
           </div>
         </div>
 
@@ -132,12 +151,36 @@ const Home = ({ onOpenRSVP }) => {
         </div>
       </div>
 
+      {/* Full bleed after entourage */}
+      <FullBleedPhoto
+        src={prenupImages.fullBleedAfterEntourage}
+        alt={photoAlt}
+      />
+
       {/* 7. Our Love Story */}
-      <div style={bgSectionStyle}>
-        <div className="relative z-20 flex items-center justify-center py-6 sm:py-8 md:py-10">
+      <div className="love-story-section-wrap">
+        <div className="relative" style={{ width: '100vw' }}>
+          <img
+            src="/assets/images/graphics/flower-banner-3.png"
+            alt=""
+            className="w-full h-auto object-contain"
+            style={{ transform: 'scaleY(-1)' }}
+          />
+        </div>
+
+        <div className="relative z-20 flex items-center justify-center py-10 sm:py-12 md:py-16">
           <div className="site-content-width">
             <LoveStory />
           </div>
+        </div>
+
+        <div className="relative" style={{ width: '100vw' }}>
+          <img
+            src="/assets/images/graphics/flower-banner-2.png"
+            alt=""
+            className="w-full h-auto object-contain"
+            style={{ transform: 'scaleY(-1)' }}
+          />
         </div>
       </div>
 
@@ -148,7 +191,7 @@ const Home = ({ onOpenRSVP }) => {
       />
 
       {/* 9. Dress code */}
-      <div style={bgSectionStyle}>
+      <div style={bg2SectionStyle}>
         <div className="relative" style={{ width: '100vw' }}>
           <img
             src="/assets/images/graphics/flower-banner-2.png"
@@ -172,37 +215,12 @@ const Home = ({ onOpenRSVP }) => {
         </div>
       </div>
 
-      {/* 10. Fifth full-bleed photo */}
-      <FullBleedPhoto
-        src={prenupImages.fullBleedAfterDressCode}
-        alt={photoAlt}
-      />
-
-      {/* 11–12. RSVP & Gift guide */}
-      <div style={bgSectionStyle}>
-        <div className="relative z-20 flex items-center justify-center py-8 sm:py-10">
+      {/* 10. Gallery */}
+      <div style={bg2SectionStyle}>
+        <div className="relative z-20 flex items-center justify-center py-10 sm:py-12 md:py-16">
           <div className="site-content-width">
-            <RSVPSection onOpenRSVP={onOpenRSVP} />
+            <Gallery />
           </div>
-        </div>
-
-        <div className="site-content-width flex items-center gap-3">
-          <div className="h-px bg-gold/50 flex-1" />
-          <div className="w-2 h-2 border border-gold/70 rotate-45 flex-shrink-0" />
-          <div className="h-px bg-gold/50 flex-1" />
-        </div>
-
-        <div className="relative z-20 flex items-center justify-center pb-8 sm:pb-10">
-          <div className="site-content-width">
-            <GiftRegistry />
-          </div>
-        </div>
-      </div>
-
-      {/* 13. Gallery */}
-      <div className="relative z-20 flex items-center justify-center">
-        <div className="site-content-width">
-          <Gallery />
         </div>
       </div>
 

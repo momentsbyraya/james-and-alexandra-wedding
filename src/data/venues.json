@@ -1,27 +1,27 @@
 {
   "ceremony": {
-    "ceremonyPhoto": "/assets/images/venues/ceremony.jpg",
-    "name": "Mango Grove Events Place",
+    "ceremonyPhoto": "/assets/images/venues/CHURCH.jpg",
+    "name": "Cebu Archdiocesan Shrine of Saint Pedro Calungsod",
     "address": "",
-    "city": "",
+    "city": "Cebu",
     "state": "",
     "zip": "",
-    "time": "2:00 PM",
-    "details": "Schedule: 2:00 PM",
-    "googleMapsUrl": "https://www.google.com/maps/place/Mango+Grove+Events+Place/@14.3018552,120.9809974,17z/data=!3m1!4b1!4m6!3m5!1s0x3397d5de43bb995b:0xa4f79f0396bb4681!8m2!3d14.30185!4d120.9835723!16s%2Fg%2F11c7sr9r_r?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D",
-    "directionsUrl": "https://www.google.com/maps/place/Mango+Grove+Events+Place/@14.3018552,120.9809974,17z/data=!3m1!4b1!4m6!3m5!1s0x3397d5de43bb995b:0xa4f79f0396bb4681!8m2!3d14.30185!4d120.9835723!16s%2Fg%2F11c7sr9r_r?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D"
+    "time": "3:00 PM",
+    "details": "Ceremony at 3:00 PM",
+    "googleMapsUrl": "https://maps.google.com/maps/place//data=!4m2!3m1!1s0x33a999451218ba33:0xa651473e0b20364d?entry=s&sa=X&ved=2ahUKEwj2lfSs2K-UAxUX1DgGHYuAMdgQ4kB6BAgWEAA&hl=en",
+    "directionsUrl": "https://maps.google.com/maps/place//data=!4m2!3m1!1s0x33a999451218ba33:0xa651473e0b20364d?entry=s&sa=X&ved=2ahUKEwj2lfSs2K-UAxUX1DgGHYuAMdgQ4kB6BAgWEAA&hl=en"
   },
   "reception": {
-    "receptionPhoto": "/assets/images/venues/reception.png",
-    "name": "Mango Grove Events Place",
+    "receptionPhoto": "/assets/images/venues/BAYFRONT.jpg",
+    "name": "Bayfront Hotel Cebu",
     "address": "",
-    "city": "",
+    "city": "Cebu",
     "state": "",
     "zip": "",
-    "time": "5:00 PM",
-    "details": "Schedule: 5:00 PM onwards",
-    "landmark": "Same venue as ceremony",
-    "googleMapsUrl": "https://www.google.com/maps/place/Mango+Grove+Events+Place/@14.3018552,120.9809974,17z/data=!3m1!4b1!4m6!3m5!1s0x3397d5de43bb995b:0xa4f79f0396bb4681!8m2!3d14.30185!4d120.9835723!16s%2Fg%2F11c7sr9r_r?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D",
-    "directionsUrl": "https://www.google.com/maps/place/Mango+Grove+Events+Place/@14.3018552,120.9809974,17z/data=!3m1!4b1!4m6!3m5!1s0x3397d5de43bb995b:0xa4f79f0396bb4681!8m2!3d14.30185!4d120.9835723!16s%2Fg%2F11c7sr9r_r?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D"
+    "time": "",
+    "details": "Reception",
+    "landmark": "",
+    "googleMapsUrl": "https://maps.google.com/maps/place//data=!4m2!3m1!1s0x33a99972f04ee017:0x239e29fd87e52e92?entry=s&sa=X&ved=2ahUKEwiw2Y7W2K-UAxUzzjgGHXNCMDUQ4kB6BAgYEAA&hl=en",
+    "directionsUrl": "https://maps.google.com/maps/place//data=!4m2!3m1!1s0x33a99972f04ee017:0x239e29fd87e52e92?entry=s&sa=X&ved=2ahUKEwiw2Y7W2K-UAxUzzjgGHXNCMDUQ4kB6BAgYEAA&hl=en"
   }
 }

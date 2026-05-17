@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { createPortal } from 'react-dom'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
-import { prenupImages } from '../data'
+import { couple, prenupImages } from '../data'
 import './pages/Details.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -16,29 +16,29 @@ const Gallery = () => {
   const modalRef = useRef(null)
   const overlayRef = useRef(null)
   const contentRef = useRef(null)
+
   const galleryImages = prenupImages.gallery
   const galleryThumbObjectPosition = prenupImages.galleryThumbObjectPosition ?? []
+  const partnerImage = prenupImages.fullBleedAfterDressCode
+  const photoAlt = couple.together.replace('&', 'and')
 
-  const gridColumnPattern = [
-    'span 3',
-    'span 1',
-    'span 2',
-    'span 2',
-    'span 1',
-    'span 3',
-    'span 1',
-    'span 2',
-    'span 2',
-    'span 1',
-  ]
-
-  /** Full-width bookend rows when there are exactly four tiles (top + bottom match). */
-  const gridColumnForIndex = (index) => {
-    if (galleryImages.length === 4 && index === 3) return 'span 3'
-    return gridColumnPattern[index % gridColumnPattern.length]
-  }
+  const partnerLightboxIndex = galleryImages.length
+  const lightboxImages = [...galleryImages, partnerImage]
 
   const imageRefs = useRef([])
+  const tileCount = Math.min(galleryImages.length, 4) + (partnerImage ? 1 : 0)
+
+  const rowHeightClass =
+    'min-h-[11rem] max-h-[220px] sm:min-h-[13rem] sm:max-h-[260px] md:min-h-[15rem] md:max-h-[300px] lg:max-h-[340px]'
+
+  /** Fixed height so object-cover + object-position apply on the full-width hero tile */
+  const heroRowHeightClass =
+    'h-[11rem] max-h-[220px] sm:h-[13rem] sm:max-h-[260px] md:h-[15rem] md:max-h-[300px] lg:max-h-[340px]'
+
+  const firstGalleryObjectPosition =
+    prenupImages.galleryFirstObjectPosition ??
+    galleryThumbObjectPosition[0] ??
+    'center 52%'
 
   useEffect(() => {
     if (titleRef.current) {
@@ -91,7 +91,7 @@ const Gallery = () => {
         }
       })
     }
-  }, [galleryImages.length])
+  }, [tileCount])
 
   const handleImageClick = (index) => {
     setCurrentImageIndex(index)
@@ -99,11 +99,13 @@ const Gallery = () => {
   }
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length)
+    setCurrentImageIndex((prev) => (prev + 1) % lightboxImages.length)
   }
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length)
+    setCurrentImageIndex(
+      (prev) => (prev - 1 + lightboxImages.length) % lightboxImages.length
+    )
   }
 
   const closeModal = () => {
@@ -117,15 +119,17 @@ const Gallery = () => {
       if (e.key === 'Escape') {
         setIsModalOpen(false)
       } else if (e.key === 'ArrowLeft') {
-        setCurrentImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length)
+        setCurrentImageIndex(
+          (prev) => (prev - 1 + lightboxImages.length) % lightboxImages.length
+        )
       } else if (e.key === 'ArrowRight') {
-        setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length)
+        setCurrentImageIndex((prev) => (prev + 1) % lightboxImages.length)
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isModalOpen, galleryImages.length])
+  }, [isModalOpen, lightboxImages.length])
 
   useEffect(() => {
     if (isModalOpen) {
@@ -158,15 +162,50 @@ const Gallery = () => {
     }
   }, [isModalOpen])
 
+  const renderTile = ({
+    refIndex,
+    src,
+    alt,
+    lightboxIndex,
+    className,
+    objectPosition = 'center center',
+  }) => (
+    <div
+      ref={(el) => {
+        imageRefs.current[refIndex] = el
+      }}
+      className={`cursor-pointer overflow-hidden ${className}`}
+      style={{
+        willChange: 'transform',
+        backfaceVisibility: 'hidden',
+        transform: 'translateZ(0)',
+      }}
+      onClick={() => handleImageClick(lightboxIndex)}
+    >
+      <img
+        src={src}
+        alt={alt}
+        className="block h-full w-full min-h-0 object-cover transition-transform duration-300 hover:scale-105"
+        style={{
+          objectPosition,
+          objectFit: 'cover',
+          willChange: 'transform',
+          backfaceVisibility: 'hidden',
+        }}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  )
+
   return (
     <div ref={sectionRef} className="relative pb-8 sm:pb-12 md:pb-16">
-      {/* Title strip — same layout / styles as FAQ (Details.css .faq-section, .faq-title-text) */}
       <div
         className="relative z-20 !py-8 sm:!py-10 bg-forest"
         style={{
           width: '100vw',
           marginLeft: 'calc(-50vw + 50%)',
-          marginRight: 'calc(-50vw + 50%)'
+          marginRight: 'calc(-50vw + 50%)',
         }}
       >
         <div className="relative z-10 w-full px-8 sm:px-12 md:px-8 lg:px-16">
@@ -178,55 +217,69 @@ const Gallery = () => {
               className="font-foglihten text-3xl sm:text-4xl md:text-5xl lg:text-6xl inline-block leading-none capitalize"
               style={{ color: '#CBCBC0' }}
             >
-              Gallery
+              Moments
             </span>
           </h3>
         </div>
       </div>
 
       <div className="w-full py-8 sm:py-12 md:py-16">
-        <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 auto-rows-auto">
-          {galleryImages.map((image, index) => {
-            const gridColumn = gridColumnForIndex(index)
-            const isFullWidthRow = gridColumn === 'span 3'
-            const thumbObjectPosition =
-              galleryThumbObjectPosition[index] ?? 'center center'
+        <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
+          {galleryImages[0] &&
+            renderTile({
+              refIndex: 0,
+              src: galleryImages[0],
+              alt: 'Gallery 1',
+              lightboxIndex: 0,
+              className: `relative w-full overflow-hidden ${heroRowHeightClass}`,
+              objectPosition: firstGalleryObjectPosition,
+            })}
 
-            return (
-              <div
-                key={index}
-                ref={(el) => {
-                  imageRefs.current[index] = el
-                }}
-                className={
-                  isFullWidthRow
-                    ? 'min-h-[11rem] max-h-[220px] cursor-pointer overflow-hidden sm:min-h-[13rem] sm:max-h-[260px] md:min-h-[15rem] md:max-h-[300px] lg:max-h-[340px]'
-                    : 'max-h-[150px] cursor-pointer overflow-hidden lg:max-h-[250px]'
-                }
-                style={{
-                  gridColumn,
-                  height: '100%',
-                  willChange: 'transform',
-                  backfaceVisibility: 'hidden',
-                  transform: 'translateZ(0)',
-                }}
-                onClick={() => handleImageClick(index)}
-              >
-                <img
-                  src={image}
-                  alt={`Gallery ${index + 1}`}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  style={{
-                    height: '100%',
-                    objectPosition: thumbObjectPosition,
-                    willChange: 'transform',
-                    backfaceVisibility: 'hidden',
-                  }}
-                  loading="lazy"
-                />
-              </div>
-            )
-          })}
+          {(galleryImages[1] || galleryImages[2]) && (
+            <div className={`grid grid-cols-5 gap-2 sm:gap-3 md:gap-4 ${rowHeightClass}`}>
+              {galleryImages[1] &&
+                renderTile({
+                  refIndex: 1,
+                  src: galleryImages[1],
+                  alt: 'Gallery 2',
+                  lightboxIndex: 1,
+                  className: `col-span-2 h-full min-h-0 ${rowHeightClass}`,
+                  objectPosition: galleryThumbObjectPosition[1] ?? 'center center',
+                })}
+              {galleryImages[2] &&
+                renderTile({
+                  refIndex: 2,
+                  src: galleryImages[2],
+                  alt: 'Gallery 3',
+                  lightboxIndex: 2,
+                  className: `col-span-3 h-full min-h-0 ${rowHeightClass}`,
+                  objectPosition: galleryThumbObjectPosition[2] ?? 'center center',
+                })}
+            </div>
+          )}
+
+          {(galleryImages[3] || partnerImage) && (
+            <div className={`grid grid-cols-5 gap-2 sm:gap-3 md:gap-4 ${rowHeightClass}`}>
+              {galleryImages[3] &&
+                renderTile({
+                  refIndex: 3,
+                  src: galleryImages[3],
+                  alt: 'Gallery 4',
+                  lightboxIndex: 3,
+                  className: `col-span-3 h-full min-h-0 ${rowHeightClass}`,
+                  objectPosition: galleryThumbObjectPosition[3] ?? 'center center',
+              })}
+              {partnerImage &&
+                renderTile({
+                  refIndex: 4,
+                  src: partnerImage,
+                  alt: photoAlt,
+                  lightboxIndex: partnerLightboxIndex,
+                  className: `col-span-2 h-full min-h-0 ${rowHeightClass}`,
+                  objectPosition: 'center center',
+                })}
+            </div>
+          )}
         </div>
       </div>
 
@@ -234,7 +287,7 @@ const Gallery = () => {
         createPortal(
           <div
             ref={modalRef}
-            className="fixed inset-0 z-[9999] flex items-center justify-center"
+            className="fixed inset-0 z-[99999] flex items-center justify-center"
             style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
           >
             <div
@@ -246,11 +299,11 @@ const Gallery = () => {
             <button
               type="button"
               onClick={closeModal}
-              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors duration-200 cursor-pointer"
+              className="absolute top-4 right-4 z-20 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/20 transition-colors duration-200 hover:bg-white/30"
               style={{ pointerEvents: 'auto' }}
               aria-label="Close"
             >
-              <X className="w-6 h-6 text-white" />
+              <X className="h-6 w-6 text-white" />
             </button>
 
             <button
@@ -259,11 +312,11 @@ const Gallery = () => {
                 e.stopPropagation()
                 prevImage()
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors duration-200 cursor-pointer"
+              className="absolute left-4 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/20 transition-colors duration-200 hover:bg-white/30"
               style={{ pointerEvents: 'auto' }}
               aria-label="Previous image"
             >
-              <ChevronLeft className="w-6 h-6 text-white" />
+              <ChevronLeft className="h-6 w-6 text-white" />
             </button>
 
             <button
@@ -272,28 +325,28 @@ const Gallery = () => {
                 e.stopPropagation()
                 nextImage()
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors duration-200 cursor-pointer"
+              className="absolute right-4 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white/20 transition-colors duration-200 hover:bg-white/30"
               style={{ pointerEvents: 'auto' }}
               aria-label="Next image"
             >
-              <ChevronRight className="w-6 h-6 text-white" />
+              <ChevronRight className="h-6 w-6 text-white" />
             </button>
 
             <div
               ref={contentRef}
-              className="relative z-10 max-w-[90vw] max-h-[90vh] flex items-center justify-center"
+              className="relative z-10 flex max-h-[90vh] max-w-[90vw] items-center justify-center"
               style={{ pointerEvents: 'none' }}
             >
               <img
-                src={galleryImages[currentImageIndex]}
+                src={lightboxImages[currentImageIndex]}
                 alt={`Gallery image ${currentImageIndex + 1}`}
-                className="max-w-full max-h-[90vh] object-contain"
+                className="max-h-[90vh] max-w-full object-contain"
               />
             </div>
 
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm">
-              <span className="text-white text-sm font-albert">
-                {currentImageIndex + 1} / {galleryImages.length}
+            <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2 rounded-full bg-white/20 px-4 py-2 backdrop-blur-sm">
+              <span className="font-albert text-sm text-white">
+                {currentImageIndex + 1} / {lightboxImages.length}
               </span>
             </div>
           </div>,

@@ -43,6 +43,7 @@ const Details = () => {
       'Wedding Reception Location': UtensilsCrossed,
       'What time is the wedding?': Clock,
       'What is the wedding theme and dress code?': Palette,
+      'What is the dress code?': Palette,
       'Can I bring a plus one?': Users,
       'What to wear?': Palette,
       "Where's the reception?": UtensilsCrossed,

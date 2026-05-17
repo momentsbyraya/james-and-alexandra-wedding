@@ -1,14 +1,14 @@
 {
   "paymentMethods": [
     {
-      "name": "Bank of the Philippine Islands",
-      "image": "/assets/images/monetary-gifts/BPIQR_BPI.png",
-      "accountInfo": {
-        "provider": "BPI",
-        "accountNumber": "",
-        "accountName": "",
-        "qrCode": "/assets/images/monetary-gifts/BPIQR_BPI.png"
-      }
+      "name": "Metrobank",
+      "image": "/assets/images/monetary-gifts/IMG_5477.PNG",
+      "alt": "Metrobank InstaPay QR code — Fritzie and Arjie"
+    },
+    {
+      "name": "GCash",
+      "image": "/assets/images/monetary-gifts/IMG_5478.JPG",
+      "alt": "GCash QR code"
     }
   ]
-} 
+}

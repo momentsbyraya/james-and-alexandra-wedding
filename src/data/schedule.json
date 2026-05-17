@@ -3,7 +3,7 @@
     {
       "time": "2:00 PM",
       "description": "Guest Gathering",
-      "image": "/assets/images/graphics/welcome-2.png",
+      "image": "/assets/images/graphics/heart.png",
       "imageAlt": "Guest Gathering",
       "position": "left"
     },
@@ -15,24 +15,10 @@
       "position": "right"
     },
     {
-      "time": "4:00 PM to 5:00 PM",
-      "description": "Cocktails",
-      "image": "/assets/images/graphics/dinner-2.png",
-      "imageAlt": "Cocktails",
-      "position": "left"
-    },
-    {
-      "time": "5:30 PM",
+      "time": "To Follow",
       "description": "Reception",
-      "image": "/assets/images/graphics/dinner-2.png",
+      "image": "/assets/images/graphics/cutlery-sketch.png",
       "imageAlt": "Reception",
-      "position": "right"
-    },
-    {
-      "time": "8:00 PM",
-      "description": "End",
-      "image": "/assets/images/graphics/cake-2.png",
-      "imageAlt": "End",
       "position": "left"
     }
   ]

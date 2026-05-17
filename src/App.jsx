@@ -13,6 +13,7 @@ import Entourage from './components/pages/Entourage'
 import Moments from './components/pages/Moments'
 import { AudioProvider, useAudio } from './contexts/AudioContext'
 import { couple, prenupImages } from './data'
+import ApprovalWatermark from './components/ApprovalWatermark'
 
 function AppContent() {
   const [isRSVPModalOpen, setIsRSVPModalOpen] = useState(false)
@@ -206,6 +207,7 @@ function AppContent() {
         </>
       )}
       <RSVPModal isOpen={isRSVPModalOpen} onClose={() => setIsRSVPModalOpen(false)} />
+      <ApprovalWatermark />
     </div>
   )
 }

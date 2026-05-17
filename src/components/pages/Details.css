@@ -30,9 +30,15 @@
   }
 }
 
-/* Program Section */
+/* Program / Schedule Section */
+.program-section,
+.schedule-section-wrap,
+.love-story-section-wrap {
+  background-color: #e8f3ed;
+}
+
 .program-section {
-  padding: 0 0 4rem 0;
+  padding: 0 0 1.5rem 0;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   margin-right: calc(-50vw + 50%);
@@ -60,7 +66,7 @@
 /* Date Selector */
 .date-month-year {
   font-style: italic;
-  color: #AA8D5A;
+  color: #094a2f;
 }
 
 .heart-day-number {
@@ -73,7 +79,7 @@
 }
 
 .timeline-event-time {
-  color: #b88917;
+  color: #094a2f;
 }
 
 .timeline-event-description {
@@ -194,7 +200,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(16, 66, 16, 0.52);
+  background: rgba(9, 74, 47, 0.52);
   pointer-events: none;
   z-index: 0;
 }
@@ -286,7 +292,7 @@
 
 /* Story scroll area — light veil so white copy stays readable on busy leaves */
 .love-story-modal-body {
-  background: rgba(16, 66, 16, 0.5);
+  background: rgba(9, 74, 47, 0.5);
 }
 
 /* Cinzel Decorative + uppercase — modal: pale gold; in-page: dark green via --section */
@@ -298,10 +304,12 @@
 }
 
 .love-story-title--section {
-  color: #104210;
+  color: #094a2f;
+  text-transform: none;
+  letter-spacing: 0.02em;
   text-shadow:
     0 1px 1px rgba(255, 255, 255, 0.5),
-    0 1px 2px rgba(16, 66, 16, 0.12);
+    0 1px 2px rgba(9, 74, 47, 0.12);
 }
 
 .love-story-modal-banner .love-story-title {

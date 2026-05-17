@@ -1,108 +1,137 @@
 {
-  "couple": {
-    "groom": { "name": "DOM-NIKKO O. NEGRITE" },
-    "bride": { "name": "PATRICIA ANN B. HISTORILLO" }
-  },
-  "parents": {
-    "groom": {
-      "father": "Domingo R. Negrite (+)",
-      "mother": "Marina O. Negrite"
-    },
-    "bride": {
-      "father": "Rodel O. Historillo",
-      "mother": "Rosiel B. Historillo"
-    }
-  },
-  "entourageList": [
+  "sections": [
     {
-      "category": "Officiating Minister",
-      "names": ["Rev. Miguelito P. Pabilonia, Jr."]
+      "id": "couple",
+      "paired": {
+        "left": { "title": "Groom", "names": ["Arjie Abaquita"] },
+        "right": { "title": "Bride", "names": ["Fritzie Briones"] }
+      }
     },
     {
-      "category": "Parents of the Groom",
+      "id": "parents",
+      "paired": {
+        "left": {
+          "title": "Parents of the Groom",
+          "names": ["Joselito Abaquita", "Arlene Abaquita"]
+        },
+        "right": {
+          "title": "Parents of the Bride",
+          "names": ["Francis Briones", "Teresita Briones"]
+        }
+      }
+    },
+    {
+      "id": "principal-heading",
+      "titleOnly": true,
+      "title": "Principal Sponsors/Witnesses"
+    },
+    {
+      "id": "principal-sponsors",
+      "paired": {
+        "left": {
+          "title": "Male",
+          "names": [
+            "Mr Jaime Rodriguez",
+            "Mr Antonio Ursal",
+            "Mr Peter Balcita",
+            "Mr Reynaldo Secoya",
+            "Mr Antonio Bahala",
+            "Atty Rodrigo Opeña",
+            "Mr Primo Monticello"
+          ]
+        },
+        "right": {
+          "title": "Female",
+          "names": [
+            "Mrs Epifania Garces",
+            "Mrs Salome Ursal",
+            "Mrs Natividad Balcita",
+            "Mrs Perla Secoya",
+            "Mrs Virginia Bahala",
+            "Mrs Lourdes Opeña",
+            "Mrs Eduarda Montecillo"
+          ]
+        }
+      }
+    },
+    {
+      "id": "secondary-heading",
+      "titleOnly": true,
+      "title": "Secondary Sponsors"
+    },
+    {
+      "id": "cord",
+      "title": "Cord",
+      "names": ["Mrs Morielle Gabor", "Mr Jeff Martin Gabor"]
+    },
+    {
+      "id": "veil",
+      "title": "Veil",
+      "names": ["Ms Angelie Lerio", "Mr Wilborne Lerio"]
+    },
+    {
+      "id": "candle",
+      "title": "Candle",
+      "names": ["Mrs Kimberly Lugatiman", "Mr Leslie Klaus Illut"]
+    },
+    {
+      "id": "honors",
+      "paired": {
+        "left": { "title": "Maid of Honor", "names": ["Mrs Honeybee Lux Briones"] },
+        "right": { "title": "Bestman", "names": ["Mr Ludweg Antero"] }
+      }
+    },
+    {
+      "id": "party",
+      "paired": {
+        "left": {
+          "title": "Bridesmaids",
+          "names": [
+            "Ms Francheska Therese Garces",
+            "Ms Angel Mae Briones",
+            "Ms Maria Lyn Garces",
+            "Mrs Jenelyn Yamid",
+            "Ms Micashe Loresto",
+            "Ms Missylah Loresto"
+          ]
+        },
+        "right": {
+          "title": "Groomsmen",
+          "names": [
+            "Mr Jace Andrew Yamid",
+            "Mr James Peter Garces",
+            "Mr Kevin Franz Briones",
+            "Mr Boncel Joseph Yamid",
+            "Mr Lourence Rodriguez",
+            "Mr Arnold Van Bahala"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ring-bearer",
+      "title": "Ring Bearer",
+      "names": ["Jacob Lee Palao"]
+    },
+    {
+      "id": "coin-bearer",
+      "title": "Coin Bearer",
+      "names": ["Jeff Manuel Gabor"]
+    },
+    {
+      "id": "bible-bearer",
+      "title": "Bible Bearer",
+      "names": ["John Paul Rodriguez Jr"]
+    },
+    {
+      "id": "flower-girls",
+      "title": "Flower Girls",
       "names": [
-        "Domingo R. Negrite (+)",
-        "Santos C. Oliva",
-        "Marina O. Negrite"
-      ]
-    },
-    {
-      "category": "Parents of the Bride",
-      "names": [
-        "Rodel O. Historillo",
-        "Rosiel B. Historillo"
-      ]
-    },
-    {
-      "category": "Principal Sponsors",
-      "ninong": [
-        "Epitacio B. Mendiola",
-        "Ruel D. Elias",
-        "Aries Martin G. Giron",
-        "Mark Gerad A. Oliva",
-        "Christian O. Buyet",
-        "Nicki Abram Padrez, JP"
-      ],
-      "ninang": [
-        "Carol Belandres",
-        "Jackie-Anne G. Bayhon",
-        "Evelyn M. Abapo",
-        "Junelyn Kate O. Monge",
-        "Josephine M. Esguerra"
-      ]
-    },
-    {
-      "category": "Bestman",
-      "names": ["Dom Igon O. Negrite"]
-    },
-    {
-      "category": "Matron",
-      "names": ["Arlon Joyce H. Saenz"]
-    },
-    {
-      "category": "Maid of Honor",
-      "names": ["Kristine Marife M. De Leon"]
-    },
-    {
-      "category": "Candle Sponsors",
-      "names": ["Russel Ace J. Popioco", "Wilma G. Baldebar"]
-    },
-    {
-      "category": "Cord Sponsors",
-      "names": ["Ivan Johnel B Historillo", "Daisy Jean Miranda"]
-    },
-    {
-      "category": "Veil Sponsors",
-      "names": ["Mark Joseph P. Gloria", "Marie Elaine D. Negrete"]
-    },
-    {
-      "category": "Secondary Sponsors",
-      "groomsmen": [
-        "Michael M. Faegane",
-        "Van Darryl A. De Guzman"
-      ],
-      "bridesmaid": [
-        "Jasmine Kaye M. Historillo"
-      ]
-    },
-    {
-      "category": "Ring Bearer",
-      "names": ["Moises F. Bajamundi"]
-    },
-    {
-      "category": "Bible Bearer",
-      "names": ["Leone Vasilios Kaeyl Monge"]
-    },
-    {
-      "category": "Coin Bearer",
-      "names": ["Gabriel Ron Yohan E. Canimo"]
-    },
-    {
-      "category": "Flower Girls",
-      "names": [
-        "Leanh Neriz F. Oliva",
-        "Lauren Gabrielle DL. Garcia",
-        "Audfile Lira P. Alcaraz"
+        "Alessandra Belle Garces",
+        "Martina Brielle Gabor",
+        "Amhara Blessy Rodriguez",
+        "Angelina Eileen Barton",
+        "Precious Amhara Rodriguez"
       ]
     }
   ]

@@ -77,8 +77,7 @@ const SaveTheDateCounter = () => {
         <div className="text-center">
           <h2
             ref={titleRef}
-            className="font-foglihten text-3xl capitalize text-white drop-shadow-sm sm:text-4xl md:text-5xl lg:text-6xl"
-            style={{ textShadow: '0 1px 3px rgba(0,0,0,0.45), 0 0 20px rgba(0,0,0,0.2)' }}
+            className="font-foglihten text-3xl capitalize text-forest sm:text-4xl md:text-5xl lg:text-6xl"
           >
             Save The Date
           </h2>

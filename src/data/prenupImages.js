@@ -1,71 +1,51 @@
-/** Prenup filenames live in /assets/images/prenup/ (spaces & parens encoded for URLs). */
+/** Prenup filenames live in /assets/images/prenup/ */
 const prenup = (filename) =>
   `/assets/images/prenup/${encodeURIComponent(filename)}`
 
-const hero = prenup('1st picture.jpeg')
-const fullBleedAfterVenue = prenup('2nd picture.jpeg')
-const fullBleedAfterSchedule = prenup('3rd picture.jpeg')
-const fullBleedAfterLoveStory = prenup('4th picture.jpeg')
-const fullBleedAfterDressCode = prenup('5th picture.jpeg')
+const hero = prenup('IMG_8139.jpg')
+const openingBackground = prenup('IMG_5200.jpg')
+const fullBleedAfterVenue = prenup('IMG_5294.jpg')
+const fullBleedAfterSchedule = prenup('IMG_5210.jpg')
+const fullBleedAfterEntourage = prenup('IMG_5202.jpg')
+const fullBleedAfterLoveStory = prenup('IMG_5288.jpg')
+const fullBleedAfterDressCode = prenup('IMG_8164.jpg')
 
-/** Modal order: Desk Mates → Study Buddies → Best Friends → Furparents → Partners for Life */
+/** Love story rows (timeline): Schoolmates → College → Forever */
 const loveStory = [
-  prenup('Deskmates picture (lovestory section).jpeg'),
-  prenup('Study Buddies picture (love story section).jpeg'),
-  prenup('Bestfriends pictures (love story section).jpeg'),
-  prenup('Furparents pictures (love story section).png'),
-  prenup('Partners for life picture (love story section).jpeg'),
+  prenup('IMG_5321.jpg'),
+  prenup('IMG_5344.jpg'),
+  prenup('IMG_8150.jpg'),
 ]
 
-/** Every prenup asset — order: main set → love story → extra gallery shots → save-the-date */
+/** Gallery only — photos not used elsewhere on the invitation */
 const gallery = [
-  prenup('1st picture.jpeg'),
-  prenup('2nd picture.jpeg'),
-  prenup('3rd picture.jpeg'),
-  prenup('4th picture.jpeg'),
-  prenup('5th picture.jpeg'),
-  prenup('Deskmates picture (lovestory section).jpeg'),
-  prenup('Study Buddies picture (love story section).jpeg'),
-  prenup('Bestfriends pictures (love story section).jpeg'),
-  prenup('Furparents pictures (love story section).png'),
-  prenup('Partners for life picture (love story section).jpeg'),
-  prenup('include in gallery(1).jpeg'),
-  prenup('include in gallery.jpeg'),
-  prenup('iclude in gallery.jpeg'),
-  prenup('include in gallery3.jpeg'),
-  prenup('Save the date or Countdown picture.jpeg'),
+  prenup('IMG_8223.jpg'),
+  prenup('IMG_8306.jpg'),
+  prenup('IMG_8430.jpg'),
+  prenup('IMG_8447.jpg'),
 ]
 
-/**
- * Same order as `gallery`: object-position for grid thumbs (object-cover).
- * Tuned from actual frames: top-anchored when heads are high; lower % when subjects sit in bottom half.
- */
+/** Full-width first gallery row (object-cover crop). */
+const galleryFirstObjectPosition = 'center 52%'
+
+/** Same order as `gallery`: object-position for grid thumbs (object-cover). */
 const galleryThumbObjectPosition = [
+  galleryFirstObjectPosition,
   'center top',
-  'center 68%',
-  'center 18%',
-  'center 34%',
-  'center 14%',
-  'center 24%',
-  'center 24%',
-  '78% 22%',
-  'center 44%',
-  '48% 12%',
-  '38% 48%',
-  'center 22%',
-  'center top',
-  'center top',
+  'center bottom',
   'center 54%',
 ]
 
-const countdownBackground = prenup('Save the date or Countdown picture.jpeg')
+const countdownBackground = prenup('IMG_8552.jpg')
 
 /** Pool for other features (e.g. Moments grid, preload). Order preserved, duplicates removed. */
 const pool = [
   ...new Set([
     hero,
+    openingBackground,
     fullBleedAfterVenue,
     fullBleedAfterSchedule,
+    fullBleedAfterEntourage,
     fullBleedAfterLoveStory,
     fullBleedAfterDressCode,
     ...loveStory,
@@ -77,17 +57,20 @@ const pool = [
 export const prenupImages = {
   pool,
   hero,
+  openingBackground,
   fullBleedAfterVenue,
   fullBleedAfterSchedule,
+  fullBleedAfterEntourage,
   fullBleedAfterLoveStory,
   fullBleedAfterDressCode,
   loveStory,
   gallery,
+  galleryFirstObjectPosition,
   galleryThumbObjectPosition,
   countdownBackground,
-  modalBackground: hero,
-  ogImage: hero,
-  favicon: hero,
+  modalBackground: openingBackground,
+  ogImage: openingBackground,
+  favicon: openingBackground,
   rsvpBackground: fullBleedAfterDressCode,
   fullBleedMain: fullBleedAfterVenue,
   splitA: {

@@ -1,49 +1,71 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { X } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { loveStory, prenupImages } from '../data'
 import './pages/Details.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
+/** Expand timeline/chapters into alternating story rows (splits `\n\n` in descriptions). */
+function buildStoryRows(storyData, images) {
+  const source =
+    Array.isArray(storyData.timeline) && storyData.timeline.length > 0
+      ? storyData.timeline
+      : (storyData.chapters || []).map((c) => ({
+          title: c.title,
+          description: c.text,
+        }))
+
+  const textRows = []
+
+  source.forEach((item) => {
+    const desc = (item.description || item.text || '').trim()
+    const parts = desc.split(/\n\n/).map((p) => p.trim()).filter(Boolean)
+    if (parts.length === 0) return
+    if (parts.length === 1) {
+      textRows.push({ text: parts[0], title: item.title || null })
+    } else {
+      parts.forEach((part, i) => {
+        textRows.push({
+          text: part,
+          title: i === 0 ? item.title || null : null,
+        })
+      })
+    }
+  })
+
+  if (textRows.length === 0 && storyData.content) {
+    storyData.content
+      .split('\n\n')
+      .map((p) => p.trim())
+      .filter(Boolean)
+      .forEach((text) => textRows.push({ text, title: null }))
+  }
+
+  return textRows.map((row, i) => ({
+    ...row,
+    image: images[i % images.length],
+  }))
+}
+
 const LoveStory = () => {
   const titleRef = useRef(null)
-  const modalInnerRef = useRef(null)
+  const storySectionRef = useRef(null)
+  const modalRef = useRef(null)
   const overlayRef = useRef(null)
-  const panelRef = useRef(null)
-  const [storyModalOpen, setStoryModalOpen] = useState(false)
-  const [teaserIndex, setTeaserIndex] = useState(0)
+  const contentRef = useRef(null)
 
-  const chapters =
-    Array.isArray(loveStory.chapters) && loveStory.chapters.length > 0
-      ? loveStory.chapters
-      : null
-  const paragraphs = chapters
-    ? chapters.map((c) => c.text)
-    : loveStory.content.split('\n\n').filter((p) => p.trim())
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  const polaroidImages = prenupImages.loveStory
-
-  const TEASER_SLIDE_MS = 4500
-
-  useEffect(() => {
-    setTeaserIndex(0)
-  }, [polaroidImages.length])
-
-  useEffect(() => {
-    if (polaroidImages.length <= 1 || storyModalOpen) return undefined
-    const id = setInterval(() => {
-      setTeaserIndex((i) => (i + 1) % polaroidImages.length)
-    }, TEASER_SLIDE_MS)
-    return () => clearInterval(id)
-  }, [polaroidImages.length, storyModalOpen])
-
-  /** Summary polaroid thread (charcoal on page background) */
-  const loveThreadColor = '#4B4B4B'
-  /** Modal thread connectors — light on dark panel */
-  const modalThreadColor = 'rgba(255,255,255,0.45)'
+  const polaroidPool = prenupImages.loveStory
+  const storyRows = useMemo(
+    () => buildStoryRows(loveStory, polaroidPool),
+    [polaroidPool]
+  )
+  const polaroidImages = useMemo(() => storyRows.map((r) => r.image), [storyRows])
 
   useEffect(() => {
     if (!titleRef.current) return undefined
@@ -59,13 +81,62 @@ const LoveStory = () => {
       toggleActions: 'play none none reverse',
     })
 
-    return () => {
-      trigger.kill()
-    }
+    return () => trigger.kill()
   }, [])
 
   useEffect(() => {
-    if (!storyModalOpen) {
+    const createdTriggers = []
+    const storyItems = storySectionRef.current?.querySelectorAll('.story-item')
+
+    storyItems?.forEach((item, index) => {
+      const polaroidWrapper = item.querySelector('.love-story-polaroid')
+      const textParagraph = item.querySelector('p.font-albert')
+      gsap.set(item, { opacity: 0, y: 28 })
+      if (polaroidWrapper) gsap.set(polaroidWrapper, { scale: 0.92 })
+      if (textParagraph) gsap.set(textParagraph, { opacity: 0, y: 16 })
+
+      createdTriggers.push(
+        ScrollTrigger.create({
+          trigger: item,
+          start: 'top 82%',
+          onEnter: () => {
+            gsap.to(item, {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: 'power2.out',
+              delay: index * 0.1,
+            })
+            if (polaroidWrapper) {
+              gsap.to(polaroidWrapper, {
+                scale: 1,
+                duration: 0.6,
+                ease: 'back.out(1.2)',
+                delay: index * 0.1 + 0.15,
+              })
+            }
+            if (textParagraph) {
+              gsap.to(textParagraph, {
+                opacity: 1,
+                y: 0,
+                duration: 0.5,
+                ease: 'power2.out',
+                delay: index * 0.1 + 0.25,
+              })
+            }
+          },
+          toggleActions: 'play none none reverse',
+        })
+      )
+    })
+
+    return () => {
+      createdTriggers.forEach((t) => t.kill())
+    }
+  }, [storyRows.length])
+
+  useEffect(() => {
+    if (!isModalOpen) {
       document.body.style.overflow = ''
       document.body.style.paddingRight = ''
       return undefined
@@ -77,13 +148,18 @@ const LoveStory = () => {
       document.body.style.paddingRight = `${scrollbarWidth}px`
     }
 
-    gsap.set([overlayRef.current, panelRef.current], { opacity: 0 })
-    gsap.set(panelRef.current, { y: 16 })
+    gsap.set([overlayRef.current, contentRef.current], { opacity: 0 })
     gsap.to(overlayRef.current, { opacity: 1, duration: 0.25, ease: 'power2.out' })
-    gsap.to(panelRef.current, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' })
+    gsap.to(contentRef.current, { opacity: 1, duration: 0.3, ease: 'power2.out' })
 
     const onKey = (e) => {
-      if (e.key === 'Escape') setStoryModalOpen(false)
+      if (e.key === 'Escape') setIsModalOpen(false)
+      if (e.key === 'ArrowLeft') {
+        setCurrentImageIndex((prev) => (prev - 1 + polaroidImages.length) % polaroidImages.length)
+      }
+      if (e.key === 'ArrowRight') {
+        setCurrentImageIndex((prev) => (prev + 1) % polaroidImages.length)
+      }
     }
     window.addEventListener('keydown', onKey)
 
@@ -92,145 +168,68 @@ const LoveStory = () => {
       document.body.style.overflow = ''
       document.body.style.paddingRight = ''
     }
-  }, [storyModalOpen])
-
-  useEffect(() => {
-    if (!storyModalOpen || !modalInnerRef.current) return undefined
-
-    const items = modalInnerRef.current.querySelectorAll('.story-item')
-    if (!items.length) return undefined
-
-    gsap.fromTo(
-      items,
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.55,
-        stagger: 0.07,
-        ease: 'power2.out',
-        delay: 0.12,
-      }
-    )
-
-    return () => {
-      gsap.killTweensOf(items)
-    }
-  }, [storyModalOpen])
+  }, [isModalOpen, polaroidImages.length])
 
   const formatParagraph = (text) => {
-    const quotePattern = /("I found him whom my soul loveth" – Song of Solomon 3:4)/
-    const parts = text.split(quotePattern)
-
-    return parts.map((part, i) => {
-      if (quotePattern.test(part)) {
-        return (
-          <span key={i} className="font-bold italic">
-            {part}
+    const quote = '"I found him whom my soul loveth" – Song of Solomon 3:4'
+    if (!text.includes(quote)) return text
+    const parts = text.split(quote)
+    const out = []
+    parts.forEach((part, i) => {
+      out.push(part)
+      if (i < parts.length - 1) {
+        out.push(
+          <span key={`q-${i}`} className="font-bold italic">
+            {quote}
           </span>
         )
       }
-      return part
     })
+    return out
   }
 
-  const Polaroid = ({
-    image,
-    rotation = 0,
-    index,
-    size = 'normal',
-    footer = null,
-    slideshowImages = null,
-    slideshowIndex = 0,
-  }) => {
-    const widthClass =
-      size === 'solo'
-        ? 'max-w-[140px]'
-        : size === 'small'
-          ? 'max-w-[150px]'
-          : 'max-w-[200px]'
+  const handleImageClick = (index) => {
+    setCurrentImageIndex(index)
+    setIsModalOpen(true)
+  }
 
-    /** Max photo area ~ same polaroid footprint as before (3:4 of width); image fits inside with object-contain */
-    const photoMax =
-      size === 'solo'
-        ? { w: 132, h: 176 }
-        : size === 'small'
-          ? { w: 142, h: 190 }
-          : { w: 192, h: 256 }
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % polaroidImages.length)
+  }
 
-    const frameStyle = footer
-      ? {
-          border: '4px solid white',
-          transform: `rotate(${rotation}deg)`,
-          padding: '2px',
-        }
-      : {
-          border: '4px solid white',
-          borderBottom: '14px solid white',
-          transform: `rotate(${rotation}deg)`,
-          padding: '2px 2px 10px 2px',
-        }
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + polaroidImages.length) % polaroidImages.length)
+  }
 
+  const Polaroid = ({ image, rotation = 0, index }) => {
     return (
-      <div
-        className={`love-story-polaroid bg-white relative w-full shrink-0 ${widthClass}`}
-        style={frameStyle}
+      <button
+        type="button"
+        className="love-story-polaroid bg-white shadow-lg relative cursor-pointer block w-full max-w-[96px] sm:max-w-[140px] md:max-w-[180px] lg:max-w-[200px]"
+        style={{
+          border: '4px solid white',
+          borderBottom: '12px solid white',
+          transform: `rotate(${rotation}deg)`,
+          padding: '2px 2px 8px 2px',
+        }}
+        onClick={() => handleImageClick(index)}
+        aria-label={`View love story photo ${index + 1}`}
       >
-        {/* Stamp sits above photo top (legacy: top -8%, 20% width); keep image clipped, stamp outside clip */}
-        <div className="relative w-full">
-          <div
-            className="relative w-full overflow-hidden rounded-[1px] bg-[#e8e8e1]"
-            style={
-              Array.isArray(slideshowImages) && slideshowImages.length > 1
-                ? { height: photoMax.h, minHeight: photoMax.h }
-                : { minHeight: '72px', maxHeight: photoMax.h }
-            }
-          >
-            {Array.isArray(slideshowImages) && slideshowImages.length > 1 ? (
-              slideshowImages.map((src, i) => (
-                <img
-                  key={`${src}-${i}`}
-                  src={src}
-                  alt={
-                    i === slideshowIndex
-                      ? `Love story preview, photo ${i + 1} of ${slideshowImages.length}`
-                      : ''
-                  }
-                  aria-hidden={i !== slideshowIndex}
-                  className={`love-story-teaser-slide pointer-events-none absolute left-1/2 top-1/2 z-0 max-h-full max-w-full -translate-x-1/2 -translate-y-1/2 object-contain ${
-                    i === slideshowIndex ? 'z-[1] opacity-100' : 'opacity-0'
-                  }`}
-                  style={{
-                    maxWidth: photoMax.w,
-                    maxHeight: photoMax.h,
-                    border: '2px solid #CBCBC0',
-                    borderBottom: 'none',
-                  }}
-                />
-              ))
-            ) : (
-              <div
-                className="flex h-full min-h-[72px] w-full max-h-full items-center justify-center"
-                style={{ maxHeight: photoMax.h }}
-              >
-                <img
-                  src={image}
-                  alt={`Love story moment ${index + 1}`}
-                  className="mx-auto block h-auto w-auto max-w-full object-contain align-top"
-                  style={{
-                    maxWidth: photoMax.w,
-                    maxHeight: photoMax.h,
-                    border: '2px solid #CBCBC0',
-                    borderBottom: 'none',
-                  }}
-                />
-              </div>
-            )}
-          </div>
+        <div className="relative">
+          <img
+            src={image}
+            alt={`Love story moment ${index + 1}`}
+            className="w-full aspect-square object-cover pointer-events-none"
+            style={{
+              border: '2px solid #CBCBC0',
+              borderBottom: 'none',
+              display: 'block',
+            }}
+          />
           <img
             src="/assets/images/graphics/stamp.png"
             alt=""
-            className="pointer-events-none absolute left-1/2 z-10 -translate-x-1/2 transform"
+            className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none"
             style={{
               top: '-8%',
               width: '20%',
@@ -238,68 +237,17 @@ const LoveStory = () => {
             }}
           />
         </div>
-        {footer ? (
-          <div className="border-t border-[#CBCBC0]/40 bg-white px-2 py-2.5 sm:py-3 flex justify-center items-center min-h-[3rem]">
-            {footer}
-          </div>
-        ) : null}
-      </div>
+      </button>
     )
-  }
-
-  /** Dashed S-thread + pin dot (same stroke/dash as between-segment connectors) */
-  const ThreadHanger = ({ className = '' }) => (
-    <svg
-      className={className}
-      viewBox="0 0 100 132"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-    >
-      <path
-        d="M 52 2 Q 28 38 46 68 Q 64 98 50 124"
-        stroke={loveThreadColor}
-        strokeWidth="1.85"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        strokeDasharray="4 4"
-        opacity="0.72"
-      />
-      <circle cx="50" cy="126" r="3.25" fill={loveThreadColor} opacity="0.78" />
-    </svg>
-  )
-
-  const storySegments = paragraphs.map((paragraph, i) => ({
-    paragraph,
-    title: chapters?.[i]?.title ?? null,
-    index: i,
-    imageCount: polaroidImages[i] ? 1 : 0,
-    imageIndices: polaroidImages[i] ? [i] : [],
-  }))
-
-  const closeModal = () => {
-    if (overlayRef.current && panelRef.current) {
-      gsap.to(overlayRef.current, { opacity: 0, duration: 0.2, ease: 'power2.out' })
-      gsap
-        .to(panelRef.current, { opacity: 0, y: 16, duration: 0.2, ease: 'power2.out' })
-        .then(() => setStoryModalOpen(false))
-    } else {
-      setStoryModalOpen(false)
-    }
-  }
-
-  const handleOverlayClick = (e) => {
-    if (e.target === overlayRef.current) closeModal()
   }
 
   return (
     <div className="relative pt-6 sm:pt-8 md:pt-10 pb-10 sm:pb-12 md:pb-14">
-      <div className="text-center mb-4 sm:mb-6">
+      <div className="text-center mb-8 sm:mb-10 md:mb-12">
         <div className="flex justify-center mb-2 sm:mb-3">
           <img
             src="/assets/images/graphics/heart.png"
-            alt="Heart decoration"
+            alt=""
             className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 object-contain"
           />
         </div>
@@ -308,202 +256,132 @@ const LoveStory = () => {
             {loveStory.title}
           </span>
         </h3>
-
-        {/* Thread + polaroid; CTA sits on polaroid caption strip */}
-        {polaroidImages[0] ? (
-          <div className="relative mx-auto mt-4 w-full max-w-[220px] sm:max-w-[240px] px-2 sm:mt-5">
-            <ThreadHanger className="pointer-events-none absolute left-1/2 top-0 z-0 h-[6.75rem] w-[4.5rem] max-w-[28%] -translate-x-1/2 -translate-y-0.5 sm:h-[7.5rem] sm:w-[5.25rem]" />
-            <div className="relative z-10 flex flex-col items-center pt-7 sm:pt-8">
-              <span className="sr-only" aria-live="polite">
-                Story photo {teaserIndex + 1} of {polaroidImages.length}
-              </span>
-              <Polaroid
-                image={polaroidImages[teaserIndex]}
-                slideshowImages={
-                  polaroidImages.length > 1 ? polaroidImages : null
-                }
-                slideshowIndex={teaserIndex}
-                rotation={-4}
-                index={teaserIndex}
-                size="normal"
-                footer={
-                  <button
-                    type="button"
-                    onClick={() => setStoryModalOpen(true)}
-                    className="w-full max-w-[11.5rem] rounded-full bg-forest px-3 py-2 text-center font-albert text-xs sm:text-sm font-medium text-white shadow-sm transition-colors duration-200 hover:bg-gold hover:text-forest"
-                  >
-                    Read story
-                  </button>
-                }
-              />
-              {polaroidImages.length > 1 && (
-                <div
-                  className="mt-2 flex justify-center gap-1.5"
-                  aria-hidden
-                >
-                  {polaroidImages.map((_, i) => (
-                    <span
-                      key={i}
-                      className={`h-1.5 w-1.5 rounded-full transition-colors duration-300 ${
-                        i === teaserIndex ? 'bg-forest' : 'bg-forest/25'
-                      }`}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        ) : (
-          <div className="mt-4 flex justify-center">
-            <button
-              type="button"
-              onClick={() => setStoryModalOpen(true)}
-              className="px-5 py-2 rounded-full bg-forest text-white hover:bg-gold hover:text-forest transition-colors duration-200 font-albert text-sm sm:text-base"
-            >
-              Read story
-            </button>
-          </div>
-        )}
       </div>
 
-      {storyModalOpen &&
+      <div ref={storySectionRef} className="relative">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="relative z-10 flex flex-col gap-12 sm:gap-16 md:gap-20">
+            {storyRows.map((row, index) => {
+              const photoLeft = index % 2 === 0
+              const image = polaroidImages[index]
+
+              return (
+                <div
+                  key={index}
+                  className={`story-item grid w-full gap-3 sm:gap-6 md:gap-8 items-center min-h-0 ${
+                    photoLeft
+                      ? 'grid-cols-[minmax(0,2fr)_minmax(0,3fr)]'
+                      : 'grid-cols-[minmax(0,3fr)_minmax(0,2fr)]'
+                  }`}
+                >
+                  {photoLeft ? (
+                    <>
+                      <div className="flex justify-center items-center min-w-0">
+                        {image && (
+                          <Polaroid image={image} rotation={-3} index={index} />
+                        )}
+                      </div>
+                      <div className="flex flex-col justify-center min-w-0 gap-2">
+                        {row.title ? (
+                          <h4 className="font-boska text-xs sm:text-base md:text-lg text-forest leading-snug text-left">
+                            {row.title}
+                          </h4>
+                        ) : null}
+                        <p className="text-[11px] sm:text-sm md:text-base font-albert font-thin leading-relaxed text-forest text-left w-full min-w-0">
+                          {formatParagraph(row.text)}
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex flex-col justify-center min-w-0 gap-2">
+                        {row.title ? (
+                          <h4 className="font-boska text-xs sm:text-base md:text-lg text-forest leading-snug text-right">
+                            {row.title}
+                          </h4>
+                        ) : null}
+                        <p className="text-[11px] sm:text-sm md:text-base font-albert font-thin leading-relaxed text-forest text-right w-full min-w-0">
+                          {formatParagraph(row.text)}
+                        </p>
+                      </div>
+                      <div className="flex justify-center items-center min-w-0">
+                        {image && (
+                          <Polaroid image={image} rotation={3} index={index} />
+                        )}
+                      </div>
+                    </>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+
+      {isModalOpen &&
         createPortal(
           <div
-            className="fixed inset-0 z-[10050] flex items-end sm:items-center justify-center sm:p-4"
+            ref={modalRef}
+            className="fixed inset-0 z-[10050] flex items-center justify-center"
             role="dialog"
             aria-modal="true"
-            aria-labelledby="love-story-modal-title"
+            aria-label="Love story photo"
           >
             <div
               ref={overlayRef}
-              className="absolute inset-0 bg-black/55 backdrop-blur-[2px]"
-              onClick={handleOverlayClick}
+              className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+              onClick={() => setIsModalOpen(false)}
               aria-hidden
             />
-            <div
-              ref={panelRef}
-              className="love-story-modal-panel relative z-10 flex max-h-[min(92vh,900px)] w-full max-w-3xl flex-col overflow-hidden rounded-t-2xl shadow-2xl sm:max-h-[85vh] sm:rounded-2xl border border-gold/30"
+
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors duration-200"
+              aria-label="Close"
             >
-              <div className="love-story-modal-banner relative shrink-0 border-b border-[#dbcf9f]/25 px-4 py-4 sm:px-5 sm:py-5">
-                <h2
-                  id="love-story-modal-title"
-                  className="love-story-title text-center text-lg leading-tight sm:text-xl md:text-2xl"
-                >
-                  {loveStory.title}
-                </h2>
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2 text-[#dbcf9f] transition-colors hover:bg-black/20 hover:text-[#f0e8c8] sm:right-3"
-                  aria-label="Close story"
-                >
-                  <X className="h-6 w-6" strokeWidth={1.75} />
-                </button>
-              </div>
-              <div
-                className="love-story-modal-banner shrink-0 border-b border-[#dbcf9f]/20 px-2 py-1"
-                aria-hidden
-              >
-                <svg
-                  className="h-3 w-full"
-                  viewBox="0 0 480 14"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M0 7 Q120 2 240 7 T480 7"
-                    fill="none"
-                    stroke="rgba(219,207,159,0.4)"
-                    strokeWidth="1.15"
-                    strokeLinecap="round"
-                    strokeDasharray="4 5"
-                  />
-                </svg>
-              </div>
-              <div
-                ref={modalInnerRef}
-                className="love-story-modal love-story-modal-body min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-6 text-white sm:px-6 sm:py-8"
-              >
-                <div className="relative z-10 space-y-12 sm:space-y-16 md:space-y-20">
-                  {storySegments.map(({ paragraph, title, index, imageCount, imageIndices }) => {
-                    const isLast = index === paragraphs.length - 1
+              <X className="w-6 h-6 text-white" />
+            </button>
 
-                    return (
-                      <div key={index} className="story-item relative">
-                        {!isLast && (
-                          <div
-                            className="absolute left-1/2 transform -translate-x-1/2 pointer-events-none hidden sm:block"
-                            style={{
-                              bottom: '-2.25rem',
-                              width: '100px',
-                              height: '4.5rem',
-                              zIndex: 0,
-                            }}
-                          >
-                            <svg
-                              width="100"
-                              height="100%"
-                              viewBox="0 0 100 100"
-                              preserveAspectRatio="none"
-                              className="absolute inset-0"
-                              style={{ overflow: 'visible' }}
-                            >
-                              <path
-                                d="M 50 0 Q 32 22, 50 45 T 50 100"
-                                stroke={modalThreadColor}
-                                strokeWidth="2"
-                                fill="none"
-                                strokeDasharray="4,4"
-                                strokeLinecap="round"
-                              />
-                            </svg>
-                            <div
-                              className="absolute bottom-0 left-1/2 h-3 w-3 -translate-x-1/2 transform rounded-full bg-white/50"
-                            />
-                          </div>
-                        )}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                prevImage()
+              }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors duration-200"
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="w-6 h-6 text-white" />
+            </button>
 
-                        <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
-                          {imageCount > 0 && (
-                            <div
-                              className={`flex justify-center flex-1 min-w-0 ${
-                                imageCount === 2
-                                  ? 'flex-row flex-nowrap gap-2 sm:gap-6'
-                                  : 'flex-row'
-                              }`}
-                            >
-                              {imageIndices.map((imgIdx, i) =>
-                                polaroidImages[imgIdx] ? (
-                                  <Polaroid
-                                    key={imgIdx}
-                                    image={polaroidImages[imgIdx]}
-                                    rotation={imageCount === 1 ? -4 : i === 0 ? -5 : 5}
-                                    index={imgIdx}
-                                    size={imageCount === 1 ? 'solo' : 'normal'}
-                                  />
-                                ) : null
-                              )}
-                            </div>
-                          )}
-                          {paragraph && (
-                            <div
-                              className={`text-center sm:text-left ${imageCount > 0 ? 'flex-1' : 'w-full'}`}
-                            >
-                              {title ? (
-                                <h3 className="mb-3 font-boska text-lg leading-snug text-[#e8dcc4] sm:mb-3 sm:text-xl">
-                                  {title}
-                                </h3>
-                              ) : null}
-                              <p className="text-base font-albert font-thin leading-relaxed text-white sm:text-lg">
-                                {formatParagraph(paragraph)}
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                nextImage()
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors duration-200"
+              aria-label="Next image"
+            >
+              <ChevronRight className="w-6 h-6 text-white" />
+            </button>
+
+            <div
+              ref={contentRef}
+              className="relative z-10 max-w-[90vw] max-h-[90vh] flex items-center justify-center pointer-events-none"
+            >
+              <img
+                src={polaroidImages[currentImageIndex]}
+                alt={`Love story image ${currentImageIndex + 1}`}
+                className="max-w-full max-h-[90vh] object-contain"
+              />
+            </div>
+
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm">
+              <span className="text-white text-sm font-albert">
+                {currentImageIndex + 1} / {polaroidImages.length}
+              </span>
             </div>
           </div>,
           document.body

@@ -22,20 +22,20 @@ export const weddingConfig = {
 
   // RSVP Information
   rsvp: {
-    deadline: "2026-05-04",
+    deadline: couple.rsvpDeadline?.date || "",
     email: "",
     phone: "",
-    website: "",
-    message: "Please RSVP by May 4th, 2026"
+    website: couple.rsvpFormUrl || "",
+    message: "We have reserved seat/s for you. Please let us know if you can join us on our special day."
   },
 
-  // Theme and Styling - Burgundy Red Wine
+  // Theme and Styling
   theme: {
     primaryColor: "forest",
     secondaryColor: "gold",
     accentColor: "gold",
     fontFamily: "serif",
-    style: "elegant" // Options: elegant, modern, rustic, vintage
+    style: "elegant"
   },
 
   // Photos and Media
@@ -52,18 +52,20 @@ export const weddingConfig = {
 
   // Additional Information
   details: {
-    hashtag: "#JohnsonWilliams2024",
-    website: "https://johnsonwilliams.com",
-    registry: "https://registry.example.com",
+    hashtag: "#ArjieAndFritzie2026",
+    website: "",
+    registry: "",
     message: "We're excited to celebrate our special day with you!",
+    giftGuide:
+      "The most important thing is to have you with us on our special day. No gifts needed or expected. However, if you wish to participate, a monetary gift would be great.",
     covidInfo: "We're following local health guidelines. Please stay home if you're feeling unwell."
   },
 
   // Social Media
   social: {
-    instagram: "@johnsonwilliams",
-    facebook: "JohnsonWilliamsWedding",
-    twitter: "@johnsonwilliams"
+    instagram: "",
+    facebook: "",
+    twitter: ""
   }
 };
 
@@ -92,4 +94,4 @@ export const getTimeUntilWedding = () => {
   const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
   
   return { days, hours, minutes, seconds };
-}; 
+};

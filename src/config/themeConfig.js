@@ -1,5 +1,12 @@
-// Enchanted Forest — Forest #104210 | Antique Gold #AA8D5A | Obsidian #000000 | Sage Mist #CBCBC0
+// Enchanted Forest — Forest #094a2f | Antique Gold #AA8D5A | Obsidian #000000 | Sage Mist #CBCBC0
 export const themeConfig = {
+    /** Client preview overlay — set enabled: false before launch */
+    approvalWatermark: {
+        enabled: true,
+        text: 'THIS IS HALF DONE, FOR CLIENT APPROVAL ONLY',
+        lines: 5,
+        rotation: -32,
+    },
     backgrounds: {
         primary: 'bg-forest',
         secondary: 'bg-gold',
@@ -20,13 +27,13 @@ export const themeConfig = {
         pause: 'text-white',
         custom: 'text-obsidian',
         light: '#AA8D5A',
-        lightBlack: '#104210',
+        lightBlack: '#094a2f',
         cream: '#CBCBC0',
         tan: '#AA8D5A',
-        wine: '#104210',
-        burgundyDark: '#104210',
-        burntOrange: '#104210',
-        sageGreen: '#104210',
+        wine: '#094a2f',
+        burgundyDark: '#094a2f',
+        burntOrange: '#094a2f',
+        sageGreen: '#094a2f',
     },
 
     borders: {
@@ -74,20 +81,20 @@ export const themeConfig = {
     },
 
     cssVariables: {
-        '--primary-bg': '#104210',
+        '--primary-bg': '#094a2f',
         '--secondary-bg': '#AA8D5A',
-        '--accent-bg': '#104210',
+        '--accent-bg': '#094a2f',
         '--accent-hover': '#8a7045',
         '--primary-text': '#000000',
         '--secondary-text': '#AA8D5A',
         '--accent-text': '#AA8D5A',
         '--muted-text': '#8a7045',
         '--border-color': '#000000',
-        '--custom-theme': '#104210',
+        '--custom-theme': '#094a2f',
         '--cream': '#CBCBC0',
         '--tan': '#AA8D5A',
-        '--wine': '#104210',
-        '--burgundy-dark': '#104210',
+        '--wine': '#094a2f',
+        '--burgundy-dark': '#094a2f',
         '--garden-bg': '#CBCBC0',
     }
 }

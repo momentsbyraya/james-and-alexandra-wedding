@@ -105,7 +105,7 @@ const Schedule = () => {
                  {isLeft ? (
                    <>
             <div className="w-1/2 pr-6 text-right flex flex-col justify-center">
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl alice-regular mb-1 timeline-event-time">
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl alice-regular mb-1 timeline-event-time text-forest">
                          {event.time}
               </div>
               <div className="border-b border-dashed border-gold/50 mb-1"></div>
@@ -121,7 +121,7 @@ const Schedule = () => {
                      <div className="w-1/2 pr-6 text-right"></div>
             <div className="absolute left-1/2 transform -translate-x-1/2 w-3 h-3 bg-gold rounded-full border border-forest/20 z-10 shadow-sm"></div>
             <div className="w-1/2 pl-6 text-left flex flex-col justify-center">
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl alice-regular mb-1 timeline-event-time">
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl alice-regular mb-1 timeline-event-time text-forest">
                          {event.time}
               </div>
               <div className="border-b border-dashed border-gold/50 mb-1"></div>

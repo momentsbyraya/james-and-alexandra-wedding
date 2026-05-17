@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, useMemo } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -23,14 +23,37 @@ const Venue = () => {
   const pageVisibleRef = useRef(true)
 
   const ceremony = venuesData.ceremony
+  const reception = venuesData.reception
 
-  const ceremonyPhoto = '/assets/images/venues/for%20envelopes%20%2817%29.png'
-
-  const venueSlides = [
-    { src: ceremonyPhoto, alt: 'Ceremony venue', venue: ceremony },
-  ]
+  const venueSlides = useMemo(
+    () =>
+      [
+        {
+          src:
+            ceremony.ceremonyPhoto ||
+            '/assets/images/venues/CHURCH.jpg',
+          alt: `Ceremony — ${ceremony.name}`,
+          label: 'Ceremony',
+          venue: ceremony,
+        },
+        {
+          src:
+            reception.receptionPhoto ||
+            '/assets/images/venues/BAYFRONT.jpg',
+          alt: `Reception — ${reception.name}`,
+          label: 'Reception',
+          venue: reception,
+        },
+      ].filter((slide) => slide.src),
+    [ceremony, reception]
+  )
 
   const showCarouselChrome = venueSlides.length > 1
+  const activeSlide = venueSlides[currentIndex] ?? venueSlides[0]
+
+  useEffect(() => {
+    setCurrentIndex((i) => Math.min(i, Math.max(0, venueSlides.length - 1)))
+  }, [venueSlides.length])
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % venueSlides.length)
@@ -169,9 +192,9 @@ const Venue = () => {
                     className="flex transition-transform duration-500 ease-in-out h-full"
                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}
                   >
-                    {venueSlides.map((slide, index) => (
+                    {venueSlides.map((slide) => (
                       <div
-                        key={index}
+                        key={slide.label}
                         className={`min-w-full aspect-square flex-shrink-0 ${!slide.src ? 'flex items-center justify-center p-4' : ''}`}
                       >
                         {slide.src ? (
@@ -183,7 +206,7 @@ const Venue = () => {
                           />
                         ) : (
                           <span className="text-center text-sm sm:text-base font-boska text-forest leading-tight px-2">
-                            {slide.fallbackText}
+                            {slide.venue.name}
                           </span>
                         )}
                       </div>
@@ -196,9 +219,9 @@ const Venue = () => {
                           key={index}
                           onClick={() => setCurrentIndex(index)}
                           className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                            index === currentIndex ? 'bg-burgundy-wine w-6' : 'bg-white/60'
+                            index === currentIndex ? 'bg-gold w-6' : 'bg-white/60'
                           }`}
-                          aria-label={`Go to image ${index + 1}`}
+                          aria-label={`Go to ${venueSlides[index]?.label ?? 'venue'}`}
                         />
                       ))}
                     </div>
@@ -218,16 +241,16 @@ const Venue = () => {
               {/* Dynamic content: updates with current slide */}
               <div className="venue-details-mobile w-full flex flex-col gap-2 px-2">
                 <div className="flex flex-col gap-0.5">
-                  <div className="text-lg sm:text-xl font-boska text-center" style={{ color: '#b88917' }}>
-                    {venueSlides[currentIndex].venue.name}
+                  <div className="text-lg sm:text-xl font-boska text-center text-forest">
+                    {activeSlide?.venue.name}
                   </div>
-                  <div className="text-sm sm:text-base font-albert font-thin text-forest text-center space-y-0">
-                    <p>Ceremony & Reception: {ceremony.time} onwards</p>
-                  </div>
+                  <p className="text-xs font-albert font-medium uppercase tracking-wider text-forest/70 text-center">
+                    {activeSlide?.label}
+                  </p>
                 </div>
                 <div className="flex justify-center">
                   <SecondaryButton
-                    href={venueSlides[currentIndex].venue.googleMapsUrl}
+                    href={activeSlide?.venue.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     icon={ArrowRight}
@@ -259,8 +282,8 @@ const Venue = () => {
                     className="flex transition-transform duration-500 ease-in-out h-full w-full"
                     style={{ transform: `translateX(-${currentIndex * 100}%)` }}
                   >
-                    {venueSlides.map((slide, index) => (
-                      <div key={index} className="min-w-full h-full">
+                    {venueSlides.map((slide) => (
+                      <div key={slide.label} className="min-w-full h-full">
                         <img
                           src={slide.src}
                           alt={slide.alt}
@@ -284,23 +307,23 @@ const Venue = () => {
                       key={index}
                       onClick={() => setCurrentIndex(index)}
                       className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                        index === currentIndex ? 'bg-burgundy-wine w-6' : 'bg-black/25'
+                        index === currentIndex ? 'bg-gold w-6' : 'bg-black/25'
                       }`}
-                      aria-label={`Go to image ${index + 1}`}
+                      aria-label={`Go to ${venueSlides[index]?.label ?? 'venue'}`}
                     />
                   ))}
                 </div>
               )}
               <div className="flex flex-col gap-2 text-center">
-                <div className="text-lg sm:text-xl lg:text-2xl font-boska" style={{ color: '#b88917' }}>
-                  {ceremony.name}
+                <div className="text-lg sm:text-xl lg:text-2xl font-boska text-forest">
+                  {activeSlide?.venue.name}
                 </div>
-                <div className="text-sm sm:text-base font-albert font-thin text-forest space-y-1">
-                  <p>Ceremony & Reception: {ceremony.time} onwards</p>
-                </div>
+                <p className="text-xs font-albert font-medium uppercase tracking-wider text-forest/70">
+                  {activeSlide?.label}
+                </p>
                 <div className="flex justify-center mt-2">
                   <SecondaryButton
-                    href={ceremony.googleMapsUrl}
+                    href={activeSlide?.venue.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     icon={ArrowRight}

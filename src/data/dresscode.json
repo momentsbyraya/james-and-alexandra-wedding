@@ -1,21 +1,20 @@
 {
   "mainDressCode": {
-    "title": "Attire Guide",
-    "description": "We kindly ask that you choose shades aligned with our wedding motif."
+    "title": "Dress Code & Color Motif",
+    "description": "Come in your best casual attire with the shades of emerald green."
   },
+  "colorPalette": [
+    { "color": "#094a2f", "name": "emerald green" },
+    { "color": "#b8a67a", "name": "khaki" },
+    { "color": "#e5dcc8", "name": "lighter khaki" }
+  ],
   "sections": [
-    {
-      "title": "Principal Sponsors",
-      "type": "text",
-      "description": "Male Principal Sponsors: Formal black suit with champagne gold tie. Female Principal Sponsors: Beige floor-length evening gown.",
-      "image": "/assets/images/dresscode/principal%20sponsor.png"
-    },
     {
       "title": "Guests",
       "type": "image",
-      "shortDescription": "Gentlemen: Long sleeves and trousers. Ladies: Floor-length gown (no shades of white, please). Strictly no wearing of t-shirt, denim, slippers, and sport shoes.",
-      "description": "Gentlemen: Long sleeves and trousers. Ladies: Floor-length gown (no shades of white, please). Strictly no wearing of t-shirt, denim, slippers, and sport shoes.",
+      "shortDescription": "Emerald green, khaki, and lighter khaki.",
+      "description": "Emerald green, khaki, and lighter khaki.",
       "image": "/assets/images/dresscode/guests.png"
     }
   ]
-} 
+}
