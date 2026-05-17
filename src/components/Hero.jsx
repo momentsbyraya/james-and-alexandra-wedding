@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react'
 import { gsap } from 'gsap'
 import { couple, venues, prenupImages } from '../data'
 import { getTimeUntilWedding } from '../utils/countdown'
-import { scheduleGsapRevealFallback } from '../utils/safariCompat'
+import { scheduleGsapRevealFallback, shouldUseSafariLiteMode } from '../utils/safariCompat'
 
 const Hero = () => {
   const [countdown, setCountdown] = useState(() => getTimeUntilWedding())
@@ -34,6 +34,9 @@ const Hero = () => {
     return [couple.groom.firstName, couple.bride.firstName]
   }, [couple.together, couple.groom.firstName, couple.bride.firstName])
   const venue = venues.ceremony
+  const safariLite = shouldUseSafariLiteMode()
+  const heroSvgFilter = safariLite ? undefined : 'url(#heroTopBlurFilter)'
+  const heroBottomSvgFilter = safariLite ? undefined : 'url(#heroBottomBlurFilter)'
 
   useEffect(() => {
     heroImgRef.current?.setAttribute('fetchpriority', 'high')
@@ -180,7 +183,13 @@ const Hero = () => {
             <stop offset="100%" stopColor="rgba(248, 243, 234, 0)" />
           </linearGradient>
         </defs>
-        <rect width="100%" height="100%" fill="url(#heroTopCreamGrad)" filter="url(#heroTopBlurFilter)" />
+        <rect
+          width="100%"
+          height="100%"
+          fill="url(#heroTopCreamGrad)"
+          className="hero-svg-blur-rect"
+          filter={heroSvgFilter}
+        />
       </svg>
 
       <div className="absolute left-0 right-0 top-0 z-20 px-4 pt-12 sm:px-6 sm:pt-16 md:px-8 md:pt-20 lg-custom:px-2 lg-custom:pt-8 lg:pt-12">
@@ -228,7 +237,13 @@ const Hero = () => {
             <stop offset="100%" stopColor="rgba(5, 45, 28, 0.92)" />
           </linearGradient>
         </defs>
-        <rect width="100%" height="100%" fill="url(#heroBottomForestGrad)" filter="url(#heroBottomBlurFilter)" />
+        <rect
+          width="100%"
+          height="100%"
+          fill="url(#heroBottomForestGrad)"
+          className="hero-svg-blur-rect"
+          filter={heroBottomSvgFilter}
+        />
       </svg>
 
       <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pb-8 sm:px-6 sm:pb-12 md:px-8 md:pb-16 lg:pb-12">

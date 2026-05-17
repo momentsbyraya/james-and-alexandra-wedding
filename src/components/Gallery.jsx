@@ -1,10 +1,15 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, useMemo } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { createPortal } from 'react-dom'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { couple, prenupImages } from '../data'
 import './pages/Details.css'
+import {
+  createScrollTriggerScope,
+  MODAL_OVERLAY_CLASS,
+  useGsapForce3D,
+} from '../utils/safariCompat'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -26,6 +31,8 @@ const Gallery = () => {
   const lightboxImages = [...galleryImages, partnerImage]
 
   const imageRefs = useRef([])
+  const scrollScope = useMemo(() => createScrollTriggerScope(), [])
+  const useForce3D = useGsapForce3D()
   const tileCount = Math.min(galleryImages.length, 4) + (partnerImage ? 1 : 0)
 
   const rowHeightClass =
@@ -42,16 +49,18 @@ const Gallery = () => {
 
   useEffect(() => {
     if (titleRef.current) {
-      ScrollTrigger.create({
-        trigger: titleRef.current,
-        start: 'top 80%',
-        animation: gsap.fromTo(
-          titleRef.current,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
-        ),
-        toggleActions: 'play none none reverse',
-      })
+      scrollScope.add(
+        ScrollTrigger.create({
+          trigger: titleRef.current,
+          start: 'top 80%',
+          animation: gsap.fromTo(
+            titleRef.current,
+            { opacity: 0, y: 30 },
+            { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
+          ),
+          toggleActions: 'play none none reverse',
+        })
+      )
     }
 
     imageRefs.current.forEach((ref, index) => {
@@ -62,36 +71,28 @@ const Gallery = () => {
         gsap.set(ref, {
           opacity: 0,
           x: xValue,
-          force3D: true,
+          force3D: useForce3D,
         })
 
-        ScrollTrigger.create({
-          trigger: ref,
-          start: 'top 85%',
-          animation: gsap.to(ref, {
-            opacity: 1,
-            x: 0,
-            duration: 0.8,
-            ease: 'power2.out',
-            force3D: true,
-          }),
-          toggleActions: 'play none none reverse',
-        })
+        scrollScope.add(
+          ScrollTrigger.create({
+            trigger: ref,
+            start: 'top 85%',
+            animation: gsap.to(ref, {
+              opacity: 1,
+              x: 0,
+              duration: 0.8,
+              ease: 'power2.out',
+              force3D: useForce3D,
+            }),
+            toggleActions: 'play none none reverse',
+          })
+        )
       }
     })
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (
-          trigger.vars &&
-          (trigger.vars.trigger === titleRef.current ||
-            imageRefs.current.includes(trigger.vars.trigger))
-        ) {
-          trigger.kill()
-        }
-      })
-    }
-  }, [tileCount])
+    return () => scrollScope.kill()
+  }, [tileCount, scrollScope, useForce3D])
 
   const handleImageClick = (index) => {
     setCurrentImageIndex(index)
@@ -174,12 +175,16 @@ const Gallery = () => {
       ref={(el) => {
         imageRefs.current[refIndex] = el
       }}
-      className={`cursor-pointer overflow-hidden ${className}`}
-      style={{
-        willChange: 'transform',
-        backfaceVisibility: 'hidden',
-        transform: 'translateZ(0)',
-      }}
+      className={`gallery-tile-animated cursor-pointer overflow-hidden ${className}`}
+      style={
+        useForce3D
+          ? {
+              willChange: 'transform',
+              backfaceVisibility: 'hidden',
+              transform: 'translateZ(0)',
+            }
+          : undefined
+      }
       onClick={() => handleImageClick(lightboxIndex)}
     >
       <img
@@ -292,7 +297,7 @@ const Gallery = () => {
           >
             <div
               ref={overlayRef}
-              className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+              className={MODAL_OVERLAY_CLASS}
               onClick={closeModal}
             />
 

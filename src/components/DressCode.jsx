@@ -1,9 +1,10 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useMemo } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { dresscode } from '../data'
 import Line from './Line'
 import './pages/Details.css'
+import { createScrollTriggerScope, scheduleGsapRevealFallback } from '../utils/safariCompat'
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -13,6 +14,7 @@ const DressCode = () => {
   const dressCodeContentRef = useRef(null)
   const category1Ref = useRef(null)
   const category2Ref = useRef(null)
+  const scrollScope = useMemo(() => createScrollTriggerScope(), [])
   
   const colorPalette =
     dresscode.colorPalette?.length > 0
@@ -47,7 +49,7 @@ const DressCode = () => {
   useEffect(() => {
     // Dress Code Title animation
     if (dressCodeTitleRef.current) {
-      ScrollTrigger.create({
+      scrollScope.add(ScrollTrigger.create({
         trigger: dressCodeTitleRef.current,
         start: "top 80%",
         animation: gsap.fromTo(dressCodeTitleRef.current,
@@ -55,7 +57,7 @@ const DressCode = () => {
           { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
         ),
         toggleActions: "play none none reverse"
-      })
+      }))
     }
 
     // Category 1 animation - animate image and content separately
@@ -75,7 +77,7 @@ const DressCode = () => {
           gsap.set(category1Content, { opacity: 0, x: 30 })
         }
         
-        ScrollTrigger.create({
+        scrollScope.add(ScrollTrigger.create({
           trigger: category1Ref.current,
           start: "top 75%",
           onEnter: () => {
@@ -97,7 +99,7 @@ const DressCode = () => {
               })
             }
           }
-        })
+        }))
       }
     }
 
@@ -118,7 +120,7 @@ const DressCode = () => {
           gsap.set(category2Content, { opacity: 0, x: -30 })
         }
         
-      ScrollTrigger.create({
+      scrollScope.add(ScrollTrigger.create({
           trigger: category2Ref.current,
           start: "top 75%",
           onEnter: () => {
@@ -140,23 +142,20 @@ const DressCode = () => {
               })
             }
           }
-        })
+        }))
       }
     }
 
-    // Cleanup function
+    const cancelFallback = scheduleGsapRevealFallback(
+      [dressCodeTitleRef.current, category1Ref.current, category2Ref.current],
+      { delayMs: 3000 }
+    )
+
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars && (
-          trigger.vars.trigger === dressCodeTitleRef.current ||
-          trigger.vars.trigger === category1Ref.current ||
-          trigger.vars.trigger === category2Ref.current
-        )) {
-          trigger.kill()
-        }
-      })
+      scrollScope.kill()
+      cancelFallback()
     }
-  }, [])
+  }, [scrollScope])
 
   return (
     <div className="relative w-full min-w-0">

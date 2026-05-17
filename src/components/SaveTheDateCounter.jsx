@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { getTimeUntilWedding } from '../utils/countdown'
 import { couple, prenupImages } from '../data'
 import './pages/Details.css'
+import { createScrollTriggerScope } from '../utils/safariCompat'
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -13,6 +14,7 @@ const SaveTheDateCounter = () => {
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
   const countdownRef = useRef(null)
+  const scrollScope = useMemo(() => createScrollTriggerScope(), [])
 
   // Update countdown every second
   useEffect(() => {
@@ -24,9 +26,9 @@ const SaveTheDateCounter = () => {
   }, [])
 
   useEffect(() => {
-    // Scroll-triggered animations
+    let titleTween
     if (titleRef.current) {
-      gsap.fromTo(
+      titleTween = gsap.fromTo(
         titleRef.current,
         { opacity: 0, y: 30 },
         {
@@ -37,13 +39,13 @@ const SaveTheDateCounter = () => {
           scrollTrigger: {
             trigger: titleRef.current,
             start: 'top 80%',
-            toggleActions: 'play none none reverse'
-          }
+            toggleActions: 'play none none reverse',
+          },
         }
       )
+      if (titleTween.scrollTrigger) scrollScope.add(titleTween.scrollTrigger)
     }
 
-    // Don't animate countdown numbers with ScrollTrigger - reversing would hide them again
     if (countdownRef.current) {
       const els = countdownRef.current.querySelectorAll('.countdown-number')
       if (els.length) {
@@ -52,9 +54,11 @@ const SaveTheDateCounter = () => {
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+      titleTween?.scrollTrigger?.kill()
+      titleTween?.kill()
+      scrollScope.kill()
     }
-  }, [])
+  }, [scrollScope])
 
   const formatDate = () => {
     const { month, day, year } = couple.wedding

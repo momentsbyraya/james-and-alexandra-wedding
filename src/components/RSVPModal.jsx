@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { gsap } from 'gsap'
 import { X } from 'lucide-react'
 import { couple } from '../data'
+import { MODAL_BACKDROP_BLUR_CLASS } from '../utils/safariCompat'
 
 const RSVPModal = ({ isOpen, onClose }) => {
   const modalRef = useRef(null)
@@ -70,7 +71,7 @@ const RSVPModal = ({ isOpen, onClose }) => {
     >
       <div
         ref={overlayRef}
-        className="absolute inset-0 z-0 cursor-pointer bg-forest/40 backdrop-blur-sm"
+        className={`absolute inset-0 z-0 cursor-pointer bg-forest/40 ${MODAL_BACKDROP_BLUR_CLASS}`}
         onClick={handleOverlayClick}
         aria-hidden
       />

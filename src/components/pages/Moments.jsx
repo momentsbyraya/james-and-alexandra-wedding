@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import ImageBanner from '../ImageBanner'
 import { loveStory, prenupImages } from '../../data'
+import { MODAL_OVERLAY_CLASS } from '../../utils/safariCompat'
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -368,7 +369,7 @@ const Moments = () => {
           <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
             {/* Dark Overlay */}
             <div
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+              className={`${MODAL_OVERLAY_CLASS} bg-black/80`}
               onClick={() => {
                 setSelectedImage(null)
                 setSelectedImageIndex(null)

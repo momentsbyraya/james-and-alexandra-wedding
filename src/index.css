@@ -170,6 +170,20 @@ body {
   min-height: -webkit-fill-available;
 }
 
+/* Safari / iOS: lighter GPU path (see utils/safariCompat.js) */
+.safari-lite .hero-svg-blur-rect {
+  filter: none !important;
+}
+
+.safari-lite .modal-backdrop-blur {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.safari-lite .gallery-tile-animated {
+  will-change: auto;
+}
+
 @layer base {
   body {
     font-family: 'Elsie Swash Caps', cursive;

@@ -15,6 +15,7 @@ import Schedule from '../Schedule'
 import EntourageDetailsSection from '../EntourageDetailsSection'
 import DressCode from '../DressCode'
 import './Details.css'
+import { createScrollTriggerScope } from '../../utils/safariCompat'
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -150,6 +151,8 @@ const Details = () => {
   }, [])
 
   useEffect(() => {
+    const scrollScope = createScrollTriggerScope()
+
     // Set initial hidden states to prevent glimpse
     if (sectionRef.current) {
       gsap.set(sectionRef.current, { x: '100%', opacity: 0 })
@@ -183,10 +186,11 @@ const Details = () => {
         toggleActions: "play none none reverse"
       }
     })
+    if (tl.scrollTrigger) scrollScope.add(tl.scrollTrigger)
 
     // Header content (description and graphics) animation
     if (headerContentRef.current) {
-      ScrollTrigger.create({
+      scrollScope.add(ScrollTrigger.create({
         trigger: headerContentRef.current,
         start: "top 80%",
         animation: gsap.fromTo(headerContentRef.current, 
@@ -194,7 +198,7 @@ const Details = () => {
           { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
         ),
         toggleActions: "play none none reverse"
-      })
+      }))
     }
 
 
@@ -205,7 +209,7 @@ const Details = () => {
 
     // Photo Section animation
     if (photoSectionRef.current) {
-      ScrollTrigger.create({
+      scrollScope.add(ScrollTrigger.create({
         trigger: photoSectionRef.current,
         start: "top 80%",
         animation: gsap.fromTo(photoSectionRef.current,
@@ -213,12 +217,12 @@ const Details = () => {
           { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
         ),
         toggleActions: "play none none reverse"
-      })
+      }))
     }
 
     // Curved Divider animations
     if (curvedDivider1Ref.current) {
-      ScrollTrigger.create({
+      scrollScope.add(ScrollTrigger.create({
         trigger: curvedDivider1Ref.current,
         start: "top 85%",
         animation: gsap.fromTo(curvedDivider1Ref.current,
@@ -226,11 +230,11 @@ const Details = () => {
           { opacity: 1, scaleY: 1, duration: 0.6, ease: "power2.out" }
         ),
         toggleActions: "play none none reverse"
-      })
+      }))
     }
 
     if (curvedDivider2Ref.current) {
-      ScrollTrigger.create({
+      scrollScope.add(ScrollTrigger.create({
         trigger: curvedDivider2Ref.current,
         start: "top 85%",
         animation: gsap.fromTo(curvedDivider2Ref.current,
@@ -238,11 +242,11 @@ const Details = () => {
           { opacity: 1, scaleY: 1, duration: 0.6, ease: "power2.out" }
         ),
         toggleActions: "play none none reverse"
-      })
+      }))
     }
 
     if (curvedDivider3Ref.current) {
-      ScrollTrigger.create({
+      scrollScope.add(ScrollTrigger.create({
         trigger: curvedDivider3Ref.current,
         start: "top 85%",
         animation: gsap.fromTo(curvedDivider3Ref.current,
@@ -250,7 +254,7 @@ const Details = () => {
           { opacity: 1, scaleY: 1, duration: 0.6, ease: "power2.out" }
         ),
         toggleActions: "play none none reverse"
-      })
+      }))
     }
 
     // FAQ section animation - title first, then items one after the other
@@ -258,7 +262,7 @@ const Details = () => {
       // Set initial states
       gsap.set(faqTitleRef.current, { opacity: 0, y: 30 })
         
-        ScrollTrigger.create({
+        scrollScope.add(ScrollTrigger.create({
           trigger: faqRef.current,
           start: "top 80%",
           onEnter: () => {
@@ -291,12 +295,12 @@ const Details = () => {
           }
         })
       }
-      })
+      }))
     }
 
-    // Cleanup function
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+      tl.kill()
+      scrollScope.kill()
     }
   }, [])
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react'
 import EntourageTextContent from '../EntourageTextContent'
 import { themeConfig } from '../../config/themeConfig'
 import './Entourage.css'
+import { createScrollTriggerScope } from '../../utils/safariCompat'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -15,6 +16,7 @@ const Entourage = () => {
   const backButtonRef = useRef(null)
   const headerRef = useRef(null)
   const contentRef = useRef(null)
+  const scrollScope = useMemo(() => createScrollTriggerScope(), [])
 
   useEffect(() => {
     if (sectionRef.current) gsap.set(sectionRef.current, { x: '100%', opacity: 0 })
@@ -46,24 +48,26 @@ const Entourage = () => {
     }
 
     if (contentRef.current && nameLines?.length) {
-      ScrollTrigger.create({
-        trigger: contentRef.current,
-        start: 'top 85%',
-        onEnter: () => {
-          gsap.to(nameLines, {
-            opacity: 1,
-            y: 0,
-            duration: 0.55,
-            ease: 'power2.out',
-            stagger: 0.035,
-          })
-        },
-        toggleActions: 'play none none reverse',
-      })
+      scrollScope.add(
+        ScrollTrigger.create({
+          trigger: contentRef.current,
+          start: 'top 85%',
+          onEnter: () => {
+            gsap.to(nameLines, {
+              opacity: 1,
+              y: 0,
+              duration: 0.55,
+              ease: 'power2.out',
+              stagger: 0.035,
+            })
+          },
+          toggleActions: 'play none none reverse',
+        })
+      )
     }
 
-    return () => ScrollTrigger.getAll().forEach((t) => t.kill())
-  }, [])
+    return () => scrollScope.kill()
+  }, [scrollScope])
 
   const accentColor = themeConfig.text.burgundyDark ?? '#094a2f'
   const titleSizes = 'font-boska text-base sm:text-lg md:text-xl mb-3 font-medium normal-case'

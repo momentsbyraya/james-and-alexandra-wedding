@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { loveStory, prenupImages } from '../data'
 import './pages/Details.css'
+import { MODAL_OVERLAY_CLASS } from '../utils/safariCompat'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -329,7 +330,7 @@ const LoveStory = () => {
           >
             <div
               ref={overlayRef}
-              className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+              className={MODAL_OVERLAY_CLASS}
               onClick={() => setIsModalOpen(false)}
               aria-hidden
             />

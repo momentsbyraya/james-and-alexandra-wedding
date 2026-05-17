@@ -6,6 +6,7 @@ import { venues as venuesData } from '../data'
 import SecondaryButton from './SecondaryButton'
 import ImageLightbox from './ImageLightbox'
 import './pages/Details.css'
+import { createScrollTriggerScope } from '../utils/safariCompat'
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -21,6 +22,7 @@ const Venue = () => {
   const [lightboxImage, setLightboxImage] = useState(null)
   const [carouselPaused, setCarouselPaused] = useState(false)
   const pageVisibleRef = useRef(true)
+  const scrollScope = useMemo(() => createScrollTriggerScope(), [])
 
   const ceremony = venuesData.ceremony
   const reception = venuesData.reception
@@ -98,7 +100,7 @@ const Venue = () => {
   useEffect(() => {
     // Venue Title animation
     if (venueTitleRef.current) {
-      ScrollTrigger.create({
+      scrollScope.add(ScrollTrigger.create({
         trigger: venueTitleRef.current,
         start: "top 80%",
         animation: gsap.fromTo(venueTitleRef.current,
@@ -106,10 +108,9 @@ const Venue = () => {
           { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
         ),
         toggleActions: "play none none reverse"
-      })
+      }))
     }
 
-    // Venue animation - animate image and content
     if (venueRef.current) {
       const venueContainer = venueRef.current
       const venueImage = venueContainer.querySelector('.venue-image-container')
@@ -120,7 +121,7 @@ const Venue = () => {
       if (venueContent) {
         gsap.set(venueContent, { opacity: 0, x: 30 })
       }
-      ScrollTrigger.create({
+      scrollScope.add(ScrollTrigger.create({
         trigger: venueRef.current,
         start: "top 75%",
         onEnter: () => {
@@ -131,21 +132,11 @@ const Venue = () => {
             gsap.to(venueContent, { opacity: 1, x: 0, duration: 0.8, ease: "power2.out", delay: 0.2 })
           }
         }
-      })
+      }))
     }
 
-    // Cleanup function
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars && (
-          trigger.vars.trigger === venueTitleRef.current ||
-          trigger.vars.trigger === venueRef.current
-        )) {
-          trigger.kill()
-        }
-      })
-    }
-  }, [])
+    return () => scrollScope.kill()
+  }, [scrollScope])
 
   return (
     <>

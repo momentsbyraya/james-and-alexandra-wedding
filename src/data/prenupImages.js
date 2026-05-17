@@ -38,6 +38,13 @@ const galleryThumbObjectPosition = [
 
 const countdownBackground = prenup('IMG_8552.jpg')
 
+/** First-screen only — avoid decoding the full gallery on load (Safari memory). */
+const criticalPreload = [
+  hero,
+  openingBackground,
+  '/assets/images/graphics/bg-2.png',
+]
+
 /** Pool for other features (e.g. Moments grid, preload). Order preserved, duplicates removed. */
 const pool = [
   ...new Set([
@@ -56,6 +63,7 @@ const pool = [
 
 export const prenupImages = {
   pool,
+  criticalPreload,
   hero,
   openingBackground,
   fullBleedAfterVenue,

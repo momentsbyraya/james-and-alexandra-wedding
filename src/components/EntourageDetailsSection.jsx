@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useMemo } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { themeConfig } from '../config/themeConfig'
 import EntourageTextContent from './EntourageTextContent'
 import './pages/Details.css'
 import './pages/Entourage.css'
+import { createScrollTriggerScope, scheduleGsapRevealFallback } from '../utils/safariCompat'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -12,6 +13,7 @@ const EntourageDetailsSection = () => {
   const sectionRef = useRef(null)
   const headerRef = useRef(null)
   const contentRef = useRef(null)
+  const scrollScope = useMemo(() => createScrollTriggerScope(), [])
 
   useEffect(() => {
     if (!sectionRef.current) return
@@ -24,6 +26,7 @@ const EntourageDetailsSection = () => {
         toggleActions: 'play none none reverse',
       },
     })
+    if (tl.scrollTrigger) scrollScope.add(tl.scrollTrigger)
 
     if (headerRef.current) {
       tl.fromTo(
@@ -38,25 +41,36 @@ const EntourageDetailsSection = () => {
       const nameLines = body.querySelectorAll('p.font-poppins')
       if (nameLines.length) {
         gsap.set(nameLines, { opacity: 0, y: 20 })
-        ScrollTrigger.create({
-          trigger: body,
-          start: 'top 85%',
-          onEnter: () => {
-            gsap.to(nameLines, {
-              opacity: 1,
-              y: 0,
-              duration: 0.55,
-              ease: 'power2.out',
-              stagger: 0.035,
-            })
-          },
-          toggleActions: 'play none none reverse',
-        })
+        scrollScope.add(
+          ScrollTrigger.create({
+            trigger: body,
+            start: 'top 85%',
+            onEnter: () => {
+              gsap.to(nameLines, {
+                opacity: 1,
+                y: 0,
+                duration: 0.55,
+                ease: 'power2.out',
+                stagger: 0.035,
+              })
+            },
+            toggleActions: 'play none none reverse',
+          })
+        )
       }
     }
 
-    return () => ScrollTrigger.getAll().forEach((t) => t.kill())
-  }, [])
+    const cancelFallback = scheduleGsapRevealFallback(
+      [headerRef.current, contentRef.current],
+      { delayMs: 3000 }
+    )
+
+    return () => {
+      tl.kill()
+      scrollScope.kill()
+      cancelFallback()
+    }
+  }, [scrollScope])
 
   const accentColor = themeConfig.text.burgundyDark ?? '#094a2f'
 

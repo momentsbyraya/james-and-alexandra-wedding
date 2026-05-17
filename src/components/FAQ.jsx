@@ -1,9 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, useMemo } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MapPin, Clock, ArrowLeft, ArrowRight, ChevronDown, UtensilsCrossed, Palette, Users, Mail, Baby, Car, Camera, Gift, Heart } from 'lucide-react'
 import { faq as faqData } from '../data'
 import './pages/Details.css'
+import { createScrollTriggerScope, scheduleGsapRevealFallback } from '../utils/safariCompat'
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -12,6 +13,7 @@ const FAQ = () => {
   const [copiedIndex, setCopiedIndex] = useState(null)
   const faqRef = useRef(null)
   const faqTitleRef = useRef(null)
+  const scrollScope = useMemo(() => createScrollTriggerScope(), [])
   const faqItems = faqData
 
   // Helper function to get icon and clean text for FAQ questions
@@ -105,7 +107,7 @@ const FAQ = () => {
       // Set initial states
       gsap.set(faqTitleRef.current, { opacity: 0, y: 30 })
         
-        ScrollTrigger.create({
+        scrollScope.add(ScrollTrigger.create({
           trigger: faqRef.current,
           start: "top 80%",
           onEnter: () => {
@@ -138,14 +140,19 @@ const FAQ = () => {
           }
         })
       }
-      })
+      }))
     }
 
-    // Cleanup function
+    const cancelFallback = scheduleGsapRevealFallback(
+      [faqTitleRef.current, faqRef.current?.querySelector('.faq-items')],
+      { delayMs: 3000 }
+    )
+
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+      scrollScope.kill()
+      cancelFallback()
     }
-  }, [])
+  }, [scrollScope])
 
   return (
     <div className="relative z-20 faq-section faq-section--botanical">

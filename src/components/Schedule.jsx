@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useMemo } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { couple, schedule as scheduleData } from '../data'
 import './pages/Details.css'
+import { createScrollTriggerScope } from '../utils/safariCompat'
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
@@ -12,11 +13,12 @@ const Schedule = () => {
   const timelineRef = useRef(null)
   const lineRef = useRef(null)
   const eventsRef = useRef(null)
+  const scrollScope = useMemo(() => createScrollTriggerScope(), [])
 
   useEffect(() => {
     // Schedule title animation
     if (scheduleTitleRef.current) {
-      ScrollTrigger.create({
+      scrollScope.add(ScrollTrigger.create({
         trigger: scheduleTitleRef.current,
         start: "top 80%",
         animation: gsap.fromTo(scheduleTitleRef.current,
@@ -24,12 +26,12 @@ const Schedule = () => {
           { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
         ),
         toggleActions: "play none none reverse"
-      })
+      }))
     }
 
     // Timeline line expansion from top to bottom
     if (lineRef.current) {
-      ScrollTrigger.create({
+      scrollScope.add(ScrollTrigger.create({
         trigger: timelineRef.current,
         start: "top 70%",
         animation: gsap.fromTo(lineRef.current,
@@ -37,7 +39,7 @@ const Schedule = () => {
           { scaleY: 1, duration: 1.5, ease: "power2.out" }
         ),
         toggleActions: "play none none reverse"
-      })
+      }))
     }
 
     // Events animate in with stagger
@@ -45,7 +47,7 @@ const Schedule = () => {
       const eventItems = eventsRef.current.querySelectorAll('div.flex.items-center')
       if (eventItems.length > 0) {
         gsap.set(eventItems, { opacity: 0, y: 30 })
-        ScrollTrigger.create({
+        scrollScope.add(ScrollTrigger.create({
           trigger: eventsRef.current,
           start: "top 70%",
           onEnter: () => {
@@ -57,23 +59,12 @@ const Schedule = () => {
               stagger: 0.2
             })
           }
-        })
+        }))
       }
     }
 
-    // Cleanup function
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars && (
-          trigger.vars.trigger === scheduleTitleRef.current ||
-          trigger.vars.trigger === timelineRef.current ||
-          trigger.vars.trigger === eventsRef.current
-        )) {
-          trigger.kill()
-        }
-      })
-    }
-  }, [])
+    return () => scrollScope.kill()
+  }, [scrollScope])
 
   return (
     <div className="relative program-section">

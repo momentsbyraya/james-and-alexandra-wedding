@@ -14,6 +14,7 @@ import Moments from './components/pages/Moments'
 import { AudioProvider, useAudio } from './contexts/AudioContext'
 import { couple, prenupImages } from './data'
 import ApprovalWatermark from './components/ApprovalWatermark'
+import { shouldUseSafariLiteMode } from './utils/safariCompat'
 
 function AppContent() {
   const [isRSVPModalOpen, setIsRSVPModalOpen] = useState(false)
@@ -25,16 +26,8 @@ function AppContent() {
   // Preload critical images and resources
   useEffect(() => {
     const preloadImages = async () => {
-      const criticalImages = [
-        ...prenupImages.pool,
-        // NavIndex graphics - all decorative elements
-        '/assets/images/graphics/dusty-blue.png',
-        '/assets/images/graphics/flower-1.png',
-        '/assets/images/graphics/flower-3.png',
-        '/assets/images/graphics/flower-4.png',
-        '/assets/images/graphics/textured-bg-2.png',
-        '/assets/images/graphics/bg-1.png'
-      ]
+      const criticalImages = prenupImages.criticalPreload
+      const safariLite = shouldUseSafariLiteMode()
 
       // Preload fonts
       const preloadFonts = async () => {
@@ -60,11 +53,11 @@ function AppContent() {
           } else {
             const img = new Image()
             img.onload = () => {
-              // Try to decode the image to ensure it's ready for rendering
-              if (img.decode) {
+              // Skip eager decode on Safari — decoded bitmaps spike memory
+              if (!safariLite && img.decode) {
                 img.decode()
                   .then(() => resolve())
-                  .catch(() => resolve()) // Resolve even if decode fails
+                  .catch(() => resolve())
               } else {
                 resolve()
               }
@@ -74,8 +67,7 @@ function AppContent() {
               resolve() // Resolve even on error to not block loading
             }
             img.src = src
-            // Set a timeout for each image (15 seconds max per image)
-            setTimeout(() => resolve(), 15000)
+            setTimeout(() => resolve(), safariLite ? 8000 : 15000)
           }
         })
       })

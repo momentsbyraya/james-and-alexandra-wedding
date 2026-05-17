@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { gsap } from 'gsap'
+import { MODAL_OVERLAY_CLASS } from '../utils/safariCompat'
 import { X } from 'lucide-react'
 
 /**
@@ -65,7 +66,7 @@ const ImageLightbox = ({ isOpen, src, alt = '', onClose }) => {
     >
       <div
         ref={overlayRef}
-        className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+        className={MODAL_OVERLAY_CLASS}
         onClick={() => onCloseRef.current()}
       />
 
