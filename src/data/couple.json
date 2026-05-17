@@ -20,11 +20,11 @@
     "year": "2026"
   },
   "rsvpDeadline": {
-    "date": "",
-    "month": "",
-    "day": "",
-    "year": ""
+    "date": "2026-06-16",
+    "month": "June",
+    "day": "16",
+    "year": "2026"
   },
-  "rsvpFormUrl": "",
-  "rsvpGoogleFormEmbedUrl": ""
+  "rsvpFormUrl": "https://forms.gle/DkeQaoixWbPj5ChGA",
+  "rsvpGoogleFormEmbedUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfsvcnM7aAZyJnEuHnsQFVVu0eU2iwhVi4XDZ-qyGQ6tI-drg/viewform?embedded=true"
 }

@@ -30,17 +30,17 @@
   background: #AA8D5A;
 }
 
-/* RSVP Modal scrollbar - dark sage green */
+/* RSVP Modal scrollbar — sage & forest */
 .rsvp-modal-content::-webkit-scrollbar {
   width: 8px;
 }
 
 .rsvp-modal-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #CBCBC0;
 }
 
 .rsvp-modal-content::-webkit-scrollbar-thumb {
-  background: #1F2B20;
+  background: #094a2f;
   border-radius: 4px;
 }
 

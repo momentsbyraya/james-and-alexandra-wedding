@@ -2,12 +2,14 @@ import React, { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { gsap } from 'gsap'
 import { X } from 'lucide-react'
-import { prenupImages } from '../data'
+import { couple } from '../data'
 
 const RSVPModal = ({ isOpen, onClose }) => {
   const modalRef = useRef(null)
   const overlayRef = useRef(null)
   const contentRef = useRef(null)
+
+  const formEmbedUrl = couple.rsvpGoogleFormEmbedUrl
 
   useEffect(() => {
     if (isOpen) {
@@ -68,44 +70,45 @@ const RSVPModal = ({ isOpen, onClose }) => {
     >
       <div
         ref={overlayRef}
-        className="absolute inset-0 z-0 cursor-pointer overflow-hidden"
+        className="absolute inset-0 z-0 cursor-pointer bg-forest/40 backdrop-blur-sm"
         onClick={handleOverlayClick}
         aria-hidden
-      >
-        <div
-          className="absolute inset-0 bg-cover bg-center pointer-events-none"
-          style={{
-            backgroundImage: `url(${prenupImages.modalBackground})`,
-            filter: 'blur(14px)',
-            transform: 'scale(1.12)',
-          }}
-        />
-        <div className="absolute inset-0 bg-black/35 pointer-events-none" />
-      </div>
+      />
 
       <div
         ref={contentRef}
         className="relative z-10 flex flex-col flex-1 min-h-0 w-full h-full min-w-0"
         onClick={(e) => e.stopPropagation()}
       >
-        <header className="flex shrink-0 items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:py-4 border-b border-gold/25 bg-sage/95 backdrop-blur-md">
-          <h2 className="text-xl sm:text-2xl font-leckerli font-light text-forest">
+        <header className="flex shrink-0 items-center justify-between gap-4 border-b border-forest/15 bg-sage px-4 py-3 sm:px-6 sm:py-4">
+          <h2 className="text-xl font-leckerli font-light text-forest sm:text-2xl">
             RSVP
           </h2>
           <button
             type="button"
             onClick={handleClose}
-            className="p-2 text-forest hover:bg-gold/20 rounded-full transition-colors duration-200"
+            className="rounded-full p-2 text-forest transition-colors duration-200 hover:bg-forest/10"
             aria-label="Close RSVP form"
           >
-            <X className="w-6 h-6" />
+            <X className="h-6 w-6" />
           </button>
         </header>
 
-        <div className="flex flex-1 min-h-0 items-center justify-center bg-sage/90 px-6 backdrop-blur-sm">
-          <p className="font-foglihten text-3xl uppercase tracking-wide text-forest sm:text-4xl md:text-5xl">
-            To Be Added
-          </p>
+        <div className="rsvp-modal-content flex min-h-0 flex-1 flex-col overflow-hidden bg-sage">
+          {formEmbedUrl ? (
+            <iframe
+              src={formEmbedUrl}
+              title="RSVP for the Wedding of Arjie and Fritzie"
+              className="h-full min-h-0 w-full flex-1 border-0 bg-sage"
+              allowFullScreen
+            />
+          ) : (
+            <div className="flex flex-1 items-center justify-center px-6">
+              <p className="text-center font-albert text-forest">
+                RSVP form is not available yet.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>,

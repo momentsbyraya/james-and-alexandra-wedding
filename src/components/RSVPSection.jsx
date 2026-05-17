@@ -19,7 +19,7 @@ const RSVPSection = ({ onOpenRSVP, compact = false }) => {
         <h3 className="font-foglihten text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-none capitalize text-forest">
           RSVP
         </h3>
-        <p className="mt-4 text-sm sm:text-base md:text-lg font-albert text-obsidian/85 max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-4 text-sm sm:text-base md:text-lg font-albert text-forest/90 max-w-2xl mx-auto leading-relaxed">
           We have reserved seat/s for you. We&apos;d love to have you with us!
           {deadlineText && (
             <>

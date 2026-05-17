@@ -2,7 +2,7 @@
 export const themeConfig = {
     /** Client preview overlay — set enabled: false before launch */
     approvalWatermark: {
-        enabled: true,
+        enabled: false,
         text: 'THIS IS HALF DONE, FOR CLIENT APPROVAL ONLY',
         lines: 5,
         rotation: -32,
