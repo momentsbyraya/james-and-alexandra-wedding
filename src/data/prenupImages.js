@@ -69,8 +69,8 @@ export const prenupImages = {
   galleryThumbObjectPosition,
   countdownBackground,
   modalBackground: openingBackground,
-  ogImage: openingBackground,
-  favicon: openingBackground,
+  ogImage: countdownBackground,
+  favicon: countdownBackground,
   rsvpBackground: fullBleedAfterDressCode,
   fullBleedMain: fullBleedAfterVenue,
   splitA: {

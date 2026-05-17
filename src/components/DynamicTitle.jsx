@@ -14,9 +14,8 @@ const DynamicTitle = () => {
 
   const origin = typeof window !== 'undefined' ? window.location.origin : ''
   const ogImageAbsolute = origin ? `${origin}${OG_IMAGE_PATH}` : OG_IMAGE_PATH
-  const pageUrl = typeof window !== 'undefined' ? window.location.href.split('#')[0] : ''
 
-  const title = `${couple.together}'s Wedding - ${weddingDate}`
+  const title = `You Are Invited to the Wedding of ${couple.together}`
   const description = `Join us for ${couple.together}'s wedding on ${weddingDate}.`
 
   return (
@@ -27,7 +26,6 @@ const DynamicTitle = () => {
       <link rel="apple-touch-icon" href={FAVICON_PATH} />
 
       <meta property="og:type" content="website" />
-      {pageUrl ? <meta property="og:url" content={pageUrl} /> : null}
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImageAbsolute} />
