@@ -21,14 +21,15 @@ const RSVPModal = ({ isOpen, onClose }) => {
       }
 
       gsap.set(overlayRef.current, { opacity: 0 })
-      gsap.set(contentRef.current, { opacity: 0, y: 24 })
+      gsap.set(contentRef.current, { opacity: 0, y: 32, scale: 0.94 })
 
-      gsap.to(overlayRef.current, { opacity: 1, duration: 0.35, ease: 'power2.out' })
+      gsap.to(overlayRef.current, { opacity: 1, duration: 0.3, ease: 'power2.out' })
       gsap.to(contentRef.current, {
         opacity: 1,
         y: 0,
-        duration: 0.4,
-        ease: 'power2.out',
+        scale: 1,
+        duration: 0.45,
+        ease: 'back.out(1.4)',
       })
     } else {
       document.body.style.overflow = ''
@@ -47,8 +48,9 @@ const RSVPModal = ({ isOpen, onClose }) => {
       .to(contentRef.current, {
         opacity: 0,
         y: 24,
+        scale: 0.96,
         duration: 0.25,
-        ease: 'power2.out',
+        ease: 'power2.in',
       })
       .then(() => {
         onClose()
@@ -66,23 +68,28 @@ const RSVPModal = ({ isOpen, onClose }) => {
   return createPortal(
     <div
       ref={modalRef}
-      className="fixed inset-0 z-50 flex flex-col m-0 p-0"
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
+      className="fixed inset-0 z-[10050] flex items-center justify-center p-4 sm:p-6"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="rsvp-modal-title"
     >
       <div
         ref={overlayRef}
-        className={`absolute inset-0 z-0 cursor-pointer bg-forest/40 ${MODAL_BACKDROP_BLUR_CLASS}`}
+        className={`absolute inset-0 z-0 cursor-pointer bg-forest/50 ${MODAL_BACKDROP_BLUR_CLASS}`}
         onClick={handleOverlayClick}
         aria-hidden
       />
 
       <div
         ref={contentRef}
-        className="relative z-10 flex flex-col flex-1 min-h-0 w-full h-full min-w-0"
+        className="relative z-10 flex max-h-[min(90vh,820px)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-forest/10 bg-sage shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <header className="flex shrink-0 items-center justify-between gap-4 border-b border-forest/15 bg-sage px-4 py-3 sm:px-6 sm:py-4">
-          <h2 className="text-xl font-leckerli font-light text-forest sm:text-2xl">
+          <h2
+            id="rsvp-modal-title"
+            className="text-xl font-leckerli font-light text-forest sm:text-2xl"
+          >
             RSVP
           </h2>
           <button
@@ -95,18 +102,22 @@ const RSVPModal = ({ isOpen, onClose }) => {
           </button>
         </header>
 
-        <div className="rsvp-modal-content flex min-h-0 flex-1 flex-col overflow-hidden bg-sage">
+        <div
+          className={`rsvp-modal-content flex flex-1 flex-col overflow-hidden bg-sage ${
+            formEmbedUrl ? 'min-h-[min(70vh,640px)]' : 'min-h-[12rem] sm:min-h-[14rem]'
+          }`}
+        >
           {formEmbedUrl ? (
             <iframe
               src={formEmbedUrl}
-              title="RSVP for the Wedding of Arjie and Fritzie"
+              title="RSVP for the Wedding of Alexandra and James"
               className="h-full min-h-0 w-full flex-1 border-0 bg-sage"
               allowFullScreen
             />
           ) : (
-            <div className="flex flex-1 items-center justify-center px-6">
-              <p className="text-center font-albert text-forest">
-                RSVP form is not available yet.
+            <div className="flex flex-1 items-center justify-center px-6 py-12">
+              <p className="text-center font-foglihten text-2xl text-forest sm:text-3xl">
+                To be added
               </p>
             </div>
           )}

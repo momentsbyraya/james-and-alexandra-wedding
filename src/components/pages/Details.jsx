@@ -12,7 +12,6 @@ import SecondaryButton from '../SecondaryButton'
 import PhotoSection from '../PhotoSection'
 import Venue from '../Venue'
 import Schedule from '../Schedule'
-import EntourageDetailsSection from '../EntourageDetailsSection'
 import DressCode from '../DressCode'
 import './Details.css'
 import { createScrollTriggerScope } from '../../utils/safariCompat'
@@ -43,13 +42,16 @@ const Details = () => {
       'Wedding Ceremony Location': MapPin,
       'Wedding Reception Location': UtensilsCrossed,
       'What time is the wedding?': Clock,
+      'What time should I arrive?': Clock,
       'What is the wedding theme and dress code?': Palette,
       'What is the dress code?': Palette,
       'Can I bring a plus one?': Users,
+      'Can I bring plus one?': Users,
       'What to wear?': Palette,
       "Where's the reception?": UtensilsCrossed,
       'Is RSVP required?': Mail,
       'Are children allowed?': Baby,
+      'Can we bring our kids along?': Baby,
       'Is parking available?': Car,
       'Can guests take photos or videos during the ceremony?': Camera,
       'Is there a gift registry?': Gift,
@@ -362,8 +364,6 @@ const Details = () => {
           {/* Schedule Section */}
           <Schedule />
 
-          {/* Entourage Section */}
-          <EntourageDetailsSection />
                     </div>
                 </div>
 

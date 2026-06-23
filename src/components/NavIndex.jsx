@@ -15,7 +15,6 @@ const NavIndex = ({ onOpenRSVP }) => {
   const flower1Ref = useRef(null)
   const flower3Ref = useRef(null)
   const flower4Ref = useRef(null)
-  const ovalContainerRef = useRef(null)
   const polaroidRef = useRef(null)
   const rsvpContainerRef = useRef(null)
   const detailsContainerRef = useRef(null)
@@ -44,7 +43,6 @@ const NavIndex = ({ onOpenRSVP }) => {
       if (flower1Ref.current) gsap.set(flower1Ref.current, { opacity: 0, scale: 0, rotation: 0 })
       if (flower3Ref.current) gsap.set(flower3Ref.current, { opacity: 0, scale: 0, transform: 'translate(-50%, 80%) scale(0)' })
       if (flower4Ref.current) gsap.set(flower4Ref.current, { opacity: 0, scale: 0, rotation: 0 })
-      if (ovalContainerRef.current) gsap.set(ovalContainerRef.current, { opacity: 0, y: 30 })
       if (polaroidRef.current) gsap.set(polaroidRef.current, { opacity: 0, y: 30 })
       if (rsvpContainerRef.current) gsap.set(rsvpContainerRef.current, { opacity: 0, y: 30 })
       if (detailsContainerRef.current) gsap.set(detailsContainerRef.current, { opacity: 0, y: 30 })
@@ -74,15 +72,6 @@ const NavIndex = ({ onOpenRSVP }) => {
             // Couple's name - simple slide in
             if (coupleNameRef.current) {
               tl.fromTo(coupleNameRef.current,
-                { opacity: 0, y: 30 },
-                { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
-                "-=0.4"
-              )
-            }
-            
-            // Oval container - simple slide in
-            if (ovalContainerRef.current) {
-              tl.fromTo(ovalContainerRef.current,
                 { opacity: 0, y: 30 },
                 { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
                 "-=0.4"
@@ -196,50 +185,8 @@ const NavIndex = ({ onOpenRSVP }) => {
            />
         </div>
 
-        {/* Container with border radius 50% and Polaroid Image */}
-        <div className="flex justify-start items-start gap-6 relative oval-polaroid-container">
-          {/* Oval Container */}
-          <div 
-            ref={ovalContainerRef}
-            className="rounded-[50%] p-1 cursor-pointer transition-transform duration-300 hover:scale-105 oval-container"
-            onClick={() => {
-              window.scrollTo(0, 0)
-              // Slide out animation before navigation
-              if (navRef.current) {
-                gsap.to(navRef.current, {
-                  x: '-100%',
-                  opacity: 0,
-                  duration: 0.5,
-                  ease: "power2.in",
-                  onComplete: () => {
-                    navigate('/entourage')
-                    setTimeout(() => window.scrollTo(0, 0), 0)
-                  }
-                })
-              } else {
-                navigate('/entourage')
-                setTimeout(() => window.scrollTo(0, 0), 0)
-              }
-            }}
-          >
-            <div className="rounded-[50%] w-full h-full p-1 oval-border">
-              <div className="rounded-[50%] w-full h-full flex flex-col items-center justify-center relative oval-border">
-                {/* Text Content */}
-                <div className="text-center px-4">
-                  <p className="nanum-myeongjo-regular text-forest mb-2 oval-text-for">
-                    FOR THE
-                  </p>
-                  <p className="imperial-script-regular mb-4 underline oval-text-entourage text-gold">
-                    Entourage
-                  </p>
-                  <p className="nanum-myeongjo-regular text-forest oval-text-click">
-                    CLICK HERE
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
+        {/* Polaroid Image */}
+        <div className="flex justify-center items-start relative oval-polaroid-container">
           {/* Polaroid Container Wrapper */}
           <div 
             className="relative polaroid-wrapper"

@@ -3,7 +3,6 @@ import Hero from './Hero'
 import Venue from './Venue'
 import Schedule from './Schedule'
 import DressCode from './DressCode'
-import EntourageSection from './EntourageSection'
 import RSVPSection from './RSVPSection'
 import LoveStory from './LoveStory'
 import Gallery from './Gallery'
@@ -101,7 +100,7 @@ const Home = ({ onOpenRSVP }) => {
         alt={photoAlt}
       />
 
-      {/* 6. Entourage, RSVP & Gift guide */}
+      {/* 6. RSVP & Gift guide */}
       <div
         style={{
           backgroundImage: 'url(/assets/images/graphics/bg-2.png)',
@@ -121,14 +120,6 @@ const Home = ({ onOpenRSVP }) => {
 
         <div className="relative z-20 flex items-center justify-center py-6 sm:py-8 md:py-10">
           <div className="site-content-width">
-            <EntourageSection compact />
-
-            <div className="flex items-center gap-3 my-2 sm:my-3">
-              <div className="h-px bg-gold/50 flex-1" />
-              <div className="w-2 h-2 border border-gold/70 rotate-45 flex-shrink-0" />
-              <div className="h-px bg-gold/50 flex-1" />
-            </div>
-
             <RSVPSection onOpenRSVP={onOpenRSVP} compact />
 
             <div className="flex items-center gap-3 my-2 sm:my-3">
@@ -151,7 +142,7 @@ const Home = ({ onOpenRSVP }) => {
         </div>
       </div>
 
-      {/* Full bleed after entourage */}
+      {/* Full bleed after RSVP */}
       <FullBleedPhoto
         src={prenupImages.fullBleedAfterEntourage}
         alt={photoAlt}

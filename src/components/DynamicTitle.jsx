@@ -22,7 +22,7 @@ const DynamicTitle = () => {
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <link rel="icon" type="image/jpeg" href={FAVICON_PATH} />
+      <link rel="icon" type="image/png" href={FAVICON_PATH} />
       <link rel="apple-touch-icon" href={FAVICON_PATH} />
 
       <meta property="og:type" content="website" />
@@ -30,7 +30,7 @@ const DynamicTitle = () => {
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImageAbsolute} />
       <meta property="og:image:secure_url" content={ogImageAbsolute} />
-      <meta property="og:image:type" content="image/jpeg" />
+      <meta property="og:image:type" content="image/png" />
       <meta property="og:image:alt" content={couple.together.replace('&', 'and')} />
       <meta property="og:locale" content="en_US" />
 

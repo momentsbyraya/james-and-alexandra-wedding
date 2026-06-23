@@ -1,18 +1,18 @@
 {
-  "hero": "/assets/images/hero-couple.jpg",
+  "hero": "/assets/images/prenup/IMG_3542%20(1).png",
   "couple": {
-    "couple1": "/assets/images/couple-1.jpg",
-    "couple2": "/assets/images/couple-2.jpg",
-    "couple3": "/assets/images/couple-3.jpg",
-    "couple4": "/assets/images/couple-4.jpg",
-    "couple5": "/assets/images/couple-5.jpg",
-    "couple6": "/assets/images/couple-6.jpg",
-    "couple7": "/assets/images/couple-7.jpg",
-    "couple8": "/assets/images/couple-8.jpg"
+    "couple1": "/assets/images/prenup/IMG_3409%20(1).png",
+    "couple2": "/assets/images/prenup/IMG_3540%20(1).png",
+    "couple3": "/assets/images/prenup/IMG_3542%20(1).png",
+    "couple4": "/assets/images/prenup/IMG_4627%20(1).png",
+    "couple5": "/assets/images/prenup/IMG_4630%20(1).png",
+    "couple6": "/assets/images/prenup/IMG_4631%20(1).png",
+    "couple7": "/assets/images/prenup/IMG_4692%20(1).png",
+    "couple8": "/assets/images/prenup/IMG_3426%20(1)%20(1).png"
   },
   "venues": {
-    "church": "/assets/images/venues/CHURCH.jpg",
-    "reception": "/assets/images/venues/BAYFRONT.jpg"
+    "church": "/assets/images/venues/IMG_0160.JPG",
+    "reception": "/assets/images/venues/images.jpg"
   },
-  "favicon": "/assets/images/prenup/IMG_8552.jpg"
-} 
+  "favicon": "/assets/images/prenup/IMG_3542%20(1).png"
+}

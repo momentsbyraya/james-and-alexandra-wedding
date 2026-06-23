@@ -13,6 +13,34 @@ import {
 
 gsap.registerPlugin(ScrollTrigger)
 
+/** Build editorial rows: full → split → split (alt) → repeat */
+function buildGalleryRows(images) {
+  const rows = []
+  let i = 0
+  let splitAlt = 0
+
+  while (i < images.length) {
+    rows.push({ kind: 'full', items: [{ src: images[i], index: i }] })
+    i += 1
+    if (i >= images.length) break
+
+    if (i + 1 < images.length) {
+      const spans = splitAlt % 2 === 0 ? [2, 3] : [3, 2]
+      rows.push({
+        kind: 'split',
+        items: [
+          { src: images[i], index: i, span: spans[0] },
+          { src: images[i + 1], index: i + 1, span: spans[1] },
+        ],
+      })
+      i += 2
+      splitAlt += 1
+    }
+  }
+
+  return rows
+}
+
 const Gallery = () => {
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
@@ -22,18 +50,17 @@ const Gallery = () => {
   const overlayRef = useRef(null)
   const contentRef = useRef(null)
 
-  const galleryImages = prenupImages.gallery
+  const galleryImages = prenupImages.moments ?? prenupImages.gallery
   const galleryThumbObjectPosition = prenupImages.galleryThumbObjectPosition ?? []
-  const partnerImage = prenupImages.fullBleedAfterDressCode
   const photoAlt = couple.together.replace('&', 'and')
 
-  const partnerLightboxIndex = galleryImages.length
-  const lightboxImages = [...galleryImages, partnerImage]
+  const lightboxImages = galleryImages
+  const galleryRows = useMemo(() => buildGalleryRows(galleryImages), [galleryImages])
 
   const imageRefs = useRef([])
   const scrollScope = useMemo(() => createScrollTriggerScope(), [])
   const useForce3D = useGsapForce3D()
-  const tileCount = Math.min(galleryImages.length, 4) + (partnerImage ? 1 : 0)
+  const tileCount = galleryImages.length
 
   const rowHeightClass =
     'min-h-[11rem] max-h-[220px] sm:min-h-[13rem] sm:max-h-[260px] md:min-h-[15rem] md:max-h-[300px] lg:max-h-[340px]'
@@ -170,21 +197,23 @@ const Gallery = () => {
     lightboxIndex,
     className,
     objectPosition = 'center center',
+    gridColumn,
   }) => (
     <div
       ref={(el) => {
         imageRefs.current[refIndex] = el
       }}
       className={`gallery-tile-animated cursor-pointer overflow-hidden ${className}`}
-      style={
-        useForce3D
+      style={{
+        ...(gridColumn ? { gridColumn: `span ${gridColumn}` } : {}),
+        ...(useForce3D
           ? {
               willChange: 'transform',
               backfaceVisibility: 'hidden',
               transform: 'translateZ(0)',
             }
-          : undefined
-      }
+          : {}),
+      }}
       onClick={() => handleImageClick(lightboxIndex)}
     >
       <img
@@ -230,61 +259,46 @@ const Gallery = () => {
 
       <div className="w-full py-8 sm:py-12 md:py-16">
         <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
-          {galleryImages[0] &&
-            renderTile({
-              refIndex: 0,
-              src: galleryImages[0],
-              alt: 'Gallery 1',
-              lightboxIndex: 0,
-              className: `relative w-full overflow-hidden ${heroRowHeightClass}`,
-              objectPosition: firstGalleryObjectPosition,
-            })}
+          {galleryRows.map((row, rowIndex) => {
+            if (row.kind === 'full') {
+              const item = row.items[0]
+              return (
+                <React.Fragment key={`row-${rowIndex}`}>
+                  {renderTile({
+                    refIndex: item.index,
+                    src: item.src,
+                    alt: `${photoAlt} — moment ${item.index + 1}`,
+                    lightboxIndex: item.index,
+                    className: `relative w-full overflow-hidden ${heroRowHeightClass}`,
+                    objectPosition:
+                      item.index === 0
+                        ? firstGalleryObjectPosition
+                        : 'center center',
+                  })}
+                </React.Fragment>
+              )
+            }
 
-          {(galleryImages[1] || galleryImages[2]) && (
-            <div className={`grid grid-cols-5 gap-2 sm:gap-3 md:gap-4 ${rowHeightClass}`}>
-              {galleryImages[1] &&
-                renderTile({
-                  refIndex: 1,
-                  src: galleryImages[1],
-                  alt: 'Gallery 2',
-                  lightboxIndex: 1,
-                  className: `col-span-2 h-full min-h-0 ${rowHeightClass}`,
-                  objectPosition: galleryThumbObjectPosition[1] ?? 'center center',
-                })}
-              {galleryImages[2] &&
-                renderTile({
-                  refIndex: 2,
-                  src: galleryImages[2],
-                  alt: 'Gallery 3',
-                  lightboxIndex: 2,
-                  className: `col-span-3 h-full min-h-0 ${rowHeightClass}`,
-                  objectPosition: galleryThumbObjectPosition[2] ?? 'center center',
-                })}
-            </div>
-          )}
-
-          {(galleryImages[3] || partnerImage) && (
-            <div className={`grid grid-cols-5 gap-2 sm:gap-3 md:gap-4 ${rowHeightClass}`}>
-              {galleryImages[3] &&
-                renderTile({
-                  refIndex: 3,
-                  src: galleryImages[3],
-                  alt: 'Gallery 4',
-                  lightboxIndex: 3,
-                  className: `col-span-3 h-full min-h-0 ${rowHeightClass}`,
-                  objectPosition: galleryThumbObjectPosition[3] ?? 'center center',
-              })}
-              {partnerImage &&
-                renderTile({
-                  refIndex: 4,
-                  src: partnerImage,
-                  alt: photoAlt,
-                  lightboxIndex: partnerLightboxIndex,
-                  className: `col-span-2 h-full min-h-0 ${rowHeightClass}`,
-                  objectPosition: 'center center',
-                })}
-            </div>
-          )}
+            return (
+              <div
+                key={`row-${rowIndex}`}
+                className={`grid grid-cols-5 gap-2 sm:gap-3 md:gap-4 ${rowHeightClass}`}
+              >
+                {row.items.map((item) =>
+                  renderTile({
+                    refIndex: item.index,
+                    src: item.src,
+                    alt: `${photoAlt} — moment ${item.index + 1}`,
+                    lightboxIndex: item.index,
+                    className: `h-full min-h-0 ${rowHeightClass}`,
+                    gridColumn: item.span,
+                    objectPosition:
+                      galleryThumbObjectPosition[item.index] ?? 'center center',
+                  })
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
 

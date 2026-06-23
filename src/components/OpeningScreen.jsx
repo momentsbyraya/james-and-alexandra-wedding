@@ -1,8 +1,13 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import { gsap } from 'gsap'
 import { prenupImages } from '../data'
 
-const OPENING_BG = prenupImages.openingBackground
+const OPENING_BACKGROUNDS =
+  prenupImages.openingBackgrounds?.length > 0
+    ? prenupImages.openingBackgrounds
+    : [prenupImages.openingBackground]
+
+const SLIDE_INTERVAL_MS = 4500
 
 function OpeningScreen({ onEnvelopeOpen }) {
   const envelopeRef = useRef(null)
@@ -10,6 +15,17 @@ function OpeningScreen({ onEnvelopeOpen }) {
   const clickMeRef = useRef(null)
   const coupleNameRef = useRef(null)
   const stampRef = useRef(null)
+  const [activeBgIndex, setActiveBgIndex] = useState(0)
+
+  useEffect(() => {
+    if (OPENING_BACKGROUNDS.length <= 1) return undefined
+
+    const interval = setInterval(() => {
+      setActiveBgIndex((prev) => (prev + 1) % OPENING_BACKGROUNDS.length)
+    }, SLIDE_INTERVAL_MS)
+
+    return () => clearInterval(interval)
+  }, [])
 
   // Animate text and envelope on mount
   useEffect(() => {
@@ -88,17 +104,27 @@ function OpeningScreen({ onEnvelopeOpen }) {
       ref={openingSectionRef}
       className="fixed inset-0 z-[9999] flex items-center justify-center opening-section"
     >
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `url(${OPENING_BG})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}
-        aria-hidden
-      />
-      <div className="absolute inset-0 bg-black/20 z-[1]" />
+      <div className="absolute inset-0 overflow-hidden" aria-hidden>
+        {OPENING_BACKGROUNDS.map((src, index) => (
+          <img
+            key={src}
+            src={src}
+            alt=""
+            className={`opening-bg-slide absolute inset-0 h-full w-full object-cover ${
+              index === activeBgIndex ? 'opening-bg-slide--active' : ''
+            }`}
+            style={{
+              opacity: index === activeBgIndex ? 1 : 0,
+              objectPosition: 'center',
+            }}
+            draggable={false}
+            decoding="async"
+            fetchPriority={index === 0 ? 'high' : 'low'}
+            aria-hidden
+          />
+        ))}
+      </div>
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-forest/55 via-forest/40 to-forest/60" />
       <section className="cssletter flex flex-col items-center relative z-10 w-full py-8" style={{ minHeight: 'auto', height: 'auto' }}>
         <div ref={clickMeRef} className="mb-4 sm:mb-6 md:mb-8 lg:mb-10 text-center click-me-container">
           <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-foglihten uppercase leading-tight" style={{ color: '#EDEDDD' }}>

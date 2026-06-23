@@ -1,16 +1,20 @@
 {
   "faqData": [
     {
-      "question": "Can I bring plus one?",
-      "answer": "As much as we'd love to celebrate with everyone, our venue has a limited capacity. We have reserved seats specifically for the number of guests reserved in your invitation. We truly appreciate your understanding."
-    },
-    {
-      "question": "Can we bring our kids along?",
-      "answer": "We wish we could celebrate with every single one of your sweet children! Due to space, we've limited our younger guests to our family and those walking down the aisle with us. We look forward to a wonderful evening of fun and hope this allows you a well-deserved night off to celebrate with us!"
+      "question": "What time should I arrive?",
+      "answer": "Come early so we can take a picture of each guest."
     },
     {
       "question": "What is the dress code?",
-      "answer": "Come in your best casual attire with shades of emerald green. We can't wait to see you dressed up for our special day!"
+      "answer": "With a touch of mint green and no white dress for female guests."
+    },
+    {
+      "question": "Can I bring plus one?",
+      "answer": "We kindly ask that only those named on your invitation attend. We are unable to accommodate additional guests."
+    },
+    {
+      "question": "Can we bring our kids along?",
+      "answer": "Yes! Children are welcome to join us in celebrating our special day."
     }
   ]
 }

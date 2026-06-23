@@ -23,12 +23,9 @@ const Moments = () => {
   const [selectedImage, setSelectedImage] = useState(null)
   const [selectedImageIndex, setSelectedImageIndex] = useState(null)
 
-  const firstGalleryImage = [prenupImages.momentsHero]
+  const galleryImages = prenupImages.moments ?? prenupImages.momentsGrid
 
-  const secondGalleryImages = prenupImages.momentsGrid
-
-  // Images array for the lightbox (includes all gallery images)
-  const lightboxImages = [...firstGalleryImage, ...secondGalleryImages]
+  const lightboxImages = galleryImages
 
   useEffect(() => {
     // Set initial hidden states to prevent glimpse
@@ -135,7 +132,7 @@ const Moments = () => {
         }
       })
     }
-  }, [secondGalleryImages.length])
+  }, [galleryImages.length])
 
   return (
     <>
@@ -148,7 +145,7 @@ const Moments = () => {
       >
         {/* Image Banner at Top */}
         <ImageBanner
-          src={prenupImages.pool[0]}
+          src={prenupImages.moments?.[0] ?? prenupImages.pool[0]}
           alt="Moments banner"
           title="Love Story"
           subtitle="Our"
@@ -210,50 +207,14 @@ const Moments = () => {
                 </h2>
               </div>
 
-              {/* First Gallery Image - Single Image - Full Width */}
               <div ref={contentRef} className="w-full">
-                {firstGalleryImage.map((image, index) => (
-                  <div
-                    key={index}
-                    className="soft-edges relative cursor-pointer overflow-hidden w-full"
-                    onClick={() => {
-                      setSelectedImage(image)
-                      setSelectedImageIndex(index)
-                    }}
-                  >
-                    <img
-                      src={image}
-                      alt={`Gallery image ${index + 1}`}
-                      className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Second Gallery Section - Grid Pattern */}
-          <div className="relative z-20 flex items-center justify-center py-12 w-full">
-            <div className="site-content-width">
-              {/* Divider and Decorative Graphic */}
-              <div className="flex justify-center items-center mb-12">
-                <div className="w-16 h-px bg-[#333333] opacity-40" />
-                <img
-                  src="/assets/images/graphics/graphics-1.svg"
-                  alt="Decorative graphic"
-                  className="w-32 sm:w-40 md:w-48 h-auto mx-4"
-                />
-                <div className="w-16 h-px bg-[#333333] opacity-40" />
-              </div>
-
-              {/* Second Gallery Grid - 3 Column Pattern */}
+              {/* Gallery Grid — all moments */}
               <div
                 ref={galleryGridRef}
                 className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4"
                 style={{ gridAutoRows: '1fr' }}
               >
-                {secondGalleryImages.map((image, index) => {
+                {galleryImages.map((image, index) => {
                   // Pattern: 1 full, 2 (1/3 + 2/3), 2 (2/3 + 1/3), 1 full, then 1/3 + 2/3
                   let gridColumn = 'span 1' // default 1/3 width
 
@@ -305,7 +266,7 @@ const Moments = () => {
                       ref={(el) => {
                         imageRefs.current[index] = el
                       }}
-                      className="cursor-pointer overflow-hidden gallery-image-container max-h-[150px] lg:max-h-[200px]"
+                      className="cursor-pointer overflow-hidden gallery-image-container max-h-[180px] sm:max-h-[220px] md:max-h-[280px] lg:max-h-[320px]"
                       style={{
                         gridColumn: gridColumn,
                         height: '100%',
@@ -315,7 +276,7 @@ const Moments = () => {
                       }}
                       onClick={() => {
                         setSelectedImage(image)
-                        setSelectedImageIndex(firstGalleryImage.length + index)
+                        setSelectedImageIndex(index)
                       }}
                     >
                       <img
@@ -332,6 +293,7 @@ const Moments = () => {
                     </div>
                   )
                 })}
+              </div>
               </div>
             </div>
           </div>

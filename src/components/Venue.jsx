@@ -33,7 +33,7 @@ const Venue = () => {
         {
           src:
             ceremony.ceremonyPhoto ||
-            '/assets/images/venues/CHURCH.jpg',
+            '/assets/images/venues/IMG_0160.JPG',
           alt: `Ceremony — ${ceremony.name}`,
           label: 'Ceremony',
           venue: ceremony,
@@ -41,7 +41,7 @@ const Venue = () => {
         {
           src:
             reception.receptionPhoto ||
-            '/assets/images/venues/BAYFRONT.jpg',
+            '/assets/images/venues/images.jpg',
           alt: `Reception — ${reception.name}`,
           label: 'Reception',
           venue: reception,

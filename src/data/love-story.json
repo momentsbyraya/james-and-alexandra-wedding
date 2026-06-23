@@ -2,33 +2,57 @@
   "title": "Our Love Story",
   "chapters": [
     {
-      "title": "Written by God",
-      "text": "From schoolmates in elementary and high school to strangers on different paths, we never imagined God was quietly writing our love story. Years later, college brought us together, and what started as simple chats on Facebook grew into a friendship full of laughter — and eventually, into a love that just feels right."
+      "title": "Across the Miles",
+      "text": "They say distance makes the heart grow fonder, and our story is proof of that.\n\nWhat started as a simple conversation soon became something neither of us expected. Despite being thousands of miles apart—one in the United Kingdom and the other in the Philippines—we found comfort, laughter, and love in each other."
     },
     {
-      "title": "Our New Chapter",
-      "text": "Every twist, every delay, every unexpected moment had a purpose. Now, we're ready to start this new chapter together — hand in hand, guided by faith, love, and the promise of forever."
+      "title": "Building Beyond Borders",
+      "text": "Through different time zones, late-night calls, endless messages, and countless video chats, we built a relationship that went beyond borders. We celebrated milestones through screens, comforted each other during difficult days, and learned that true love isn't measured by the distance between two places, but by the connection between two hearts."
+    },
+    {
+      "title": "Choosing Each Other",
+      "text": "The miles tested our patience, strengthened our trust, and deepened our commitment. Every goodbye at the end of a call became a promise that one day, we would no longer have to say goodbye.\n\nAfter years of choosing each other every day, across oceans and time zones, that day has finally come."
+    },
+    {
+      "title": "A New Chapter",
+      "text": "With grateful hearts and endless love, we are excited to begin the next chapter of our journey—not as two people living in different countries, but as husband and wife, building one life together.\n\nWe warmly invite you to join us as we celebrate the love that brought us together, the distance that made us stronger, and the future we are about to share."
+    },
+    {
+      "title": "Written by Faith",
+      "text": "Because some love stories aren't limited by miles—they are written by faith, patience, and the unwavering belief that true love always finds its way home."
     }
   ],
-  "content": "From schoolmates in elementary and high school to strangers on different paths, we never imagined God was quietly writing our love story. Years later, college brought us together, and what started as simple chats on Facebook grew into a friendship full of laughter — and eventually, into a love that just feels right.\n\nEvery twist, every delay, every unexpected moment had a purpose. Now, we're ready to start this new chapter together — hand in hand, guided by faith, love, and the promise of forever.",
+  "content": "They say distance makes the heart grow fonder, and our story is proof of that.\n\nWhat started as a simple conversation soon became something neither of us expected. Despite being thousands of miles apart—one in the United Kingdom and the other in the Philippines—we found comfort, laughter, and love in each other.\n\nThrough different time zones, late-night calls, endless messages, and countless video chats, we built a relationship that went beyond borders. We celebrated milestones through screens, comforted each other during difficult days, and learned that true love isn't measured by the distance between two places, but by the connection between two hearts.\n\nThe miles tested our patience, strengthened our trust, and deepened our commitment. Every goodbye at the end of a call became a promise that one day, we would no longer have to say goodbye.\n\nAfter years of choosing each other every day, across oceans and time zones, that day has finally come.\n\nWith grateful hearts and endless love, we are excited to begin the next chapter of our journey—not as two people living in different countries, but as husband and wife, building one life together.\n\nWe warmly invite you to join us as we celebrate the love that brought us together, the distance that made us stronger, and the future we are about to share.\n\nBecause some love stories aren't limited by miles—they are written by faith, patience, and the unwavering belief that true love always finds its way home.",
   "timeline": [
     {
-      "title": "Schoolmates",
+      "title": "Across the Miles",
       "date": "The Beginning",
-      "description": "From schoolmates in elementary and high school to strangers on different paths, we never imagined God was quietly writing our love story.",
+      "description": "They say distance makes the heart grow fonder, and our story is proof of that.\n\nWhat started as a simple conversation soon became something neither of us expected. Despite being thousands of miles apart—one in the United Kingdom and the other in the Philippines—we found comfort, laughter, and love in each other.",
       "image": "couple2"
     },
     {
-      "title": "College",
-      "date": "Coming Together",
-      "description": "Years later, college brought us together, and what started as simple chats on Facebook grew into a friendship full of laughter — and eventually, into a love that just feels right.",
+      "title": "Building Beyond Borders",
+      "date": "Long Distance",
+      "description": "Through different time zones, late-night calls, endless messages, and countless video chats, we built a relationship that went beyond borders. We celebrated milestones through screens, comforted each other during difficult days, and learned that true love isn't measured by the distance between two places, but by the connection between two hearts.",
       "image": "couple4"
     },
     {
-      "title": "Forever",
-      "date": "Our Chapter",
-      "description": "Every twist, every delay, every unexpected moment had a purpose. Now, we're ready to start this new chapter together — hand in hand, guided by faith, love, and the promise of forever.",
+      "title": "Choosing Each Other",
+      "date": "Every Day",
+      "description": "The miles tested our patience, strengthened our trust, and deepened our commitment. Every goodbye at the end of a call became a promise that one day, we would no longer have to say goodbye.\n\nAfter years of choosing each other every day, across oceans and time zones, that day has finally come.",
       "image": "couple7"
+    },
+    {
+      "title": "A New Chapter",
+      "date": "Together",
+      "description": "With grateful hearts and endless love, we are excited to begin the next chapter of our journey—not as two people living in different countries, but as husband and wife, building one life together.\n\nWe warmly invite you to join us as we celebrate the love that brought us together, the distance that made us stronger, and the future we are about to share.",
+      "image": "couple2"
+    },
+    {
+      "title": "Written by Faith",
+      "date": "Forever",
+      "description": "Because some love stories aren't limited by miles—they are written by faith, patience, and the unwavering belief that true love always finds its way home.",
+      "image": "couple4"
     }
   ]
 }

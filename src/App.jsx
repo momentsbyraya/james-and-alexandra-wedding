@@ -9,7 +9,6 @@ import OpeningScreen from './components/OpeningScreen'
 import Loader from './components/Loader'
 import ScrollToTop from './components/ScrollToTop'
 import Details from './components/pages/Details'
-import Entourage from './components/pages/Entourage'
 import Moments from './components/pages/Moments'
 import { AudioProvider, useAudio } from './contexts/AudioContext'
 import { couple, prenupImages } from './data'
@@ -166,6 +165,10 @@ function AppContent() {
     navigate('/')
   }
 
+  const handleCloseRSVP = () => {
+    setIsRSVPModalOpen(false)
+  }
+
   return (
     <div className="App min-h-screen wedding-gradient">
       <DynamicTitle />
@@ -192,13 +195,12 @@ function AppContent() {
           <Routes>
             <Route path="/" element={<Home onOpenRSVP={() => setIsRSVPModalOpen(true)} />} />
             <Route path="/details" element={<Details />} />
-            <Route path="/entourage" element={<Entourage />} />
             <Route path="/moments" element={<Moments />} />
           </Routes>
           <Footer />
         </>
       )}
-      <RSVPModal isOpen={isRSVPModalOpen} onClose={() => setIsRSVPModalOpen(false)} />
+      <RSVPModal isOpen={isRSVPModalOpen} onClose={handleCloseRSVP} />
       <ApprovalWatermark />
     </div>
   )

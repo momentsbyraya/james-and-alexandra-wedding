@@ -325,6 +325,24 @@
 }
 
 /* Opening background pulsing animation */
+@keyframes openingBgKenBurns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+
+.opening-bg-slide {
+  transition: opacity 1.4s ease-in-out;
+  will-change: opacity, transform;
+}
+
+.opening-bg-slide--active {
+  animation: openingBgKenBurns 4.5s ease-out forwards;
+}
+
 @keyframes openingBgPulse {
   0%, 100% {
     opacity: 1;

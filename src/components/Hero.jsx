@@ -28,11 +28,8 @@ const Hero = () => {
   }
 
   const dateInfo = useMemo(() => formatDate(couple.wedding.date), [couple.wedding.date])
-  const [heroGroomName, heroBrideName] = useMemo(() => {
-    const parts = couple.together.split(/\s*&\s*/)
-    if (parts.length >= 2) return [parts[0].trim(), parts[1].trim()]
-    return [couple.groom.firstName, couple.bride.firstName]
-  }, [couple.together, couple.groom.firstName, couple.bride.firstName])
+  const heroGroomName = couple.groom.firstName
+  const heroBrideName = couple.bride.firstName
   const venue = venues.ceremony
   const safariLite = shouldUseSafariLiteMode()
   const heroSvgFilter = safariLite ? undefined : 'url(#heroTopBlurFilter)'
@@ -161,7 +158,7 @@ const Hero = () => {
         src={prenupImages.hero}
         alt={heroAlt}
         className="h-full w-full object-cover"
-        style={{ objectPosition: '54% center' }}
+        style={{ objectPosition: 'center 38%' }}
         decoding="async"
         draggable={false}
       />
@@ -206,17 +203,25 @@ const Hero = () => {
             <br />
             THE WEDDING OF
           </p>
-          <p
+          <div
             ref={coupleNamesRef}
-            className="mx-auto mb-3 mt-4 max-w-full px-2 text-center text-5xl leading-none whitespace-nowrap sm:mb-4 sm:mt-5 md:mb-6 md:mt-6 lg:mb-8 lg:mt-8 sm:text-6xl md:text-7xl lg:text-8xl lg-custom:text-[clamp(2.75rem,9vw,4.25rem)] xl:text-[clamp(3.5rem,10vw,8rem)]"
+            className="mx-auto mb-3 mt-4 flex max-w-full flex-col items-center px-2 text-center sm:mb-4 sm:mt-5 md:mb-6 md:mt-6 lg:mb-8 lg:mt-8"
             style={{
               fontFamily: 'Pinyon Script, cursive',
               color: heroInk,
               textShadow: heroContrastShadow,
             }}
           >
-            {heroGroomName} & {heroBrideName}
-          </p>
+            <span className="text-5xl leading-none sm:text-6xl md:text-7xl lg:text-8xl lg-custom:text-[clamp(2.75rem,9vw,4.25rem)] xl:text-[clamp(3.5rem,10vw,8rem)]">
+              {heroGroomName}
+            </span>
+            <span className="my-1 text-3xl leading-none sm:my-1.5 sm:text-4xl md:text-5xl lg:text-6xl lg-custom:text-[clamp(1.75rem,5vw,2.5rem)]">
+              &
+            </span>
+            <span className="text-5xl leading-none sm:text-6xl md:text-7xl lg:text-8xl lg-custom:text-[clamp(2.75rem,9vw,4.25rem)] xl:text-[clamp(3.5rem,10vw,8rem)]">
+              {heroBrideName}
+            </span>
+          </div>
         </div>
       </div>
 

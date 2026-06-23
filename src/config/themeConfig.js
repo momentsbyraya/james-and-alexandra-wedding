@@ -66,7 +66,7 @@ export const themeConfig = {
     },
 
     calendar: {
-        weddingDate: '2026-06-28',
+        weddingDate: '2026-09-30',
         highlightColor: 'bg-gold',
         heartColor: 'text-gold',
         textColor: 'text-forest',

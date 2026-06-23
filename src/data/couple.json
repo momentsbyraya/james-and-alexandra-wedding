@@ -1,30 +1,30 @@
 {
   "bride": {
-    "firstName": "Fritzie",
-    "lastName": "Briones",
-    "fullName": "FRITZIE BRIONES"
+    "firstName": "Alexandra",
+    "lastName": "Samson",
+    "fullName": "ALEXANDRA SAMSON"
   },
   "groom": {
-    "firstName": "Arjie",
-    "lastName": "Abaquita",
-    "fullName": "ARJIE ABAQUITA"
+    "firstName": "James",
+    "lastName": "Elliott",
+    "fullName": "JAMES ELLIOTT"
   },
-  "together": "Arjie & Fritzie",
-  "nickname": "Arjie & Fritzie",
+  "together": "Alexandra & James",
+  "nickname": "Alexandra & James",
   "wedding": {
-    "date": "2026-06-18",
-    "time": "3:00 PM",
-    "dayOfWeek": "Thursday",
-    "month": "June",
-    "day": "18",
+    "date": "2026-09-30",
+    "time": "9:00 AM",
+    "dayOfWeek": "Wednesday",
+    "month": "September",
+    "day": "30",
     "year": "2026"
   },
   "rsvpDeadline": {
-    "date": "2026-06-16",
-    "month": "June",
-    "day": "16",
+    "date": "2026-08-30",
+    "month": "August",
+    "day": "30",
     "year": "2026"
   },
-  "rsvpFormUrl": "https://forms.gle/DkeQaoixWbPj5ChGA",
-  "rsvpGoogleFormEmbedUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfsvcnM7aAZyJnEuHnsQFVVu0eU2iwhVi4XDZ-qyGQ6tI-drg/viewform?embedded=true"
+  "rsvpFormUrl": "",
+  "rsvpGoogleFormEmbedUrl": ""
 }

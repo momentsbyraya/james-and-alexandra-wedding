@@ -1,19 +1,19 @@
 {
   "mainDressCode": {
     "title": "Dress Code & Color Motif",
-    "description": "Come in your best casual attire with the shades of emerald green."
+    "description": "With a touch of green or eucalyptus. No white for female guests."
   },
   "colorPalette": [
-    { "color": "#094a2f", "name": "emerald green" },
-    { "color": "#b8a67a", "name": "khaki" },
-    { "color": "#e5dcc8", "name": "lighter khaki" }
+    { "color": "#5F7161", "name": "eucalyptus green" },
+    { "color": "#8FA98E", "name": "sage green" },
+    { "color": "#C5D4C0", "name": "mint green" }
   ],
   "sections": [
     {
       "title": "Guests",
       "type": "image",
-      "shortDescription": "Emerald green, khaki, and lighter khaki.",
-      "description": "Emerald green, khaki, and lighter khaki.",
+      "shortDescription": "With a touch of green or eucalyptus. No white for female guests.",
+      "description": "With a touch of green or eucalyptus. No white for female guests.",
       "image": "/assets/images/dresscode/guests.png"
     }
   ]

@@ -1,27 +1,27 @@
 {
   "ceremony": {
-    "ceremonyPhoto": "/assets/images/venues/CHURCH.jpg",
-    "name": "Cebu Archdiocesan Shrine of Saint Pedro Calungsod",
+    "ceremonyPhoto": "/assets/images/venues/IMG_0160.JPG",
+    "name": "Cris And Charms Events",
     "address": "",
-    "city": "Cebu",
+    "city": "",
     "state": "",
     "zip": "",
-    "time": "3:00 PM",
-    "details": "Ceremony at 3:00 PM",
-    "googleMapsUrl": "https://maps.google.com/maps/place//data=!4m2!3m1!1s0x33a999451218ba33:0xa651473e0b20364d?entry=s&sa=X&ved=2ahUKEwj2lfSs2K-UAxUX1DgGHYuAMdgQ4kB6BAgWEAA&hl=en",
-    "directionsUrl": "https://maps.google.com/maps/place//data=!4m2!3m1!1s0x33a999451218ba33:0xa651473e0b20364d?entry=s&sa=X&ved=2ahUKEwj2lfSs2K-UAxUX1DgGHYuAMdgQ4kB6BAgWEAA&hl=en"
+    "time": "9:00 AM",
+    "details": "Ceremony at 9:00 AM",
+    "googleMapsUrl": "https://maps.app.goo.gl/xpvW1Ybf8F8kKMwG8?g_st=ic",
+    "directionsUrl": "https://maps.app.goo.gl/xpvW1Ybf8F8kKMwG8?g_st=ic"
   },
   "reception": {
-    "receptionPhoto": "/assets/images/venues/BAYFRONT.jpg",
-    "name": "Bayfront Hotel Cebu",
+    "receptionPhoto": "/assets/images/venues/images.jpg",
+    "name": "Romulo Cafe",
     "address": "",
-    "city": "Cebu",
+    "city": "",
     "state": "",
     "zip": "",
-    "time": "",
-    "details": "Reception",
+    "time": "11:00 AM",
+    "details": "Reception Lunch at 11:00 AM",
     "landmark": "",
-    "googleMapsUrl": "https://maps.google.com/maps/place//data=!4m2!3m1!1s0x33a99972f04ee017:0x239e29fd87e52e92?entry=s&sa=X&ved=2ahUKEwiw2Y7W2K-UAxUzzjgGHXNCMDUQ4kB6BAgYEAA&hl=en",
-    "directionsUrl": "https://maps.google.com/maps/place//data=!4m2!3m1!1s0x33a99972f04ee017:0x239e29fd87e52e92?entry=s&sa=X&ved=2ahUKEwiw2Y7W2K-UAxUzzjgGHXNCMDUQ4kB6BAgYEAA&hl=en"
+    "googleMapsUrl": "https://maps.app.goo.gl/ZJUGj15YqsSY5M2g6?g_st=ic",
+    "directionsUrl": "https://maps.app.goo.gl/ZJUGj15YqsSY5M2g6?g_st=ic"
   }
 }

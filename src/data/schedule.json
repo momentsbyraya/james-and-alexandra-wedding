@@ -1,25 +1,32 @@
 {
   "events": [
     {
-      "time": "2:00 PM",
-      "description": "Guest Gathering",
+      "time": "8:45 AM",
+      "description": "Arrive at Cris and Charms for pictorial before the ceremony",
       "image": "/assets/images/graphics/heart.png",
-      "imageAlt": "Guest Gathering",
+      "imageAlt": "Guest arrival and pictorial",
       "position": "left"
     },
     {
-      "time": "3:00 PM",
-      "description": "Ceremony",
+      "time": "9:00 AM",
+      "description": "Wedding Ceremony",
       "image": "/assets/images/graphics/ceremony-2.png",
       "imageAlt": "Ceremony",
       "position": "right"
     },
     {
-      "time": "To Follow",
-      "description": "Reception",
+      "time": "11:00 AM",
+      "description": "Reception Lunch",
       "image": "/assets/images/graphics/cutlery-sketch.png",
-      "imageAlt": "Reception",
+      "imageAlt": "Reception Lunch",
       "position": "left"
+    },
+    {
+      "time": "2:30 PM",
+      "description": "Ends",
+      "image": "/assets/images/graphics/heart.png",
+      "imageAlt": "End of celebration",
+      "position": "right"
     }
   ]
 }

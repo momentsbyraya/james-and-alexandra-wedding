@@ -40,24 +40,24 @@ export const weddingConfig = {
 
   // Photos and Media
   photos: {
-    hero: "/assets/images/hero-couple.jpg",
+    hero: "/assets/images/prenup/IMG_3542%20(1).png",
     gallery: [
-      "/assets/images/couple-1.jpg",
-      "/assets/images/couple-2.jpg",
-      "/assets/images/couple-3.jpg",
-      "/assets/images/couple-4.jpg"
+      "/assets/images/prenup/IMG_4631%20(1).png",
+      "/assets/images/prenup/IMG_4692%20(1).png",
+      "/assets/images/prenup/IMG_3409%20(1).png",
+      "/assets/images/prenup/IMG_4630%20(1).png"
     ],
     background: "/assets/images/background-pattern.jpg"
   },
 
   // Additional Information
   details: {
-    hashtag: "#ArjieAndFritzie2026",
+    hashtag: "#AlexandraAndJames2026",
     website: "",
     registry: "",
     message: "We're excited to celebrate our special day with you!",
     giftGuide:
-      "The most important thing is to have you with us on our special day. No gifts needed or expected. However, if you wish to participate, a monetary gift would be great.",
+      "Your presence is the greatest gift to us. If you wish to bless us, monetary gifts may be given by envelope or during the wedding dance.",
     covidInfo: "We're following local health guidelines. Please stay home if you're feeling unwell."
   },
 
