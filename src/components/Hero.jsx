@@ -7,6 +7,7 @@ import { scheduleGsapRevealFallback, shouldUseSafariLiteMode } from '../utils/sa
 const Hero = () => {
   const [countdown, setCountdown] = useState(() => getTimeUntilWedding())
 
+  const videoRef = useRef(null)
   const invitationTextRef = useRef(null)
   const coupleNamesRef = useRef(null)
   const dateRef = useRef(null)
@@ -14,7 +15,6 @@ const Hero = () => {
   const countdownHoursRef = useRef(null)
   const countdownMinutesRef = useRef(null)
   const countdownSecondsRef = useRef(null)
-  const heroImgRef = useRef(null)
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
@@ -36,7 +36,21 @@ const Hero = () => {
   const heroBottomSvgFilter = safariLite ? undefined : 'url(#heroBottomBlurFilter)'
 
   useEffect(() => {
-    heroImgRef.current?.setAttribute('fetchpriority', 'high')
+    const video = videoRef.current
+    if (!video) return
+
+    video.setAttribute('fetchpriority', 'high')
+
+    const tryPlay = () => {
+      video.play().catch(() => {})
+    }
+
+    tryPlay()
+    video.addEventListener('loadeddata', tryPlay)
+
+    return () => {
+      video.removeEventListener('loadeddata', tryPlay)
+    }
   }, [])
 
   useEffect(() => {
@@ -132,8 +146,6 @@ const Hero = () => {
     }
   }, [])
 
-  const heroAlt = couple.together.replace('&', 'and')
-
   const heroInk = '#094a2f'
   const heroLabelLight = '#F8F3EA'
   const heroLabelShadow =
@@ -153,14 +165,18 @@ const Hero = () => {
       data-hero-section="true"
       className="hero-viewport-height relative w-full overflow-x-hidden overflow-y-hidden"
     >
-      <img
-        ref={heroImgRef}
-        src={prenupImages.hero}
-        alt={heroAlt}
-        className="h-full w-full object-cover"
-        style={{ objectPosition: 'center 38%' }}
-        decoding="async"
-        draggable={false}
+      <video
+        ref={videoRef}
+        data-hero-video="true"
+        src={prenupImages.heroVideo}
+        poster={prenupImages.hero}
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{ objectPosition: 'center center' }}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
       />
 
       <svg

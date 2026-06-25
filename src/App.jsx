@@ -93,18 +93,15 @@ function AppContent() {
       // This helps prevent lag when NavIndex first renders
       await new Promise(resolve => setTimeout(resolve, 300))
 
-      // Wait for hero image to be visible in the viewport
+      // Wait for hero video to be visible in the viewport
       const waitForHeroVisible = () => {
         return new Promise((resolve) => {
           const checkHero = () => {
             // Check if we're on the home page
             if (window.location.pathname === '/' || window.location.pathname === '') {
-              // Look for hero image
-              const heroImg = document.querySelector(`img[src="${prenupImages.hero}"]`)
-              if (heroImg) {
-                // Check if image is loaded and visible
-                if (heroImg.complete && heroImg.naturalHeight > 0) {
-                  // Use Intersection Observer to check if hero is visible
+              const heroVideo = document.querySelector('video[data-hero-video="true"]')
+              if (heroVideo) {
+                const onReady = () => {
                   const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                       if (entry.isIntersecting) {
@@ -113,28 +110,26 @@ function AppContent() {
                       }
                     })
                   }, { threshold: 0.1 })
-                  
-                  observer.observe(heroImg)
-                  
-                  // Fallback timeout
+
+                  observer.observe(heroVideo)
+
                   setTimeout(() => {
                     observer.disconnect()
                     resolve()
                   }, 2000)
+                }
+
+                if (heroVideo.readyState >= 2) {
+                  onReady()
                 } else {
-                  // Image not loaded yet, wait for load event
-                  heroImg.onload = () => {
-                    setTimeout(() => resolve(), 100)
-                  }
-                  heroImg.onerror = () => resolve() // Resolve even on error
-                  setTimeout(() => resolve(), 2000) // Fallback timeout
+                  heroVideo.addEventListener('loadeddata', onReady, { once: true })
+                  heroVideo.addEventListener('error', () => resolve(), { once: true })
+                  setTimeout(() => resolve(), 2000)
                 }
               } else {
-                // Hero image not found, resolve anyway
                 resolve()
               }
             } else {
-              // Not on home page, resolve immediately
               resolve()
             }
           }

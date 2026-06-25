@@ -25,7 +25,7 @@ const bg2SectionStyle = {
 const Home = ({ onOpenRSVP }) => {
   return (
     <div className="relative w-full bg-sage">
-      {/* 1. First page — photo, date & names (Hero; venue not shown) */}
+      {/* 1. First page — video bg, date & names */}
       <Hero />
 
       {/* 2. Where to go — venue, directions, time */}

@@ -1,3 +1,5 @@
+import heroVideoUrl from '../../assets/video/video1.mp4?url'
+
 /** Prenup filenames live in /assets/images/prenup/ */
 const prenup = (filename) =>
   `/assets/images/prenup/${encodeURIComponent(filename)}`
@@ -12,6 +14,7 @@ const IMG_4630 = 'IMG_4630 (1).png'
 const IMG_4631 = 'IMG_4631 (1).png'
 const IMG_4692 = 'IMG_4692 (1).png'
 
+const heroVideo = heroVideoUrl
 const hero = prenup(IMG_3542)
 const openingBackground = prenup(IMG_3540)
 const fullBleedAfterVenue = prenup(IMG_4627)
@@ -65,6 +68,7 @@ const countdownBackground = prenup(IMG_3540)
 
 /** First-screen only — avoid decoding the full gallery on load (Safari memory). */
 const criticalPreload = [
+  heroVideo,
   hero,
   openingBackground,
   '/assets/images/graphics/bg-2.png',
@@ -90,6 +94,7 @@ const pool = [
 export const prenupImages = {
   pool,
   criticalPreload,
+  heroVideo,
   hero,
   openingBackground,
   openingBackgrounds: moments,
