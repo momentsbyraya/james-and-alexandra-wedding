@@ -25,6 +25,6 @@
     "day": "30",
     "year": "2026"
   },
-  "rsvpFormUrl": "",
-  "rsvpGoogleFormEmbedUrl": ""
+  "rsvpFormUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfQAjtiSX72F4mc5h09bAZ5Qs_AEYMSgUs5PDdLS13NUXaN4g/viewform",
+  "rsvpGoogleFormEmbedUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfQAjtiSX72F4mc5h09bAZ5Qs_AEYMSgUs5PDdLS13NUXaN4g/viewform?embedded=true"
 }

@@ -16,6 +16,7 @@ const IMG_4692 = 'IMG_4692 (1).png'
 
 const heroVideo = heroVideoUrl
 const hero = prenup(IMG_3542)
+const shareThumbnail = `/assets/video/${encodeURIComponent('for banners.png')}`
 const openingBackground = prenup(IMG_3540)
 const fullBleedAfterVenue = prenup(IMG_4627)
 const fullBleedAfterSchedule = prenup(IMG_4631)
@@ -110,7 +111,7 @@ export const prenupImages = {
   galleryThumbObjectPosition,
   countdownBackground,
   modalBackground: openingBackground,
-  ogImage: hero,
+  ogImage: shareThumbnail,
   favicon: hero,
   rsvpBackground: fullBleedAfterDressCode,
   fullBleedMain: fullBleedAfterVenue,

@@ -28,6 +28,7 @@ const DynamicTitle = () => {
       <meta property="og:type" content="website" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
+      <meta property="og:url" content={origin || undefined} />
       <meta property="og:image" content={ogImageAbsolute} />
       <meta property="og:image:secure_url" content={ogImageAbsolute} />
       <meta property="og:image:type" content="image/png" />

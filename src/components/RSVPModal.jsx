@@ -110,7 +110,7 @@ const RSVPModal = ({ isOpen, onClose }) => {
           {formEmbedUrl ? (
             <iframe
               src={formEmbedUrl}
-              title="RSVP for the Wedding of Alexandra and James"
+              title="RSVP for the Wedding of James and Alexandra"
               className="h-full min-h-0 w-full flex-1 border-0 bg-sage"
               allowFullScreen
             />
