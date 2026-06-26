@@ -1,4 +1,4 @@
-import heroVideoUrl from '../../assets/video/video1.mp4?url'
+import heroVideoUrl from '../../assets/videos/video1.mp4?url'
 
 /** Prenup filenames live in /assets/images/prenup/ */
 const prenup = (filename) =>
@@ -16,7 +16,7 @@ const IMG_4692 = 'IMG_4692 (1).png'
 
 const heroVideo = heroVideoUrl
 const hero = prenup(IMG_3542)
-const shareThumbnail = '/assets/video/share-thumbnail.png'
+const shareThumbnail = `/assets/videos/${encodeURIComponent('for banners.png')}`
 const openingBackground = prenup(IMG_3540)
 const fullBleedAfterVenue = prenup(IMG_4627)
 const fullBleedAfterSchedule = prenup(IMG_4631)
