@@ -1,6 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
 import { couple, prenupImages } from '../data'
+import { absoluteUrl } from '../config/siteConfig'
 
 const OG_IMAGE_PATH = prenupImages.ogImage
 const FAVICON_PATH = prenupImages.favicon
@@ -12,8 +13,8 @@ const DynamicTitle = () => {
     day: 'numeric'
   })
 
-  const origin = typeof window !== 'undefined' ? window.location.origin : ''
-  const ogImageAbsolute = origin ? `${origin}${OG_IMAGE_PATH}` : OG_IMAGE_PATH
+  const pageUrl = absoluteUrl('/')
+  const ogImageAbsolute = absoluteUrl(OG_IMAGE_PATH)
 
   const title = `You Are Invited to the Wedding of ${couple.together}`
   const description = `Join us for ${couple.together}'s wedding on ${weddingDate}.`
@@ -22,13 +23,14 @@ const DynamicTitle = () => {
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <link rel="canonical" href={pageUrl} />
       <link rel="icon" type="image/png" href={FAVICON_PATH} />
       <link rel="apple-touch-icon" href={FAVICON_PATH} />
 
       <meta property="og:type" content="website" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:url" content={origin || undefined} />
+      <meta property="og:url" content={pageUrl} />
       <meta property="og:image" content={ogImageAbsolute} />
       <meta property="og:image:secure_url" content={ogImageAbsolute} />
       <meta property="og:image:type" content="image/png" />
@@ -44,4 +46,4 @@ const DynamicTitle = () => {
   )
 }
 
-export default DynamicTitle 
+export default DynamicTitle

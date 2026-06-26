@@ -17,6 +17,12 @@
   [headers.values]
     Content-Type = "application/javascript; charset=utf-8"
 
+[[headers]]
+  for = "/assets/video/share-thumbnail.png"
+  [headers.values]
+    Content-Type = "image/png"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
