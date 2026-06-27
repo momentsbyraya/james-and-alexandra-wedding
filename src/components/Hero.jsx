@@ -176,7 +176,7 @@ const Hero = () => {
         muted
         loop
         playsInline
-        preload="auto"
+        preload={safariLite ? 'metadata' : 'auto'}
       />
 
       <svg

@@ -20,9 +20,32 @@ export function isIOS() {
   )
 }
 
+/** Facebook, Instagram, WhatsApp, Line, etc. — WebKit wrappers with stricter media/network rules */
+export function isInAppBrowser() {
+  if (typeof navigator === 'undefined') return false
+  const ua = navigator.userAgent || ''
+  return /FBAN|FBAV|Instagram|Line\/|MicroMessenger|WhatsApp|Twitter|LinkedInApp|Snapchat/i.test(ua)
+}
+
+export function isWhatsAppBrowser() {
+  if (typeof navigator === 'undefined') return false
+  return /WhatsApp/i.test(navigator.userAgent || '')
+}
+
+export function getBrowserContext() {
+  return {
+    userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+    isIOS: isIOS(),
+    isSafari: isSafari(),
+    isInApp: isInAppBrowser(),
+    isWhatsApp: isWhatsAppBrowser(),
+    safariLite: shouldUseSafariLiteMode(),
+  }
+}
+
 /** iOS Safari + desktop Safari — enable lighter GPU / memory path */
 export function shouldUseSafariLiteMode() {
-  return isIOS() || isSafari()
+  return isIOS() || isSafari() || isInAppBrowser()
 }
 
 export function initSafariCompat() {

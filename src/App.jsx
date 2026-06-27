@@ -13,149 +13,67 @@ import Moments from './components/pages/Moments'
 import { AudioProvider, useAudio } from './contexts/AudioContext'
 import { couple, prenupImages } from './data'
 import ApprovalWatermark from './components/ApprovalWatermark'
-import { shouldUseSafariLiteMode } from './utils/safariCompat'
+import {
+  installInitErrorLogging,
+  logInit,
+  logInitWarn,
+  MAX_INIT_MS,
+  runCriticalPreload,
+  withTimeout,
+} from './utils/appInit'
 
 function AppContent() {
   const [isRSVPModalOpen, setIsRSVPModalOpen] = useState(false)
-  const [showInvitation, setShowInvitation] = useState(false) // Set to false to show opening screen
+  const [showInvitation, setShowInvitation] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const { play } = useAudio()
   const navigate = useNavigate()
 
-  // Preload critical images and resources
   useEffect(() => {
-    const preloadImages = async () => {
-      const criticalImages = prenupImages.criticalPreload
-      const safariLite = shouldUseSafariLiteMode()
+    let cancelled = false
 
-      // Preload fonts
-      const preloadFonts = async () => {
-        if (document.fonts && document.fonts.ready) {
-          try {
-            await document.fonts.ready
-          } catch (e) {
-            console.warn('Font loading error:', e)
-          }
-        }
-      }
-
-      // Preload images with proper error handling and decoding
-      const imagePromises = criticalImages.map((src) => {
-        return new Promise((resolve) => {
-          if (src.endsWith('.mp4')) {
-            // For video, preload it properly
-            const video = document.createElement('video')
-            video.preload = 'auto'
-            video.oncanplaythrough = () => resolve()
-            video.onerror = () => resolve() // Resolve even on error to not block
-            video.src = src
-          } else {
-            const img = new Image()
-            img.onload = () => {
-              // Skip eager decode on Safari — decoded bitmaps spike memory
-              if (!safariLite && img.decode) {
-                img.decode()
-                  .then(() => resolve())
-                  .catch(() => resolve())
-              } else {
-                resolve()
-              }
-            }
-            img.onerror = () => {
-              console.warn(`Failed to load image: ${src}`)
-              resolve() // Resolve even on error to not block loading
-            }
-            img.src = src
-            setTimeout(() => resolve(), safariLite ? 8000 : 15000)
-          }
-        })
-      })
-
-      // Start font preloading
-      const fontPromise = preloadFonts()
-
-      // Wait for all critical resources to load
-      // Use Promise.allSettled to ensure we don't block on individual failures
-      const results = await Promise.allSettled([
-        Promise.all(imagePromises),
-        fontPromise
-      ])
-
-      // Check if critical images loaded successfully
-      const imageResults = results[0]
-      if (imageResults.status === 'fulfilled') {
-        console.log('All critical images loaded')
-      } else {
-        console.warn('Some images failed to load:', imageResults.reason)
-      }
-
-      // Additional delay to ensure browser has processed all resources
-      // This helps prevent lag when NavIndex first renders
-      await new Promise(resolve => setTimeout(resolve, 300))
-
-      // Wait for hero video to be visible in the viewport
-      const waitForHeroVisible = () => {
-        return new Promise((resolve) => {
-          const checkHero = () => {
-            // Check if we're on the home page
-            if (window.location.pathname === '/' || window.location.pathname === '') {
-              const heroVideo = document.querySelector('video[data-hero-video="true"]')
-              if (heroVideo) {
-                const onReady = () => {
-                  const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                      if (entry.isIntersecting) {
-                        observer.disconnect()
-                        resolve()
-                      }
-                    })
-                  }, { threshold: 0.1 })
-
-                  observer.observe(heroVideo)
-
-                  setTimeout(() => {
-                    observer.disconnect()
-                    resolve()
-                  }, 2000)
-                }
-
-                if (heroVideo.readyState >= 2) {
-                  onReady()
-                } else {
-                  heroVideo.addEventListener('loadeddata', onReady, { once: true })
-                  heroVideo.addEventListener('error', () => resolve(), { once: true })
-                  setTimeout(() => resolve(), 2000)
-                }
-              } else {
-                resolve()
-              }
-            } else {
-              resolve()
-            }
-          }
-          
-          // Wait a bit for DOM to be ready
-          if (document.readyState === 'complete') {
-            checkHero()
-          } else {
-            window.addEventListener('load', checkHero)
-            setTimeout(() => resolve(), 3000) // Fallback timeout
-          }
-        })
-      }
-
-      await waitForHeroVisible()
-
-      // Hide loader
+    const finishLoading = (reason) => {
+      if (cancelled) return
+      logInit('loader-hidden', reason)
       setIsLoading(false)
     }
 
-    preloadImages()
+    const removeErrorLogging = installInitErrorLogging()
+
+    const forceTimer = window.setTimeout(() => {
+      finishLoading('max-init-timeout')
+    }, MAX_INIT_MS)
+
+    const init = async () => {
+      try {
+        logInit('init-start')
+        await withTimeout(
+          runCriticalPreload(prenupImages.criticalPreload),
+          MAX_INIT_MS - 500,
+          'critical-preload'
+        )
+        finishLoading('preload-complete')
+      } catch (err) {
+        logInitWarn('init-error', err?.message ?? err)
+        finishLoading('init-error')
+      }
+    }
+
+    init()
+
+    return () => {
+      cancelled = true
+      clearTimeout(forceTimer)
+      removeErrorLogging()
+    }
   }, [])
 
   const handleEnvelopeOpen = async () => {
-    // Start playing music when invitation is revealed (user interaction allows auto-play)
-    await play()
+    try {
+      await play()
+    } catch (err) {
+      logInitWarn('audio-play', err?.message ?? err)
+    }
     setShowInvitation(true)
     navigate('/')
   }
@@ -168,7 +86,6 @@ function AppContent() {
     <div className="App min-h-screen wedding-gradient">
       <DynamicTitle />
       <ScrollToTop />
-      {/* Loader - shows while preloading */}
       {isLoading && (
         <div className="fixed inset-0 z-[10000] flex flex-col items-center justify-center gap-8 sm:gap-10 bg-[#F8F3EA] px-4">
           <p
@@ -180,11 +97,9 @@ function AppContent() {
           <Loader />
         </div>
       )}
-      {/* OpeningScreen - shows after loading, before invitation */}
       {!isLoading && !showInvitation && (
         <OpeningScreen onEnvelopeOpen={handleEnvelopeOpen} />
       )}
-      {/* Main content - shows after invitation is opened (stamp clicked) */}
       {!isLoading && showInvitation && (
         <>
           <Routes>
@@ -209,4 +124,4 @@ function App() {
   )
 }
 
-export default App 
+export default App

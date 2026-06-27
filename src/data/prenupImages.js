@@ -69,7 +69,6 @@ const countdownBackground = prenup(IMG_3540)
 
 /** First-screen only — avoid decoding the full gallery on load (Safari memory). */
 const criticalPreload = [
-  heroVideo,
   hero,
   openingBackground,
   '/assets/images/graphics/bg-2.png',
